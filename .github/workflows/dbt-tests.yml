@@ -1,0 +1,18 @@
+name: dbt Tests
+
+on:
+  pull_request:
+    paths:
+      - 'dbt/**'
+      - '.github/workflows/dbt-tests.yml'
+  workflow_dispatch:
+
+jobs:
+  dbt-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Placeholder
+        run: |
+          echo "Configure dbt-bigquery credentials through repository secrets before enabling dbt build."
+          echo "Expected command: dbt deps && dbt build --project-dir dbt"

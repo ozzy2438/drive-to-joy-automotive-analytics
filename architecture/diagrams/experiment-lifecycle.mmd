@@ -1,0 +1,13 @@
+flowchart TD
+  A[Opportunity] --> B[Evidence]
+  B --> C[Hypothesis]
+  C --> D[Pre-registration]
+  D --> E[Build and QA]
+  E --> F[Randomised Launch]
+  F --> G[Monitor SRM/Guardrails]
+  G --> H[Analyse]
+  H --> I{Decision}
+  I -->|Ship| J[Rollout]
+  I -->|Iterate| A
+  I -->|Stop| K[Document Learning]
+  J --> K

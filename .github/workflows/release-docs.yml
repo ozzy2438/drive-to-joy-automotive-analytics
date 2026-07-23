@@ -1,0 +1,22 @@
+name: Documentation Release Check
+
+on:
+  pull_request:
+    paths:
+      - 'docs/**'
+      - 'roadmap/**'
+      - 'measurement/**'
+      - 'architecture/**'
+      - 'experiments/**'
+
+jobs:
+  docs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Confirm required policy files
+        run: |
+          test -f README.md
+          test -f data/DATA_DISCLOSURE.md
+          test -f docs/39_limitations.md
+          test -f roadmap/README.md

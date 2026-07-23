@@ -1,0 +1,17 @@
+flowchart LR
+  A[Web Demo] --> B[dataLayer]
+  B --> C[GTM]
+  C --> D[GA4-style Collection]
+  D --> E[BigQuery Raw Events]
+  F[CRM] --> G[BigQuery Raw CRM]
+  H[Media] --> I[BigQuery Raw Media]
+  J[Reference Data] --> K[BigQuery Raw Reference]
+  E --> L[dbt Staging]
+  G --> L
+  I --> L
+  K --> L
+  L --> M[dbt Intermediate]
+  M --> N[Analytics Marts]
+  N --> O[Dashboards]
+  N --> P[Experiments]
+  N --> Q[Data Quality]

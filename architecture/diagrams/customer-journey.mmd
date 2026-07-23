@@ -1,19 +1,14 @@
 flowchart TD
-    A[Acquisition] --> B[Landing Page]
-    B --> C[Vehicle Range]
-    C --> D[Vehicle Model Page]
-    D --> E[Variant and Specification Review]
-    E --> F[Configurator]
-    E --> G[Finance Calculator]
-    E --> H[Dealer Search]
-    F --> H
-    G --> H
-    H --> I[Test Drive Form]
-    H --> J[Quote Form]
-    I --> K[CRM Lead]
-    J --> K
-    K --> L[Lead Qualified]
-    L --> M[Appointment Booked]
-    M --> N[Appointment Attended]
-    N --> O[Vehicle Ordered]
-    O --> P[Vehicle Delivered]
+  A[Campaign/Organic Visit] --> B[Landing]
+  B --> C[Vehicle Model]
+  C --> D[Configurator]
+  C --> E[Finance]
+  C --> F[Dealer Search]
+  D --> F
+  E --> F
+  F --> G[Test Drive/Quote]
+  G --> H[CRM Lead]
+  H --> I[Qualified]
+  I --> J[Appointment]
+  J --> K[Attendance]
+  K --> L[Order]

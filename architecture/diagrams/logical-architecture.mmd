@@ -1,25 +1,14 @@
-flowchart LR
-    A[Demo Automotive Website] --> B[dataLayer]
-    B --> C[Google Tag Manager]
-    C --> D[GA4-style Event Collection]
-    C --> E[Experiment Exposure Tracking]
-    C --> F[Consent State Tracking]
-    D --> G[BigQuery Raw Events]
-    H[CRM Lead and Sales Outcomes] --> I[BigQuery Raw CRM]
-    J[Media Spend Data] --> K[BigQuery Raw Media]
-    L[Vehicle Dealer Campaign Reference Data] --> M[BigQuery Raw Reference]
-    G --> N[dbt Staging]
-    I --> N
-    K --> N
-    M --> N
-    N --> O[dbt Intermediate Models]
-    O --> P[Analytics Marts]
-    P --> Q[Executive Dashboard]
-    P --> R[Journey Dashboard]
-    P --> S[Marketing Dashboard]
-    P --> T[Data Quality Monitor]
-    P --> U[Experimentation Hub]
-    P --> V[Personalisation Dashboard]
-    P --> W[Python Analysis]
-    W --> X[Experiment Readouts]
-    W --> Y[Alerts]
+flowchart TD
+  A[Raw Sources] --> B[Staging]
+  B --> C[Intermediate Sessions]
+  B --> D[Intermediate Journey]
+  B --> E[Intermediate CRM Match]
+  B --> F[Intermediate Exposure]
+  C --> G[Session Mart]
+  D --> H[Vehicle Journey Mart]
+  E --> I[Lead Funnel Mart]
+  F --> J[Experiment/Personalisation Marts]
+  G --> K[Dashboards]
+  H --> K
+  I --> K
+  J --> K

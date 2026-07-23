@@ -1,0 +1,16 @@
+name: Data Quality Checks
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 8 * * 1-5'
+
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Placeholder
+        run: |
+          echo "Connect warehouse credentials and execute governed quality checks here."
+          echo "Quality SQL specifications live in sql/data_quality and dbt/tests."
