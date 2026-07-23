@@ -2,47 +2,27 @@
 
 ## Objective
 
-Create a documentation-first, production-minded GitHub repository that a technical implementer can use as the source of truth.
+Create a versioned, documentation-first repository that a developer can implement end to end.
 
-## Tasks
+## Completed baseline
 
-1. Configure repository description and topic tags.
-2. Add README, contribution rules and data disclosure.
-3. Add issue templates and a pull-request template.
-4. Configure branch protection where available.
-5. Add Markdown linting and test workflow placeholders.
-6. Create directory structure.
-7. Set up GitHub Project board with phases and issues.
-8. Ensure no credentials, customer information or raw PII can be committed.
+- Repository created.
+- README, data disclosure, security and contribution guidance added.
+- Initial GitHub issue/PR templates and workflow placeholders added.
+- Architecture, roadmap, measurement, data, experiment and operating-model documentation started.
 
-## Recommended topics
+## Remaining tasks
 
-```text
-digital-analytics
-ga4
-google-tag-manager
-bigquery
-dbt
-sql
-python
-experimentation
-ab-testing
-marketing-analytics
-conversion-rate-optimization
-automotive
-customer-journey
-personalisation
-looker-studio
-data-quality
-portfolio-project
-```
+- Configure GitHub topics and labels in UI.
+- Configure branch protection/required reviews.
+- Create GitHub Project board with roadmap phases.
+- Choose final open-source licence.
+- Configure repository secrets only when a real demo deployment begins.
 
 ## Exit criteria
 
-- [ ] Repository structure exists.
-- [ ] README exists.
-- [ ] Data disclosure exists.
-- [ ] Contribution rules exist.
-- [ ] Pull-request and issue templates exist.
-- [ ] Main branch is protected where possible.
-- [ ] No secrets are committed.
+- [ ] Repo structure exists
+- [ ] Required policies exist
+- [ ] Main branch protections are considered
+- [ ] No secrets/PII in Git
+- [ ] Project tracking board exists

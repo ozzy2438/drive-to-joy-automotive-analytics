@@ -1,0 +1,11 @@
+# License Selection
+
+Choose an appropriate open-source licence before publishing final implementation code.
+
+Common options:
+
+- MIT: permissive and simple
+- Apache-2.0: permissive with patent grant
+- GPL-3.0: copyleft
+
+The repository owner must select the licence appropriate for intended reuse. Until then, do not assume unrestricted reuse of repository content.

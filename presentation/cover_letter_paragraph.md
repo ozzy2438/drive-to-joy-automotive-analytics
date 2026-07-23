@@ -1,0 +1,3 @@
+# Cover Letter Paragraph
+
+I developed Drive to Joy, a production-style automotive digital analytics and experimentation case study, to demonstrate how I would approach an Analytics Specialist role. The project connects GA4-style web behaviour, GTM/dataLayer governance, BigQuery and dbt transformations, CRM-qualified lead outcomes, dashboard reporting, data-quality monitoring and statistically disciplined experimentation. It is designed around the practical challenge of understanding which digital journeys and marketing initiatives create qualified demand rather than simply generating traffic or form submissions. All project-specific core data is synthetic, with public sources used only for context and methodology.
