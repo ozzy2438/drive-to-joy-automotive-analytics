@@ -1,55 +1,19 @@
 # EXP-CTA-001 — Model Page Primary CTA
 
-## Business problem
+## Documents
 
-Vehicle-model-page visitors may be ready for different next steps. A single generic CTA may not produce the highest-quality downstream lead outcome.
-
-## Research question
-
-Does directing users to a vehicle configurator instead of directly to a test-drive form increase CRM-qualified lead rate?
-
-## Variants
-
-| Variant | Experience |
+| File | Purpose |
 |---|---|
-| Control | `Book a Test Drive` |
-| Treatment A | `Build Your Vehicle` |
-| Treatment B | `Estimate Your Repayment` |
-
-## Primary metric
-
-```text
-Qualified Lead Rate =
-CRM-qualified leads / eligible exposed users
-```
-
-## Secondary metrics
-
-- Test-drive booking rate
-- Quote request rate
-- Configurator completion rate
-- Finance-calculator completion rate
-- CRM match rate
-- Appointment booking rate
-- Appointment attendance rate
-- Vehicle-order rate
-
-## Guardrails
-
-- Form error rate
-- Exit rate
-- Page-performance metrics
-- Duplicate lead rate
-- Lead rejection rate
-- Dealer-capacity flags
-- Mobile error rate
-
-## Required controls
-
-- Stable user-level assignment.
-- Exposure recorded before outcomes.
-- Concurrent variants.
-- Sample-size plan.
-- Sample Ratio Mismatch check.
-- Segment analysis by device, channel, new/returning user and model.
-- No rollout before the planned evidence threshold or documented stopping rule.
+| `01_problem_statement.md` | Customer/business problem |
+| `02_research_evidence.md` | Evidence and assumptions |
+| `03_hypothesis.md` | Testable hypothesis |
+| `04_experience_design.md` | Control and treatments |
+| `05_targeting_and_eligibility.md` | Eligible audience/exclusions |
+| `06_metrics.md` | Primary, secondary and guardrails |
+| `07_sample_size_and_duration.md` | Statistical planning |
+| `08_tracking_plan.md` | Exposure/outcome events |
+| `09_qa_checklist.md` | Release validation |
+| `10_analysis_plan.md` | Analysis rules |
+| `11_results.md` | Results placeholder/synthetic labelling |
+| `12_decision_log.md` | Decision record |
+| `13_follow_up_actions.md` | Next actions |

@@ -1,0 +1,5 @@
+experiment_id,name,problem,primary_metric,status,owner,priority
+EXP-CTA-001,Model Page Primary CTA,Unclear best next action,qualified_lead_rate,draft,CRO Analytics,high
+EXP-FORM-002,Mobile Form Friction,Form abandonment on mobile,form_completion_rate,planned,Product Analytics,high
+EXP-PERS-003,Hybrid Researcher Personalisation,Generic content for hybrid researchers,qualified_lead_rate,planned,CRM Analytics,medium
+EXP-FIN-004,Finance Next Best Action,Finance completion does not progress,lead_progression_rate,planned,Product Analytics,medium
