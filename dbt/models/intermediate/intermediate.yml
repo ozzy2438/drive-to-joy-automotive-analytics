@@ -1,0 +1,13 @@
+version: 2
+
+models:
+  - name: int_sessions
+    description: Sessionised web behaviour.
+  - name: int_vehicle_journey
+    description: Vehicle journey flags by session and model.
+  - name: int_form_funnel
+    description: Form funnel by privacy-safe lead key.
+  - name: int_crm_web_match
+    description: Web lead and CRM outcome join.
+  - name: int_experiment_exposure
+    description: First eligible experiment exposure.

@@ -1,0 +1,11 @@
+drive_to_joy:
+  target: dev
+  outputs:
+    dev:
+      type: bigquery
+      method: service-account
+      project: your_gcp_project_id
+      dataset: analytics_dev
+      threads: 4
+      keyfile: /path/to/service-account.json
+      location: australia-southeast1

@@ -1,0 +1,26 @@
+version: 2
+
+sources:
+  - name: raw_ga4
+    database: '{{ target.project }}'
+    schema: raw_ga4
+    tables:
+      - name: events
+  - name: raw_crm
+    database: '{{ target.project }}'
+    schema: raw_crm
+    tables:
+      - name: leads
+  - name: raw_media
+    database: '{{ target.project }}'
+    schema: raw_media
+    tables:
+      - name: daily_spend
+
+models:
+  - name: stg_ga4_events
+    description: Standardised GA4-style events.
+  - name: stg_crm_leads
+    description: Standardised CRM lead outcomes.
+  - name: stg_media_spend
+    description: Standardised daily media spend.

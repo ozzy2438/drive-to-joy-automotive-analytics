@@ -1,0 +1,5 @@
+vehicle_model,vehicle_variant,body_type,powertrain,price_band,seats,launch_status
+Aurora SUV,Aurora Hybrid Touring,SUV,hybrid,50000_60000,5,current
+Aurora SUV,Aurora Petrol Active,SUV,petrol,40000_50000,5,current
+Coastline SUV,Coastline Hybrid Elite,SUV,hybrid,60000_70000,7,current
+Metro Hatch,Metro Hybrid Urban,Hatch,hybrid,30000_40000,5,current

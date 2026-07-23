@@ -1,0 +1,28 @@
+# dbt Project Configuration
+
+name: 'drive_to_joy'
+version: '1.0.0'
+config-version: 2
+
+profile: 'drive_to_joy'
+
+model-paths: ['models']
+analysis-paths: ['analysis']
+test-paths: ['tests']
+seed-paths: ['seeds']
+macro-paths: ['macros']
+snapshot-paths: ['snapshots']
+
+target-path: 'target'
+clean-targets:
+  - 'target'
+  - 'dbt_packages'
+
+models:
+  drive_to_joy:
+    staging:
+      +materialized: view
+    intermediate:
+      +materialized: view
+    marts:
+      +materialized: table

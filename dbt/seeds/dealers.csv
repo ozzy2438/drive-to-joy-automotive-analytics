@@ -1,0 +1,6 @@
+dealer_id,dealer_name,state,region_type,active_flag,capacity_band
+NSW-014,AstraDrive Sydney Central,NSW,metro,true,high
+VIC-008,AstraDrive Melbourne North,VIC,metro,true,medium
+QLD-011,AstraDrive Brisbane West,QLD,metro,true,medium
+SA-004,AstraDrive Adelaide Hills,SA,regional,true,low
+WA-006,AstraDrive Perth Coast,WA,metro,true,high

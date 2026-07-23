@@ -1,0 +1,21 @@
+version: 2
+
+models:
+  - name: fct_sessions
+    description: Governed session mart.
+    columns:
+      - name: session_id
+        tests: [unique, not_null]
+  - name: fct_lead_funnel
+    description: Governed web-to-CRM lead funnel.
+    columns:
+      - name: lead_id_hash
+        tests: [unique, not_null]
+  - name: dim_vehicle
+    columns:
+      - name: vehicle_variant
+        tests: [unique, not_null]
+  - name: dim_dealer
+    columns:
+      - name: dealer_id
+        tests: [unique, not_null]
