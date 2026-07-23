@@ -1,22 +1,13 @@
-# SQL Plan
+# SQL Analysis Directory
 
-## Purpose
+## Conventions
 
-This directory will contain reusable SQL for business analysis, data quality, experimentation and stakeholder reporting.
+Each SQL file must begin with:
 
-## Directory guide
+- business question
+- intended grain
+- source marts
+- filters/assumptions
+- expected decision use
 
-| Directory | Purpose |
-|---|---|
-| `ad_hoc/` | Exploratory and business-question analysis |
-| `data_quality/` | Monitoring and validation checks |
-| `experimentation/` | Exposure, uplift, SRM, guardrail and segment analysis |
-| `reporting/` | Dashboard-ready reporting queries where dbt marts are not sufficient |
-
-## SQL standards
-
-- Use partition filters for large event tables.
-- Avoid `SELECT *` in production queries.
-- Document business purpose and expected grain at top of every query.
-- Reference governed marts where available.
-- Keep KPI logic centralised in dbt rather than duplicating it across dashboards.
+Use marts rather than raw data whenever possible. Add partition filters for raw event queries.
