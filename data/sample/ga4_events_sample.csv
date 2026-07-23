@@ -1,0 +1,5 @@
+event_date,event_name,user_pseudo_id,session_id,vehicle_model,dealer_id,form_type,consent_analytics
+2026-07-01,view_vehicle_model,user_demo_001,session_demo_001,Aurora SUV,,,granted
+2026-07-01,configurator_start,user_demo_001,session_demo_001,Aurora SUV,,,granted
+2026-07-01,configurator_complete,user_demo_001,session_demo_001,Aurora SUV,,,granted
+2026-07-01,test_drive_submit,user_demo_001,session_demo_001,Aurora SUV,NSW-014,test_drive,granted

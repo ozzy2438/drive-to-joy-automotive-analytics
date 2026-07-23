@@ -1,0 +1,2 @@
+experiment_id,experiment_name,primary_metric,control_variant,treatment_variants,allocation_ratio,status
+EXP-CTA-001,Model Page Primary CTA,qualified_lead_rate,control,treatment_a;treatment_b,1:1:1,draft

@@ -1,0 +1,2 @@
+crm_lead_id,lead_id_hash,lead_status,vehicle_model_interest,dealer_id,appointment_attended_flag,vehicle_ordered_flag
+crm_demo_001,hash_demo_001,Qualified,Aurora SUV,NSW-014,true,false
