@@ -1,0 +1,10 @@
+version: 2
+
+sources:
+  - name: raw_dashboard_fixtures
+    schema: raw_dashboard_fixtures
+    tables:
+      - name: metric_inputs
+        description: >
+          Versioned synthetic dashboard metric components loaded only into the
+          isolated dashboard fixture DuckDB warehouse.

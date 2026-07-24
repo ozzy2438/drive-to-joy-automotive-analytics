@@ -7,6 +7,9 @@ on:
       - 'python/**'
       - 'contracts/**'
       - 'data/reference/**'
+      - 'data/synthetic/dashboard_fixtures/**'
+      - 'dashboards/**'
+      - 'measurement/**'
       - 'Makefile'
       - '.github/workflows/dbt-tests.yml'
   push:
@@ -16,6 +19,9 @@ on:
       - 'python/**'
       - 'contracts/**'
       - 'data/reference/**'
+      - 'data/synthetic/dashboard_fixtures/**'
+      - 'dashboards/**'
+      - 'measurement/**'
       - 'Makefile'
   workflow_dispatch:
 
@@ -42,5 +48,11 @@ jobs:
         run: make setup
       - name: Build deterministic local warehouse and all canonical marts
         run: make warehouse-smoke
+      - name: Validate metric contracts and dashboard source boundary
+        run: make semantic-check
+      - name: Build isolated dashboard fixtures and verify expected KPIs
+        run: make dashboard-fixtures
+      - name: Reconcile dashboard metrics to governed aggregate components
+        run: make dashboard-reconcile
       - name: Parse dbt project without warehouse credentials
         run: make dbt-parse
