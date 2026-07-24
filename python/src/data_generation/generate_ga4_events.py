@@ -103,18 +103,32 @@ def generate_ga4_events(seed: int, days: int = 180, sessions: int = 100_000) -> 
             "traffic_medium": medium,
             "campaign_id": campaign_id,
             "campaign_name": campaign_name,
+            "entry_point": None,
+            "comparison_model": None,
+            "specification_section": None,
+            "offer_id": None,
+            "cta_id": None,
             "vehicle_model": None,
             "vehicle_variant": None,
             "powertrain": None,
             "configurator_id": None,
+            "configurator_step": None,
+            "configurator_value_band": None,
+            "colour_id": None,
+            "option_ids": None,
+            "loan_term_months": None,
+            "repayment_band": None,
             "dealer_id": None,
             "dealer_state": None,
+            "search_method": None,
             "form_type": None,
             "form_instance_id": None,
             "web_submission_id": None,
             "lead_id_hash": None,
             "form_field": None,
             "form_error_type": None,
+            "form_completion_time_seconds": None,
+            "form_error_count": None,
             "experiment_id": None,
             "experiment_assignment_id": None,
             "variant_id": None,
@@ -125,6 +139,8 @@ def generate_ga4_events(seed: int, days: int = 180, sessions: int = 100_000) -> 
             "consent_analytics": analytics_consent,
             "consent_marketing": marketing_consent,
             "cmp_version": "cmp_demo_1",
+            "lead_status": None,
+            "order_value_band": None,
         }
         sequence = 1
         sequence = add_event(
@@ -273,6 +289,7 @@ def generate_ga4_events(seed: int, days: int = 180, sessions: int = 100_000) -> 
                 page_type="configurator",
                 journey_stage="configure",
                 configurator_id=configurator_id,
+                entry_point="vehicle_model_primary",
                 **journey_context,
             )
             high_intent_score += 0.12
@@ -289,6 +306,8 @@ def generate_ga4_events(seed: int, days: int = 180, sessions: int = 100_000) -> 
                     page_type="configurator",
                     journey_stage="configure",
                     configurator_id=configurator_id,
+                    configurator_step="complete",
+                    configurator_value_band=str(selected["price_band"]),
                     **journey_context,
                 )
                 high_intent_score += 0.18
@@ -305,6 +324,7 @@ def generate_ga4_events(seed: int, days: int = 180, sessions: int = 100_000) -> 
                 base_context=base_context,
                 page_type="finance_calculator",
                 journey_stage="evaluate",
+                entry_point="vehicle_model_finance",
                 **journey_context,
             )
             if rng.random() < 0.72:
@@ -319,6 +339,8 @@ def generate_ga4_events(seed: int, days: int = 180, sessions: int = 100_000) -> 
                     base_context=base_context,
                     page_type="finance_calculator",
                     journey_stage="evaluate",
+                    loan_term_months=60,
+                    repayment_band="illustrative_mid",
                     **journey_context,
                 )
                 high_intent_score += 0.12
@@ -339,6 +361,7 @@ def generate_ga4_events(seed: int, days: int = 180, sessions: int = 100_000) -> 
                 journey_stage="evaluate",
                 dealer_id=str(selected_dealer["dealer_id"]),
                 dealer_state=str(selected_dealer["state"]),
+                search_method="state_filter",
                 **journey_context,
             )
             high_intent_score += 0.15
@@ -374,7 +397,9 @@ def generate_ga4_events(seed: int, days: int = 180, sessions: int = 100_000) -> 
             **journey_context,
         )
         error_probability = 0.31 if device_category == "mobile" else 0.14
+        form_error_count = 0
         if rng.random() < error_probability:
+            form_error_count = 1
             event_at += timedelta(seconds=int(rng.integers(4, 35)))
             sequence = add_event(
                 session_index=session_index,
@@ -390,6 +415,7 @@ def generate_ga4_events(seed: int, days: int = 180, sessions: int = 100_000) -> 
                 form_instance_id=form_instance_id,
                 form_field="contact_preference",
                 form_error_type="required",
+                form_error_count=form_error_count,
                 dealer_id=(
                     str(selected_dealer["dealer_id"])
                     if selected_dealer is not None
@@ -407,7 +433,8 @@ def generate_ga4_events(seed: int, days: int = 180, sessions: int = 100_000) -> 
             continue
         web_submission_id = stable_id("sub", seed, session_index, form_type)
         lead_id_hash = stable_id("lead", web_submission_id, "analytics-demo")
-        event_at += timedelta(seconds=int(rng.integers(12, 160)))
+        completion_seconds = int(rng.integers(12, 160))
+        event_at += timedelta(seconds=completion_seconds)
         add_event(
             session_index=session_index,
             sequence=sequence,
@@ -422,6 +449,8 @@ def generate_ga4_events(seed: int, days: int = 180, sessions: int = 100_000) -> 
             form_instance_id=form_instance_id,
             web_submission_id=web_submission_id,
             lead_id_hash=lead_id_hash,
+            form_completion_time_seconds=completion_seconds,
+            form_error_count=form_error_count,
             dealer_id=(
                 str(selected_dealer["dealer_id"])
                 if selected_dealer is not None

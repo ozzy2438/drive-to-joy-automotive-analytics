@@ -13,7 +13,7 @@ All events use lower snake case and follow `verb_object`.
 | `compare_vehicle_models` | Comparison initiated | `vehicle_model`, `comparison_model` | Consideration |
 | `configurator_start` | Configurator begins | `vehicle_model`, `entry_point` | High intent |
 | `configurator_step_complete` | Configurator step ends | `vehicle_model`, `configurator_step` | Friction analysis |
-| `configurator_complete` | Configuration completed | `vehicle_model`, `vehicle_variant`, `configurator_value` | Strong intent |
+| `configurator_complete` | Configuration completed | `vehicle_model`, `vehicle_variant`, `configurator_id`, `configurator_value_band` | Strong intent |
 | `finance_calculator_start` | Calculator starts | `vehicle_model`, `entry_point` | Finance consideration |
 | `finance_calculator_complete` | Result generated | `vehicle_model`, `loan_term_months`, `repayment_band` | Finance intent |
 | `dealer_search` | Dealer search begins | `search_method`, `dealer_state` | Local intent |

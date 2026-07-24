@@ -18,7 +18,7 @@
     "consent_marketing"
   ],
   "properties": {
-    "schema_version": { "const": "1.0.0" },
+    "schema_version": { "const": "1.1.0" },
     "source_system": {
       "enum": ["synthetic_flat", "ga4_bigquery"]
     },
@@ -55,12 +55,31 @@
     "traffic_medium": { "type": ["string", "null"], "maxLength": 100 },
     "campaign_id": { "type": ["string", "null"], "maxLength": 100 },
     "campaign_name": { "type": ["string", "null"], "maxLength": 160 },
+    "entry_point": { "type": ["string", "null"], "maxLength": 80 },
+    "comparison_model": { "type": ["string", "null"], "maxLength": 120 },
+    "specification_section": { "type": ["string", "null"], "maxLength": 80 },
+    "offer_id": { "type": ["string", "null"], "maxLength": 80 },
+    "cta_id": { "type": ["string", "null"], "maxLength": 80 },
     "vehicle_model": { "type": ["string", "null"], "maxLength": 120 },
     "vehicle_variant": { "type": ["string", "null"], "maxLength": 160 },
     "powertrain": { "type": ["string", "null"], "maxLength": 60 },
     "configurator_id": { "type": ["string", "null"], "maxLength": 128 },
+    "configurator_step": { "type": ["string", "null"], "maxLength": 80 },
+    "configurator_value_band": {
+      "type": ["string", "null"],
+      "maxLength": 80
+    },
+    "colour_id": { "type": ["string", "null"], "maxLength": 80 },
+    "option_ids": { "type": ["string", "null"], "maxLength": 320 },
+    "loan_term_months": {
+      "type": ["integer", "null"],
+      "minimum": 1,
+      "maximum": 120
+    },
+    "repayment_band": { "type": ["string", "null"], "maxLength": 80 },
     "dealer_id": { "type": ["string", "null"], "maxLength": 80 },
     "dealer_state": { "type": ["string", "null"], "maxLength": 8 },
+    "search_method": { "type": ["string", "null"], "maxLength": 80 },
     "form_type": {
       "type": ["string", "null"],
       "enum": ["test_drive", "quote", null]
@@ -70,6 +89,11 @@
     "lead_id_hash": { "type": ["string", "null"], "maxLength": 128 },
     "form_field": { "type": ["string", "null"], "maxLength": 80 },
     "form_error_type": { "type": ["string", "null"], "maxLength": 80 },
+    "form_completion_time_seconds": {
+      "type": ["number", "null"],
+      "minimum": 0
+    },
+    "form_error_count": { "type": ["integer", "null"], "minimum": 0 },
     "experiment_id": { "type": ["string", "null"], "maxLength": 80 },
     "experiment_assignment_id": {
       "type": ["string", "null"],
@@ -89,6 +113,8 @@
     "consent_marketing": {
       "enum": ["granted", "denied", "unknown", "revoked"]
     },
-    "cmp_version": { "type": ["string", "null"], "maxLength": 40 }
+    "cmp_version": { "type": ["string", "null"], "maxLength": 40 },
+    "lead_status": { "type": ["string", "null"], "maxLength": 80 },
+    "order_value_band": { "type": ["string", "null"], "maxLength": 80 }
   }
 }

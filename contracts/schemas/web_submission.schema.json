@@ -15,7 +15,7 @@
     "data_origin"
   ],
   "properties": {
-    "schema_version": { "const": "1.0.0" },
+    "schema_version": { "const": "1.1.0" },
     "form_instance_id": { "type": "string", "minLength": 8 },
     "web_submission_id": { "type": "string", "minLength": 8 },
     "lead_id_hash": { "type": "string", "minLength": 16 },

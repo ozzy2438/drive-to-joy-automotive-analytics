@@ -7,7 +7,7 @@ from typing import Any
 
 import pandas as pd
 
-CONTRACT_VERSION = "1.0.0"
+CONTRACT_VERSION = "1.1.0"
 
 CANONICAL_EVENT_COLUMNS = (
     "schema_version",
@@ -26,18 +26,32 @@ CANONICAL_EVENT_COLUMNS = (
     "traffic_medium",
     "campaign_id",
     "campaign_name",
+    "entry_point",
+    "comparison_model",
+    "specification_section",
+    "offer_id",
+    "cta_id",
     "vehicle_model",
     "vehicle_variant",
     "powertrain",
     "configurator_id",
+    "configurator_step",
+    "configurator_value_band",
+    "colour_id",
+    "option_ids",
+    "loan_term_months",
+    "repayment_band",
     "dealer_id",
     "dealer_state",
+    "search_method",
     "form_type",
     "form_instance_id",
     "web_submission_id",
     "lead_id_hash",
     "form_field",
     "form_error_type",
+    "form_completion_time_seconds",
+    "form_error_count",
     "experiment_id",
     "experiment_assignment_id",
     "variant_id",
@@ -48,6 +62,8 @@ CANONICAL_EVENT_COLUMNS = (
     "consent_analytics",
     "consent_marketing",
     "cmp_version",
+    "lead_status",
+    "order_value_band",
 )
 
 FORBIDDEN_PII_COLUMNS = {

@@ -8,6 +8,7 @@ import pytest
 
 from src.adapters.flat_synthetic import adapt_flat_synthetic_events
 from src.adapters.ga4_bigquery import adapt_ga4_bigquery_events
+from src.contracts.canonical import CONTRACT_VERSION
 from src.contracts.schema_validation import (
     REPOSITORY_ROOT,
     validate_record,
@@ -23,6 +24,7 @@ def _ga4_param(key, value):
 def test_all_contract_schemas_are_valid():
     validated = validate_schemas()
     assert len(validated) == 6
+    assert CONTRACT_VERSION == "1.1.0"
 
 
 def test_experiment_definition_fixture_is_contract_valid():
@@ -56,11 +58,16 @@ def test_flat_and_nested_adapters_have_business_context_parity():
                 "traffic_medium": "cpc",
                 "campaign_id": "cmp_001",
                 "campaign_name": "synthetic_campaign",
+                "entry_point": "vehicle_model_primary",
                 "vehicle_model": "Aurora SUV",
+                "loan_term_months": 60,
+                "repayment_band": "illustrative_mid",
                 "form_type": "test_drive",
                 "form_instance_id": "frm_demo_001",
                 "web_submission_id": "sub_demo_001",
                 "lead_id_hash": "lead_0123456789abcdef",
+                "form_completion_time_seconds": 42.5,
+                "form_error_count": 1,
                 "experiment_id": "EXP-CTA-001",
                 "experiment_assignment_id": "exa_demo_001",
                 "variant_id": "control",
@@ -88,7 +95,15 @@ def test_flat_and_nested_adapters_have_business_context_parity():
                 _ga4_param("page_type", "test_drive_form"),
                 _ga4_param("journey_stage", "convert"),
                 _ga4_param("campaign_id", "cmp_001"),
+                _ga4_param("entry_point", "vehicle_model_primary"),
                 _ga4_param("vehicle_model", "Aurora SUV"),
+                _ga4_param("loan_term_months", 60),
+                {
+                    "key": "form_completion_time_seconds",
+                    "value": {"double_value": 42.5},
+                },
+                _ga4_param("form_error_count", 1),
+                _ga4_param("repayment_band", "illustrative_mid"),
                 _ga4_param("form_type", "test_drive"),
                 _ga4_param("form_instance_id", "frm_demo_001"),
                 _ga4_param("web_submission_id", "sub_demo_001"),
@@ -121,11 +136,16 @@ def test_flat_and_nested_adapters_have_business_context_parity():
         "traffic_medium",
         "campaign_id",
         "campaign_name",
+        "entry_point",
         "vehicle_model",
+        "loan_term_months",
+        "repayment_band",
         "form_type",
         "form_instance_id",
         "web_submission_id",
         "lead_id_hash",
+        "form_completion_time_seconds",
+        "form_error_count",
         "experiment_id",
         "experiment_assignment_id",
         "variant_id",

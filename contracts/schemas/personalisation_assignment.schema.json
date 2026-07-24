@@ -20,7 +20,7 @@
     "data_origin"
   ],
   "properties": {
-    "schema_version": { "const": "1.0.0" },
+    "schema_version": { "const": "1.1.0" },
     "personalisation_assignment_id": { "type": "string", "minLength": 8 },
     "audience_id": { "type": "string", "minLength": 3 },
     "assignment_key": { "type": "string", "minLength": 8 },

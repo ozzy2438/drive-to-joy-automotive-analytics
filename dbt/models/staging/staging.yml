@@ -21,9 +21,9 @@ sources:
 
 models:
   - name: stg_synthetic_flat_events
-    description: Flat synthetic source adapter to canonical event v1.
+    description: Flat synthetic source adapter to canonical event v1.1.
   - name: stg_ga4_bigquery_events
-    description: Nested GA4 BigQuery source adapter to canonical event v1.
+    description: Nested GA4 BigQuery source adapter to canonical event v1.1.
   - name: stg_ga4_events
     description: Active source adapter selected through event_source_adapter.
     columns:

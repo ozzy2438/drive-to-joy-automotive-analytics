@@ -6,6 +6,8 @@ All notable project-design and implementation changes should be recorded here.
 
 ### Added
 
+- Canonical analytics contract `1.1.0` journey fields for executable web,
+  adapter and warehouse parity.
 - Versioned AstraDrive vehicle, dealer, campaign, experiment and
   personalisation audience registries.
 - Deterministic JSON-to-dbt seed export with Python parity tests.

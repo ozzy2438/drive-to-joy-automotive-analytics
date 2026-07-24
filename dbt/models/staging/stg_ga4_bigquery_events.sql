@@ -6,7 +6,7 @@ with source as (
 
 renamed as (
   select
-    '1.0.0' as schema_version,
+    '1.1.0' as schema_version,
     'ga4_bigquery' as source_system,
     cast('{{ var("data_origin", "live_demo") }}' as string) as data_origin,
     coalesce(
@@ -38,18 +38,34 @@ renamed as (
       {{ get_event_param('campaign_name') }},
       traffic_source.name
     ) as campaign_name,
+    {{ get_event_param('entry_point') }} as entry_point,
+    {{ get_event_param('comparison_model') }} as comparison_model,
+    {{ get_event_param('specification_section') }} as specification_section,
+    {{ get_event_param('offer_id') }} as offer_id,
+    {{ get_event_param('cta_id') }} as cta_id,
     {{ get_event_param('vehicle_model') }} as vehicle_model,
     {{ get_event_param('vehicle_variant') }} as vehicle_variant,
     {{ get_event_param('powertrain') }} as powertrain,
     {{ get_event_param('configurator_id') }} as configurator_id,
+    {{ get_event_param('configurator_step') }} as configurator_step,
+    {{ get_event_param('configurator_value_band') }} as configurator_value_band,
+    {{ get_event_param('colour_id') }} as colour_id,
+    {{ get_event_param('option_ids') }} as option_ids,
+    safe_cast({{ get_event_param('loan_term_months') }} as int64) as loan_term_months,
+    {{ get_event_param('repayment_band') }} as repayment_band,
     {{ get_event_param('dealer_id') }} as dealer_id,
     {{ get_event_param('dealer_state') }} as dealer_state,
+    {{ get_event_param('search_method') }} as search_method,
     {{ get_event_param('form_type') }} as form_type,
     {{ get_event_param('form_instance_id') }} as form_instance_id,
     {{ get_event_param('web_submission_id') }} as web_submission_id,
     {{ get_event_param('lead_id_hash') }} as lead_id_hash,
     {{ get_event_param('form_field') }} as form_field,
     {{ get_event_param('form_error_type') }} as form_error_type,
+    safe_cast(
+      {{ get_event_param('form_completion_time_seconds') }} as float64
+    ) as form_completion_time_seconds,
+    safe_cast({{ get_event_param('form_error_count') }} as int64) as form_error_count,
     {{ get_event_param('experiment_id') }} as experiment_id,
     {{ get_event_param('experiment_assignment_id') }} as experiment_assignment_id,
     {{ get_event_param('variant_id') }} as variant_id,
@@ -59,7 +75,9 @@ renamed as (
     safe_cast({{ get_event_param('holdout_flag') }} as bool) as holdout_flag,
     {{ get_event_param('consent_analytics') }} as consent_analytics,
     {{ get_event_param('consent_marketing') }} as consent_marketing,
-    {{ get_event_param('cmp_version') }} as cmp_version
+    {{ get_event_param('cmp_version') }} as cmp_version,
+    {{ get_event_param('lead_status') }} as lead_status,
+    {{ get_event_param('order_value_band') }} as order_value_band
   from source
 )
 

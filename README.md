@@ -86,7 +86,7 @@ Acquisition
 
 Sprint 0–1 provides a deterministic, privacy-safe development baseline. It
 normalises both flat synthetic events and nested GA4 BigQuery export records
-into canonical contract version `1.0.0`, generates coherent synthetic
+into canonical contract version `1.1.0`, generates coherent synthetic
 outcomes, and validates the result in DuckDB.
 
 Prerequisites are Python 3.11+, Make and Node.js/npm for Markdown linting.
