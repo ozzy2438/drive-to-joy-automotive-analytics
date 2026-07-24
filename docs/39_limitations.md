@@ -50,6 +50,19 @@
 - Assignment context can persist beyond an analytical outcome window; marts
   correctly retain the context but exclude it from attributed outcomes.
 
+## Semantic-layer limitations
+
+- The metric registry and aggregates are executable locally but are not a
+  deployed BI semantic service.
+- Dashboard acceptance fixtures validate known synthetic scenarios, not visual
+  layout, accessibility or stakeholder usability.
+- The local evaluation clock is deterministic and must be supplied by
+  production orchestration in a future deployment.
+- Melbourne business dates are tested across DST boundaries; no other business
+  timezone is supported by metric contract version `1.0.0`.
+- Daily ratios cannot be averaged. Future consumers must use the preserved
+  additive numerator and denominator fields.
+
 ## Portfolio statement
 
 This repository demonstrates how a production-quality analytics capability can

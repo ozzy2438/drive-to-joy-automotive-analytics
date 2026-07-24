@@ -6,6 +6,16 @@ All notable project-design and implementation changes should be recorded here.
 
 ### Added
 
+- Machine-readable metric contract registry with JSON Schema validation,
+  Melbourne business-date policy and metric SemVer.
+- CRM reconciliation result fact and six governed dashboard-ready daily
+  aggregates with additive numerator/denominator components.
+- Dashboard source allowlist, executable per-metric reconciliation SQL and CI
+  enforcement against raw, staging or intermediate dependencies.
+- Isolated `dashboard_fixture` adapter, nine synthetic edge-case scenarios and
+  versioned expected KPI acceptance manifest.
+- Quality badge status model with `fail`, `stale`, `warn`, `unknown`, `pass`
+  precedence.
 - Governed Parquet-to-DuckDB loader with digest verification, source-load
   manifest and optional local-demo NDJSON evidence.
 - Complete local dbt staging, reconciliation, bounded attribution, canonical

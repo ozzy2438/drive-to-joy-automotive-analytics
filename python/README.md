@@ -14,6 +14,7 @@ calculation utilities.
 | `adapters` | Normalise flat synthetic and nested GA4 BigQuery shapes |
 | `contracts` | Enforce canonical columns, JSON Schemas and privacy invariants |
 | `warehouse` | Validate the generated local foundation with DuckDB |
+| `semantic` | Validate metric contracts, build isolated fixtures and reconcile dashboard aggregates |
 | `experimentation` | Power calculation, frequentist/Bayesian analysis, SRM and guardrails |
 
 Lead scoring and reporting exports remain future work.
@@ -28,6 +29,9 @@ make test-python
 make generate-data
 make warehouse-smoke
 make warehouse-scale
+make semantic-check
+make dashboard-fixtures
+make dashboard-reconcile
 make dbt-parse
 ```
 

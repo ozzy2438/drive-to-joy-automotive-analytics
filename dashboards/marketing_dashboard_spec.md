@@ -8,6 +8,10 @@ Performance marketing, campaign managers and agencies.
 
 Which channels, campaigns, audiences and landing pages create quality demand?
 
+## Governed sources
+
+`agg_marketing_daily` and `agg_data_quality_daily`.
+
 ## Required views
 
 - Spend, impressions, clicks and sessions

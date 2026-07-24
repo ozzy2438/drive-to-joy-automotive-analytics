@@ -4,6 +4,10 @@
 
 CRO, product, analytics and leadership.
 
+## Governed sources
+
+`agg_experiment_daily` and `agg_data_quality_daily`.
+
 ## Required views
 
 - Experiment registry/status

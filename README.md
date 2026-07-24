@@ -114,6 +114,28 @@ See the [canonical contracts](./contracts/README.md),
 [local Python workflow](./python/README.md), and
 [repository governance](./docs/40_repository_governance.md).
 
+## Governed metric and dashboard acceptance layer
+
+Sprint 5 freezes 15 metric contracts in machine-readable YAML, publishes six
+dashboard-ready daily aggregates, and validates deterministic dashboard
+fixtures without building a dashboard UI.
+
+```bash
+make semantic-check
+make dashboard-fixtures
+make dashboard-reconcile
+make check
+```
+
+Dashboard consumers are restricted to the governed source allowlist.
+Melbourne business dates are derived from preserved UTC timestamps, including
+DST boundary tests. Expected KPI values live only in the versioned synthetic
+acceptance manifest.
+
+See the [metric contracts](./measurement/metric_contracts.yml),
+[semantic-layer guide](./docs/52_dashboard_semantic_layer.md) and
+[acceptance strategy](./docs/53_dashboard_acceptance_strategy.md).
+
 ## Local web runtime
 
 Sprint 2–3 adds the fictional AstraDrive customer journey as an executable
@@ -176,7 +198,8 @@ Start with [`roadmap/README.md`](./roadmap/README.md). Do not start with dashboa
 
 Sprint 0–1 established contracts and deterministic generation. Sprint 2–3
 added the AstraDrive analytics test surface and local CRM runtime. Sprint 4
-adds governed DuckDB ingestion, complete canonical dbt marts, full web/CRM
-reconciliation, bounded experiment/personalisation attribution and executable
-quality gates at smoke and acceptance scale. Production deployment, real
-integrations, dashboards and live experiment conclusions remain out of scope.
+added governed DuckDB ingestion and canonical dbt marts. Sprint 5 freezes the
+metric semantic contract, reconciliation fact, governed daily aggregates,
+source allowlist and isolated dashboard acceptance fixtures. Production
+deployment, real integrations, dashboard UI and live experiment conclusions
+remain out of scope.

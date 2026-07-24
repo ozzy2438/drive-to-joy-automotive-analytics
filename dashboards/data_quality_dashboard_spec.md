@@ -4,6 +4,10 @@
 
 Analytics, engineering, CRM operations and digital owners.
 
+## Governed sources
+
+`agg_data_quality_daily` and `agg_executive_daily`.
+
 ## Required checks
 
 - Source freshness

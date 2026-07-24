@@ -33,3 +33,18 @@ Every dashboard must answer:
 - Owner
 - Known limitation
 - Recommended next action
+
+## Executable pre-UI gate
+
+Dashboard UI is not yet implemented. Its governed foundation is executable:
+
+- `measurement/metric_contracts.yml` freezes 15 versioned metrics.
+- `dashboard_sources.yml` allowlists six aggregate models.
+- `dashboard_acceptance_manifest.yml` stores versioned synthetic expectations.
+- `reconciliation/` contains one executable query per metric.
+
+```bash
+make semantic-check
+make dashboard-fixtures
+make dashboard-reconcile
+```

@@ -1,9 +1,11 @@
 # Local Warehouse Implementation Status
 
-## Sprint 4 status
+## Sprint 4–5 status
 
 The local warehouse, canonical dbt marts, reconciliation graph and quality
-gates are executable. No production cloud or vendor integration is deployed.
+gates are executable. Sprint 5 adds metric contract freeze, semantic aggregates
+and isolated dashboard acceptance. No production cloud, vendor integration or
+dashboard UI is deployed.
 
 ## Implemented
 
@@ -17,6 +19,11 @@ gates are executable. No production cloud or vendor integration is deployed.
 - Controlled-defect, clean-quality, grain, SRM, lifecycle and attribution
   tests.
 - CI smoke profile and separate local acceptance-scale profile.
+- JSON-Schema-validated registry for 15 governed metrics.
+- Melbourne business-date conversion with UTC preservation and DST tests.
+- Daily reconciliation fact and six dashboard-facing aggregate models.
+- Dashboard source allowlist and executable reconciliation queries.
+- Separate fixture adapter and DuckDB warehouse covering nine scenarios.
 
 ## Acceptance evidence
 
@@ -31,16 +38,43 @@ consent-aware journeys) produced:
 | CRM records | 12,562 |
 | Experiment assignments | 53,136 |
 | Personalisation assignments | 16,255 |
-| dbt models/seeds/tests | 111 passed |
+| Sprint 4 dbt models/seeds/tests | 111 passed |
 
 Late assignment context is retained but excluded from outcomes: 3,466
 experiment and 1,241 personalisation submit contexts fell outside their
 analysis window in this scale fixture.
+
+The deterministic Sprint 5 smoke and acceptance profiles produced:
+
+| Gate | Result |
+|---|---:|
+| Python tests | 29 passed |
+| Local dbt models/seeds/tests | 154 passed |
+| Governed metrics | 15 validated |
+| Governed dashboard sources | 6 validated |
+| Reconciliation queries | 15 executed |
+| Reconciled aggregate rows | 1,218 passed |
+| Fixture scenarios | 9 passed |
+| Fixture expectations | 23 passed |
+| BigQuery compatibility | dbt parse passed |
 
 ## Not implemented
 
 - Production BigQuery deployment, partition materialisation or orchestration.
 - Real GA4/GTM credentials or exports.
 - Real Salesforce or customer PII.
-- Dashboards, paid traffic or live experiment conclusions.
+- Dashboard UI, paid traffic or live experiment conclusions.
 - Production alert routing and authentication.
+
+## Sprint 5 acceptance commands
+
+```bash
+make semantic-check
+make dashboard-fixtures
+make dashboard-reconcile
+make check
+```
+
+The fixture warehouse is generated under `data/processed/` and remains
+Git-ignored. Its expected values are synthetic test assertions, not performance
+results.

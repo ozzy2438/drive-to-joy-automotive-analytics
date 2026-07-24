@@ -28,3 +28,26 @@ intermediate models + reference seeds
 ```
 
 Source-adapter branching is prohibited after canonical staging.
+
+## Executable Sprint 5 lineage
+
+```text
+measurement/metric_contracts.yml
+  → JSON Schema + semantic validation
+  → governed metric documentation
+
+canonical marts + quality facts
+  → daily dashboard aggregates
+  → executable reconciliation SQL
+  → governed dashboard-source allowlist
+
+versioned fixture CSV + acceptance manifest
+  → isolated fixture DuckDB adapter
+  → aggregate acceptance results
+  → exact/tolerance assertions
+```
+
+Experiment aggregates accept only actual rendered exposures and apply the
+30-day outcome window. Personalisation aggregates require the assignment key,
+treatment/holdout context and the 14-day outcome window. UTC timestamps remain
+available while `business_date` is derived in `Australia/Melbourne`.
