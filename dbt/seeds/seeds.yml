@@ -1,0 +1,63 @@
+version: 2
+
+seeds:
+  - name: vehicle_catalogue
+    description: Versioned fictional AstraDrive vehicle variants.
+    columns:
+      - name: variant_id
+        tests: [unique, not_null]
+      - name: vehicle_model_id
+        tests: [not_null]
+      - name: data_origin
+        tests:
+          - accepted_values:
+              arguments:
+                values: ['synthetic']
+  - name: dealers
+    description: Versioned fictional AstraDrive dealer network.
+    columns:
+      - name: dealer_id
+        tests: [unique, not_null]
+      - name: state
+        tests: [not_null]
+      - name: data_origin
+        tests:
+          - accepted_values:
+              arguments:
+                values: ['synthetic']
+  - name: campaign_registry
+    description: Governed fictional campaign definitions.
+    columns:
+      - name: campaign_id
+        tests: [unique, not_null]
+      - name: campaign_name
+        tests: [unique, not_null]
+      - name: data_origin
+        tests:
+          - accepted_values:
+              arguments:
+                values: ['synthetic']
+  - name: experiment_registry
+    description: Experiment definitions and collision namespaces.
+    columns:
+      - name: experiment_id
+        tests: [unique, not_null]
+      - name: collision_namespace
+        tests: [not_null]
+      - name: data_origin
+        tests:
+          - accepted_values:
+              arguments:
+                values: ['synthetic']
+  - name: personalisation_audience_registry
+    description: Audience eligibility, holdout and priority definitions.
+    columns:
+      - name: audience_id
+        tests: [unique, not_null]
+      - name: eligibility_version
+        tests: [not_null]
+      - name: data_origin
+        tests:
+          - accepted_values:
+              arguments:
+                values: ['synthetic']

@@ -8,3 +8,7 @@ drive_to_joy:
       dataset: analytics_ci
       threads: 1
       location: australia-southeast1
+    local:
+      type: duckdb
+      path: data/processed/drive_to_joy_local.duckdb
+      threads: 4

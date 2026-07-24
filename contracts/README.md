@@ -12,8 +12,13 @@ consume source-specific raw shapes directly.
 
 ## Contract version
 
-The initial contract version is `1.0.0`. A breaking field or semantic change
-requires a new major version and a documented migration plan.
+The current contract version is `1.1.0`. It adds bounded journey fields needed
+by the executable configurator, finance, dealer, form and downstream outcome
+flows. Version `1.0.0` remains the initial baseline. A breaking field or
+semantic change requires a new major version and a documented migration plan.
+
+Reference registries have their own version lifecycle and remain at `1.0.0`;
+their `schema_version` must not be inferred from the analytics-event version.
 
 ## Machine-readable schemas
 
@@ -39,6 +44,9 @@ Schemas use JSON Schema 2020-12 and reject undocumented properties.
   number, name or other raw PII.
 - `user_pseudo_id` and `session_id` support anonymous web journey analysis.
   They do not replace the submission or CRM identifiers.
+- An accepted submission may have a null analytics `session_id` when analytics
+  consent is not granted; the server-side submission and lead identities
+  remain valid and separate.
 - Experiment and personalisation assignment IDs are separate so overlapping
   decision systems remain auditable.
 

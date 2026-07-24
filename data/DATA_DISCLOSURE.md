@@ -2,7 +2,14 @@
 
 ## No proprietary data
 
-This repository does not include Honda Australia data, customer information, analytics exports, CRM data, dealership data, campaign data, financial data or employee data.
+This repository does not include proprietary Honda Australia data or any real
+customer information, analytics export, CRM record, dealership record,
+campaign result, person-linked financial value or employee data.
+
+Synthetic records emulate automotive events, CRM lifecycle, dealer, campaign
+and bounded financial-value domains solely for contract, testing and
+methodology practice. They do not describe real people, organisations or
+commercial performance.
 
 ## Core data policy
 

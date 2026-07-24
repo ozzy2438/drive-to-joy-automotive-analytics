@@ -7,8 +7,8 @@ Provide illustrative repayment estimate and measure affordability evaluation.
 ## Required elements
 
 - Clearly labelled illustrative calculation
-- Inputs: price band, deposit, term, rate assumption
-- Result summary
+- Inputs: synthetic vehicle context and illustrative term
+- Banded result summary without a person-linked raw financial value
 - Next-best action CTA
 - No real financial advice claim
 

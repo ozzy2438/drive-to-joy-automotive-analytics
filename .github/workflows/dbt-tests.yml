@@ -26,6 +26,29 @@ jobs:
           cache-dependency-path: dbt/requirements.txt
       - name: Install dbt adapter
         run: python -m pip install -r dbt/requirements.txt
+      - name: Prepare local DuckDB output directory
+        run: mkdir -p data/processed
+      - name: Load versioned seeds in local DuckDB
+        run: >-
+          dbt seed
+          --project-dir dbt
+          --profiles-dir dbt/ci
+          --target local
+      - name: Test local reference seeds
+        run: >-
+          dbt test
+          --project-dir dbt
+          --profiles-dir dbt/ci
+          --target local
+          --select
+          vehicle_catalogue
+          dealers
+          campaign_registry
+          experiment_registry
+          personalisation_audience_registry
+          reference_minimum_volumes
+          reference_campaign_focus_integrity
+          reference_proprietary_brand_guard
       - name: Parse dbt project without warehouse credentials
         run: >-
           dbt parse

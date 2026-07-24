@@ -4,8 +4,12 @@
     "MD060": false
   },
   "ignores": [
+    "**/.next/**",
     "**/.venv/**",
     "**/dbt_packages/**",
+    "**/node_modules/**",
+    "**/playwright-report/**",
+    "**/test-results/**",
     "**/target/**"
   ]
 }

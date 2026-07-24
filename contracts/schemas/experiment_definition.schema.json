@@ -19,7 +19,7 @@
     "outcome_window_days"
   ],
   "properties": {
-    "schema_version": { "const": "1.0.0" },
+    "schema_version": { "const": "1.1.0" },
     "experiment_id": { "type": "string", "pattern": "^EXP-[A-Z]+-[0-9]{3}$" },
     "status": {
       "enum": [

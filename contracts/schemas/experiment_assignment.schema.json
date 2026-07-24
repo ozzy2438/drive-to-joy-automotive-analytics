@@ -21,7 +21,7 @@
     "data_origin"
   ],
   "properties": {
-    "schema_version": { "const": "1.0.0" },
+    "schema_version": { "const": "1.1.0" },
     "experiment_assignment_id": { "type": "string", "minLength": 8 },
     "experiment_id": { "type": "string", "pattern": "^EXP-[A-Z]+-[0-9]{3}$" },
     "assignment_key": { "type": "string", "minLength": 8 },

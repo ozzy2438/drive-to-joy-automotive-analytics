@@ -15,11 +15,23 @@ models:
         tests: [not_null]
   - name: dim_vehicle
     columns:
-      - name: vehicle_variant
+      - name: variant_id
         tests: [unique, not_null]
   - name: dim_dealer
     columns:
       - name: dealer_id
+        tests: [unique, not_null]
+  - name: dim_campaign
+    columns:
+      - name: campaign_id
+        tests: [unique, not_null]
+  - name: dim_experiment
+    columns:
+      - name: experiment_id
+        tests: [unique, not_null]
+  - name: dim_personalisation_audience
+    columns:
+      - name: audience_id
         tests: [unique, not_null]
   - name: fct_data_quality_results
     description: Executable canonical identity and CRM quality checks.

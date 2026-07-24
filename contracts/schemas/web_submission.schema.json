@@ -15,14 +15,14 @@
     "data_origin"
   ],
   "properties": {
-    "schema_version": { "const": "1.0.0" },
+    "schema_version": { "const": "1.1.0" },
     "form_instance_id": { "type": "string", "minLength": 8 },
     "web_submission_id": { "type": "string", "minLength": 8 },
     "lead_id_hash": { "type": "string", "minLength": 16 },
     "submitted_at": { "type": "string", "format": "date-time" },
     "form_type": { "enum": ["test_drive", "quote"] },
     "user_pseudo_id": { "type": ["string", "null"] },
-    "session_id": { "type": "string", "minLength": 8 },
+    "session_id": { "type": ["string", "null"], "minLength": 8 },
     "vehicle_model": { "type": ["string", "null"] },
     "dealer_id": { "type": ["string", "null"] },
     "experiment_assignment_id": { "type": ["string", "null"] },

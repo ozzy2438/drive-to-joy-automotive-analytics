@@ -1,3 +1,5 @@
-experiment_id,experiment_name,start_date,end_date,primary_metric,control_variant,treatment_variants,allocation_ratio,status
-EXP-CTA-001,Model Page Primary CTA,2026-08-01,2026-08-31,qualified_lead_rate,control,treatment_a;treatment_b,1:1:1,draft
-EXP-FORM-002,Mobile Form Friction,2026-09-01,2026-09-30,form_completion_rate,control,treatment_a,1:1,draft
+schema_version,record_version,experiment_id,experiment_name,collision_namespace,status,runtime_enabled,allocation_unit,allocation_rule,variant_ids,allocation,planned_start_date,planned_end_date,primary_metric,owner,feature_flag,data_origin
+1.0.0,1,EXP-CTA-001,Model Page Primary CTA,model_primary_action,instrumentation_demo,True,browser,deterministic_sha256_modulo,control;treatment_a;treatment_b,control:0.3333333333;treatment_a:0.3333333333;treatment_b:0.3333333334,2026-08-01,2026-08-31,qualified_lead_rate,cro_analytics,NEXT_PUBLIC_EXP_CTA_001_ENABLED,synthetic
+1.0.0,1,EXP-FORM-002,Mobile Form Friction,lead_form_layout,inactive_contract,False,browser,deterministic_sha256_modulo,control;treatment_a,control:0.5;treatment_a:0.5,2026-09-01,2026-09-30,form_completion_rate,product_analytics,NEXT_PUBLIC_EXP_FORM_002_ENABLED,synthetic
+1.0.0,1,EXP-PERS-003,Hybrid Researcher Personalisation,model_primary_action,planned,False,browser,audience_holdout_assignment,generic_holdout;hybrid_relevance,generic_holdout:0.2;hybrid_relevance:0.8,2026-10-01,2026-10-31,qualified_lead_rate,crm_analytics,NEXT_PUBLIC_EXP_PERS_003_ENABLED,synthetic
+1.0.0,1,EXP-FIN-004,Finance Calculator Next Best Action,finance_next_action,planned,False,browser,deterministic_sha256_modulo,control;treatment_a,control:0.5;treatment_a:0.5,2026-11-01,2026-11-30,lead_progression_rate,product_analytics,NEXT_PUBLIC_EXP_FIN_004_ENABLED,synthetic

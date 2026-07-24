@@ -1,6 +1,21 @@
-dealer_id,dealer_name,state,region_type,active_flag,capacity_band
-NSW-014,AstraDrive Sydney Central,NSW,metro,true,high
-VIC-008,AstraDrive Melbourne North,VIC,metro,true,medium
-QLD-011,AstraDrive Brisbane West,QLD,metro,true,medium
-SA-004,AstraDrive Adelaide Hills,SA,regional,true,low
-WA-006,AstraDrive Perth Coast,WA,metro,true,high
+schema_version,record_version,dealer_id,dealer_name,state,region_type,capacity_band,active_flag,availability_state,data_origin
+1.0.0,1,NSW-001,AstraDrive Sydney Central,NSW,metro,high,True,available,synthetic
+1.0.0,1,NSW-002,AstraDrive Parramatta East,NSW,metro,medium,True,available,synthetic
+1.0.0,1,NSW-003,AstraDrive Newcastle Coast,NSW,regional,medium,True,limited,synthetic
+1.0.0,1,NSW-004,AstraDrive Riverina,NSW,regional,low,False,inactive,synthetic
+1.0.0,1,VIC-001,AstraDrive Melbourne North,VIC,metro,high,True,available,synthetic
+1.0.0,1,VIC-002,AstraDrive Bayside,VIC,metro,medium,True,available,synthetic
+1.0.0,1,VIC-003,AstraDrive Geelong,VIC,regional,medium,True,limited,synthetic
+1.0.0,1,VIC-004,AstraDrive Ballarat,VIC,regional,low,True,available,synthetic
+1.0.0,1,QLD-001,AstraDrive Brisbane West,QLD,metro,high,True,available,synthetic
+1.0.0,1,QLD-002,AstraDrive Gold Coast,QLD,metro,medium,True,available,synthetic
+1.0.0,1,QLD-003,AstraDrive Sunshine Coast,QLD,regional,medium,True,limited,synthetic
+1.0.0,1,QLD-004,AstraDrive Townsville,QLD,regional,low,False,inactive,synthetic
+1.0.0,1,SA-001,AstraDrive Adelaide Central,SA,metro,medium,True,available,synthetic
+1.0.0,1,SA-002,AstraDrive Adelaide Hills,SA,regional,low,True,limited,synthetic
+1.0.0,1,WA-001,AstraDrive Perth Coast,WA,metro,high,True,available,synthetic
+1.0.0,1,WA-002,AstraDrive Fremantle,WA,metro,medium,True,available,synthetic
+1.0.0,1,TAS-001,AstraDrive Hobart,TAS,metro,low,True,limited,synthetic
+1.0.0,1,TAS-002,AstraDrive Launceston,TAS,regional,low,True,limited,synthetic
+1.0.0,1,ACT-001,AstraDrive Canberra,ACT,metro,medium,True,available,synthetic
+1.0.0,1,NT-001,AstraDrive Darwin,NT,regional,low,True,limited,synthetic

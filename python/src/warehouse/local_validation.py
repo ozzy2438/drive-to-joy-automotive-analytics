@@ -10,12 +10,17 @@ import duckdb
 from src.contracts.canonical import CANONICAL_EVENT_COLUMNS, FORBIDDEN_PII_COLUMNS
 
 REQUIRED_FILES = {
+    "campaign_registry": "campaign_registry.parquet",
     "canonical_events": "canonical_events.parquet",
     "crm_leads": "crm_leads.parquet",
     "dealers": "dealers.parquet",
     "experiment_assignments": "experiment_assignments.parquet",
+    "experiment_registry": "experiment_registry.parquet",
     "media_spend_daily": "media_spend_daily.parquet",
     "personalisation_assignments": "personalisation_assignments.parquet",
+    "personalisation_audience_registry": (
+        "personalisation_audience_registry.parquet"
+    ),
     "raw_flat_events": "raw_flat_events.parquet",
     "vehicle_catalogue": "vehicle_catalogue.parquet",
     "web_submissions": "web_submissions.parquet",
@@ -159,6 +164,53 @@ def validate_local_foundation(output_directory: str | Path) -> dict[str, Any]:
         ).fetchone()[0],
         "reference_dealer_target_met": connection.execute(
             "select count(*) >= 20 from dealers"
+        ).fetchone()[0],
+        "reference_campaign_target_met": connection.execute(
+            "select count(*) >= 10 from campaign_registry"
+        ).fetchone()[0],
+        "reference_experiment_target_met": connection.execute(
+            "select count(*) >= 4 from experiment_registry"
+        ).fetchone()[0],
+        "reference_audience_target_met": connection.execute(
+            "select count(*) >= 6 from personalisation_audience_registry"
+        ).fetchone()[0],
+        "campaign_focuses_resolve": connection.execute(
+            """
+            select count(*) = 0
+            from campaign_registry c
+            left join (
+              select distinct vehicle_model_id as focus_id from vehicle_catalogue
+              union all
+              select audience_id from personalisation_audience_registry
+              union all
+              select 'sitewide'
+            ) r using (focus_id)
+            where r.focus_id is null
+            """
+        ).fetchone()[0],
+        "media_campaigns_resolve": connection.execute(
+            """
+            select count(*) = 0
+            from media_spend_daily m
+            left join campaign_registry c using (campaign_id)
+            where c.campaign_id is null
+            """
+        ).fetchone()[0],
+        "only_approved_runtime_experiment_enabled": connection.execute(
+            """
+            select count(*) = 0
+            from experiment_registry
+            where runtime_enabled and experiment_id != 'EXP-CTA-001'
+            """
+        ).fetchone()[0],
+        "owner_audience_remains_placeholder": connection.execute(
+            """
+            select count(*) = 1
+            from personalisation_audience_registry
+            where audience_id = 'AUD-OWN-006'
+              and status = 'placeholder'
+              and not runtime_enabled
+            """
         ).fetchone()[0],
     }
 

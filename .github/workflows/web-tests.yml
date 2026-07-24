@@ -1,0 +1,52 @@
+name: Web Runtime Tests
+
+on:
+  pull_request:
+    paths:
+      - 'apps/web/**'
+      - 'contracts/**'
+      - 'data/reference/**'
+      - '.github/workflows/web-tests.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'apps/web/**'
+      - 'contracts/**'
+      - 'data/reference/**'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: web-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  web-tests:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: apps/web
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+          cache: npm
+          cache-dependency-path: apps/web/package-lock.json
+      - name: Install dependencies
+        run: npm ci
+      - name: Lint
+        run: npm run lint
+      - name: Typecheck
+        run: npm run typecheck
+      - name: Unit and integration tests
+        run: npm test
+      - name: Install Playwright Chromium
+        run: npx playwright install --with-deps chromium
+      - name: Browser journey tests
+        run: npm run test:e2e
+      - name: Reconcile local browser and CRM evidence
+        run: DTJ_LOCAL_DATA_DIR=.local-data/e2e npm run quality:local
+      - name: Production build
+        run: npm run build

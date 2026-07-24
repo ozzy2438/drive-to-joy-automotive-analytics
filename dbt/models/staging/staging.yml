@@ -2,32 +2,28 @@ version: 2
 
 sources:
   - name: raw_synthetic
-    database: '{{ target.project }}'
     schema: raw_synthetic
     tables:
       - name: events_flat
         description: Privacy-safe flat synthetic source events.
   - name: raw_ga4
-    database: '{{ target.project }}'
     schema: raw_ga4
     tables:
       - name: events
   - name: raw_crm
-    database: '{{ target.project }}'
     schema: raw_crm
     tables:
       - name: leads
   - name: raw_media
-    database: '{{ target.project }}'
     schema: raw_media
     tables:
       - name: daily_spend
 
 models:
   - name: stg_synthetic_flat_events
-    description: Flat synthetic source adapter to canonical event v1.
+    description: Flat synthetic source adapter to canonical event v1.1.
   - name: stg_ga4_bigquery_events
-    description: Nested GA4 BigQuery source adapter to canonical event v1.
+    description: Nested GA4 BigQuery source adapter to canonical event v1.1.
   - name: stg_ga4_events
     description: Active source adapter selected through event_source_adapter.
     columns:
@@ -44,3 +40,13 @@ models:
     description: Standardised CRM lead outcomes.
   - name: stg_media_spend
     description: Standardised daily media spend.
+  - name: stg_vehicle_catalogue
+    description: Versioned synthetic vehicle and variant reference data.
+  - name: stg_dealers
+    description: Versioned synthetic dealer network reference data.
+  - name: stg_campaign_registry
+    description: Governed synthetic campaign registry.
+  - name: stg_experiments
+    description: Governed experiment and collision registry.
+  - name: stg_personalisation_audiences
+    description: Governed audience, holdout and priority registry.
