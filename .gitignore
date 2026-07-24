@@ -23,6 +23,15 @@ profiles.yml
 !dbt/ci/profiles.yml
 dbt/ci/.user.yml
 
+# Node / Next.js
+node_modules/
+.next/
+coverage/
+playwright-report/
+test-results/
+apps/web/.local-data/
+*.tsbuildinfo
+
 # Data outputs
 *.parquet
 *.feather
