@@ -1,4 +1,4 @@
-"""Local warehouse validation helpers."""
+"""Local warehouse loading and validation helpers."""
 
 from src.warehouse.local_validation import validate_local_foundation
 

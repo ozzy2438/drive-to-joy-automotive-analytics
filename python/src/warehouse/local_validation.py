@@ -141,12 +141,30 @@ def validate_local_foundation(output_directory: str | Path) -> dict[str, Any]:
         ).fetchone()[0],
         "experiment_outcomes_are_bounded": connection.execute(
             """
+            with attributed_outcomes as (
+              select
+                w.submitted_at,
+                a.exposed_at,
+                a.outcome_window_end_at
+              from web_submissions w
+              join experiment_assignments a
+                on w.experiment_assignment_id = a.experiment_assignment_id
+               and w.user_pseudo_id = a.assignment_key
+               and w.submitted_at between
+                 a.exposed_at and a.outcome_window_end_at
+            )
             select count(*) = 0
-            from web_submissions w
-            join experiment_assignments a
-              using (experiment_assignment_id)
-            where w.submitted_at < a.exposed_at
-               or w.submitted_at > a.outcome_window_end_at
+            from attributed_outcomes
+            where submitted_at < exposed_at
+               or submitted_at > outcome_window_end_at
+            """
+        ).fetchone()[0],
+        "experiment_assignment_windows_valid": connection.execute(
+            """
+            select count(*) = 0
+            from experiment_assignments
+            where epoch(outcome_window_end_at) - epoch(exposed_at)
+              != 30 * 24 * 60 * 60
             """
         ).fetchone()[0],
         "personalisation_exposures_have_assignments": connection.execute(
@@ -157,6 +175,35 @@ def validate_local_foundation(output_directory: str | Path) -> dict[str, Any]:
               using (personalisation_assignment_id)
             where e.event_name = 'personalisation_exposure'
               and a.personalisation_assignment_id is null
+            """
+        ).fetchone()[0],
+        "personalisation_outcomes_are_bounded": connection.execute(
+            """
+            with attributed_outcomes as (
+              select
+                w.submitted_at,
+                a.exposed_at,
+                a.outcome_window_end_at
+              from web_submissions w
+              join personalisation_assignments a
+                on w.personalisation_assignment_id
+                  = a.personalisation_assignment_id
+               and w.user_pseudo_id = a.assignment_key
+               and w.submitted_at between
+                 a.exposed_at and a.outcome_window_end_at
+            )
+            select count(*) = 0
+            from attributed_outcomes
+            where submitted_at < exposed_at
+               or submitted_at > outcome_window_end_at
+            """
+        ).fetchone()[0],
+        "personalisation_assignment_windows_valid": connection.execute(
+            """
+            select count(*) = 0
+            from personalisation_assignments
+            where epoch(outcome_window_end_at) - epoch(exposed_at)
+              != 14 * 24 * 60 * 60
             """
         ).fetchone()[0],
         "reference_vehicle_target_met": connection.execute(
@@ -240,6 +287,29 @@ def validate_local_foundation(output_directory: str | Path) -> dict[str, Any]:
         ).fetchone()[0],
         "personalisation_assignments": connection.execute(
             "select count(*) from personalisation_assignments"
+        ).fetchone()[0],
+        "experiment_contexts_outside_outcome_window": connection.execute(
+            """
+            select count(*)
+            from web_submissions w
+            join experiment_assignments a
+              on w.experiment_assignment_id = a.experiment_assignment_id
+             and w.user_pseudo_id = a.assignment_key
+            where w.submitted_at < a.exposed_at
+               or w.submitted_at > a.outcome_window_end_at
+            """
+        ).fetchone()[0],
+        "personalisation_contexts_outside_outcome_window": connection.execute(
+            """
+            select count(*)
+            from web_submissions w
+            join personalisation_assignments a
+              on w.personalisation_assignment_id
+                = a.personalisation_assignment_id
+             and w.user_pseudo_id = a.assignment_key
+            where w.submitted_at < a.exposed_at
+               or w.submitted_at > a.outcome_window_end_at
+            """
         ).fetchone()[0],
     }
     if metrics["web_submissions"] == 0:

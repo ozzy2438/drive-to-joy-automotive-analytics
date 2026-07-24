@@ -20,11 +20,17 @@ def generate_media_spend(seed: int, days: int = 180) -> pd.DataFrame:
         .set_index("vehicle_model_id")["vehicle_model"]
         .to_dict()
     )
-    end_date = date(2026, 7, 22)
+    end_date = date(2026, 9, 30)
     rows: list[dict[str, object]] = []
     for day_offset in range(days):
         spend_date = end_date - timedelta(days=days - day_offset - 1)
         for campaign in campaigns.itertuples(index=False):
+            if not (
+                date.fromisoformat(campaign.active_start_date)
+                <= spend_date
+                <= date.fromisoformat(campaign.active_end_date)
+            ):
+                continue
             vehicle_model = vehicle_names.get(campaign.focus_id)
             base_spend = (
                 rng.uniform(180, 1400)
