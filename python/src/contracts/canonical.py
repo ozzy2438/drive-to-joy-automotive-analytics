@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import hashlib
+import re
 from typing import Any
 
 import pandas as pd
@@ -74,13 +75,24 @@ FORBIDDEN_PII_COLUMNS = {
     "customer_phone",
     "email",
     "email_address",
+    "contact_email",
+    "contact_name",
+    "contact_phone",
     "first_name",
     "full_name",
+    "home_address",
     "last_name",
+    "mobile",
+    "mobile_number",
     "name",
     "phone",
     "phone_number",
+    "postal_code",
+    "postcode",
     "postal_address",
+    "raw_financial_value",
+    "residential_address",
+    "street_address",
 }
 
 ALLOWED_DATA_ORIGINS = {"synthetic", "official_sample", "live_demo"}
@@ -95,7 +107,14 @@ def stable_id(prefix: str, *parts: Any, length: int = 24) -> str:
 
 def reject_pii_columns(columns: list[str] | pd.Index) -> None:
     """Reject obvious raw-PII fields at the analytics adapter boundary."""
-    normalised = {str(column).strip().lower() for column in columns}
+    normalised = {
+        re.sub(
+            r"[^a-zA-Z0-9]+",
+            "_",
+            re.sub(r"([a-z0-9])([A-Z])", r"\1_\2", str(column).strip()),
+        ).lower()
+        for column in columns
+    }
     prohibited = sorted(normalised.intersection(FORBIDDEN_PII_COLUMNS))
     if prohibited:
         raise ValueError(

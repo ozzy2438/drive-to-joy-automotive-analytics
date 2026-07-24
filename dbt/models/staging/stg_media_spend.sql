@@ -9,5 +9,6 @@ select
   cast(vehicle_model as string) as vehicle_model,
   cast(spend_aud as numeric) as spend_aud,
   cast(impressions as int64) as impressions,
-  cast(clicks as int64) as clicks
+  cast(clicks as int64) as clicks,
+  cast(data_origin as string) as data_origin
 from {{ source('raw_media', 'daily_spend') }}

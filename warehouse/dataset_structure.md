@@ -11,3 +11,12 @@
 | analytics_marts | Governed reporting tables | BI consumption |
 | analytics_quality | Check outputs | Monitoring |
 | analytics_sandbox | Ad hoc analysis | Controlled exploration |
+
+## Local physical mapping
+
+Local DuckDB uses `raw_synthetic`, `raw_crm`, `raw_media`, `raw_reference`,
+`raw_quality`, optional `raw_local_demo` and `raw_governance`. dbt writes
+`main_staging`, `main_intermediate`, `main_marts` and `main_quality`.
+
+The mapping proves the data contracts locally; it does not claim that the
+BigQuery datasets above have been deployed.

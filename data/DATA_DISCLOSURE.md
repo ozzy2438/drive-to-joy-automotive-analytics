@@ -11,6 +11,10 @@ and bounded financial-value domains solely for contract, testing and
 methodology practice. They do not describe real people, organisations or
 commercial performance.
 
+Local Parquet, DuckDB, NDJSON and validation manifests are generated into
+Git-ignored paths. Local collector evidence is synthetic-safe demo output; it
+must not be relabelled as GA4, BigQuery or Salesforce data.
+
 ## Core data policy
 
 The project uses:

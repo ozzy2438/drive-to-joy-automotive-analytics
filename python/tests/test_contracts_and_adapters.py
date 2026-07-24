@@ -175,6 +175,13 @@ def test_adapter_rejects_raw_pii_columns():
     with pytest.raises(ValueError, match="Raw PII"):
         adapt_flat_synthetic_events(source)
 
+    for forbidden_key in ["firstName", "postalCode", "customerEmail"]:
+        candidate = source.drop(columns=["email"]).assign(
+            **{forbidden_key: "synthetic-looking-but-forbidden"}
+        )
+        with pytest.raises(ValueError, match="Raw PII"):
+            adapt_flat_synthetic_events(candidate)
+
 
 def test_nested_adapter_rejects_pii_event_parameters():
     nested = [

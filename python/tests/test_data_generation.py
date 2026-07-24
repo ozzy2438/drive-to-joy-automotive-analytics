@@ -1,5 +1,6 @@
 """Tests for deterministic data generation and identity contracts."""
 
+from datetime import date
 import re
 
 import pandas as pd
@@ -11,6 +12,7 @@ from src.data_generation.generate_ga4_events import (
     create_controlled_defect_scenario,
     generate_ga4_events,
 )
+from src.data_generation.generate_media_spend import generate_media_spend
 from src.data_generation.generate_vehicle_catalogue import generate_vehicle_catalogue
 from src.data_generation.reference_data import (
     REPOSITORY_ROOT,
@@ -95,6 +97,54 @@ def test_event_generation_is_reproducible():
     second = generate_ga4_events(seed=42, days=7, sessions=120)
     assert first["event_id"].tolist() == second["event_id"].tolist()
     assert first["event_name"].tolist() == second["event_name"].tolist()
+
+
+def test_campaign_and_personalisation_context_resolves_to_registries():
+    events = generate_ga4_events(seed=42, days=60, sessions=1_000)
+    campaigns = generate_campaign_registry().set_index("campaign_id")
+    campaign_events = events[events["campaign_id"].notna()]
+    assert not campaign_events.empty
+    for event in campaign_events[
+        [
+            "event_date",
+            "campaign_id",
+            "campaign_name",
+            "traffic_source",
+            "traffic_medium",
+        ]
+    ].drop_duplicates().itertuples(index=False):
+        campaign = campaigns.loc[event.campaign_id]
+        assert event.campaign_name == campaign["campaign_name"]
+        assert event.traffic_source == campaign["source"]
+        assert event.traffic_medium == campaign["medium"]
+        assert (
+            date.fromisoformat(campaign["active_start_date"])
+            <= event.event_date
+            <= date.fromisoformat(campaign["active_end_date"])
+        )
+
+    audience_ids = set(
+        events.loc[
+            events["event_name"] == "personalisation_exposure",
+            "audience_id",
+        ].dropna()
+    )
+    assert audience_ids.issubset(
+        set(generate_personalisation_audience_registry()["audience_id"])
+    )
+
+
+def test_media_spend_respects_campaign_active_dates():
+    campaigns = generate_campaign_registry().set_index("campaign_id")
+    media = generate_media_spend(seed=42, days=180)
+    assert not media.empty
+    for row in media[["spend_date", "campaign_id"]].itertuples(index=False):
+        campaign = campaigns.loc[row.campaign_id]
+        assert (
+            date.fromisoformat(campaign["active_start_date"])
+            <= row.spend_date
+            <= date.fromisoformat(campaign["active_end_date"])
+        )
 
 
 def test_form_identities_are_separate():

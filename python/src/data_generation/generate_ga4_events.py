@@ -9,6 +9,7 @@ import pandas as pd
 from src.contracts.canonical import CONTRACT_VERSION, stable_id
 from src.data_generation.generate_dealers import generate_dealers
 from src.data_generation.generate_vehicle_catalogue import generate_vehicle_catalogue
+from src.data_generation.reference_data import generate_campaign_registry
 
 
 def _variant_for_user(user_pseudo_id: str) -> str:
@@ -17,8 +18,15 @@ def _variant_for_user(user_pseudo_id: str) -> str:
 
 
 def _personalisation_for_user(user_pseudo_id: str) -> tuple[str, bool]:
-    bucket = int(stable_id("bucket", user_pseudo_id, "AUD-HIGH-INTENT").split("_")[1][:8], 16)
-    return ("generic_holdout", True) if bucket % 5 == 0 else ("resume_journey", False)
+    bucket = int(
+        stable_id("bucket", user_pseudo_id, "AUD-RET-004").split("_")[1][:8],
+        16,
+    )
+    return (
+        ("generic_holdout", True)
+        if bucket % 5 == 0
+        else ("recent_journey_next_step", False)
+    )
 
 
 def generate_ga4_events(seed: int, days: int = 180, sessions: int = 100_000) -> pd.DataFrame:
@@ -31,14 +39,23 @@ def generate_ga4_events(seed: int, days: int = 180, sessions: int = 100_000) -> 
     rng = np.random.default_rng(seed)
     vehicles = generate_vehicle_catalogue()
     dealers = generate_dealers()
+    campaigns = generate_campaign_registry().assign(
+        active_start_date=lambda frame: pd.to_datetime(
+            frame["active_start_date"]
+        ).dt.date,
+        active_end_date=lambda frame: pd.to_datetime(
+            frame["active_end_date"]
+        ).dt.date,
+    )
     model_rows = vehicles.groupby("vehicle_model", sort=True).first().reset_index()
-    campaign_contexts = [
-        ("google", "cpc", "cmp_001", "au_search_lead_aurora_suv_2026_07"),
-        ("meta", "paid_social", "cmp_005", "au_paid_social_lead_aurora_suv_2026_07"),
-        ("google", "organic", None, None),
-        ("direct", "none", None, None),
+    campaign_channels = [
+        "Paid Search",
+        "Paid Social",
+        "Organic Search",
+        "Direct",
     ]
-    end_date = date(2026, 7, 22)
+    campaign_channel_probabilities = [0.34, 0.22, 0.27, 0.17]
+    end_date = date(2026, 9, 30)
     user_pool_size = max(1, int(sessions * 0.72))
     rows: list[dict[str, object]] = []
 
@@ -90,9 +107,32 @@ def generate_ga4_events(seed: int, days: int = 180, sessions: int = 100_000) -> 
             if analytics_consent == "granted"
             else "denied"
         )
-        source, medium, campaign_id, campaign_name = campaign_contexts[
-            int(rng.choice(len(campaign_contexts), p=[0.34, 0.22, 0.27, 0.17]))
+        selected_channel = str(
+            rng.choice(
+                campaign_channels,
+                p=campaign_channel_probabilities,
+            )
+        )
+        eligible_campaigns = campaigns[
+            (campaigns["channel"] == selected_channel)
+            & (campaigns["active_start_date"] <= event_day)
+            & (campaigns["active_end_date"] >= event_day)
+            & (campaigns["governance_status"] == "approved")
         ]
+        if eligible_campaigns.empty:
+            source, medium, campaign_id, campaign_name = (
+                ("direct", "none", None, None)
+                if selected_channel == "Direct"
+                else ("google", "organic", None, None)
+            )
+        else:
+            campaign = eligible_campaigns.iloc[
+                int(rng.integers(0, len(eligible_campaigns)))
+            ]
+            source = str(campaign["source"])
+            medium = str(campaign["medium"])
+            campaign_id = str(campaign["campaign_id"])
+            campaign_name = str(campaign["campaign_name"])
         base_context: dict[str, object] = {
             "schema_version": CONTRACT_VERSION,
             "data_origin": "synthetic",
@@ -234,7 +274,7 @@ def generate_ga4_events(seed: int, days: int = 180, sessions: int = 100_000) -> 
         experience_id = None
         holdout_flag = None
         if user_index < sessions * 0.22:
-            audience_id = "AUD-RETURNING-HIGH-INTENT"
+            audience_id = "AUD-RET-004"
             experience_id, holdout_flag = _personalisation_for_user(user_pseudo_id)
             personalisation_assignment_id = stable_id(
                 "psa",

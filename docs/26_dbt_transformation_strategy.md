@@ -30,3 +30,13 @@ Create stakeholder-oriented, documented, dashboard-ready tables with approved KP
 - CRM match threshold
 - Invalid funnel sequencing
 - Experiment SRM
+- Assignment/exposure validity
+- Bounded experiment and personalisation outcomes
+- Controlled-defect detection
+- Clean quality-result enforcement
+
+## Local execution
+
+`make warehouse-smoke` executes the complete graph in UTC-configured DuckDB.
+`make warehouse-scale` is the separate volume acceptance profile. The
+`ga4_bigquery` adapter is parse-validated without production credentials.

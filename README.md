@@ -87,29 +87,30 @@ Acquisition
 | [`confluence/`](./confluence) | Documentation-hub structure |
 | [`presentation/`](./presentation) | Portfolio and interview collateral |
 
-## Local foundation
+## Local warehouse foundation
 
-Sprint 0–1 provides a deterministic, privacy-safe development baseline. It
-normalises both flat synthetic events and nested GA4 BigQuery export records
-into canonical contract version `1.1.0`, generates coherent synthetic
-outcomes, and validates the result in DuckDB.
+Sprint 4 extends the deterministic, privacy-safe baseline into executable
+DuckDB raw schemas, canonical dbt staging/intermediate layers, reconciled marts
+and quality gates. Flat synthetic and optional local-demo inputs execute
+locally; the nested GA4 BigQuery adapter is credential-free parse evidence.
 
 Prerequisites are Python 3.11+, Make and Node.js/npm for Markdown linting.
 
 ```bash
 make setup
-make check
+make warehouse-smoke
 ```
 
-The generated Parquet files and validation manifest are written to
-`data/processed/local_foundation/` and ignored by Git. Override the
-deterministic defaults when needed:
+The generated Parquet, DuckDB and manifest files are written below
+`data/processed/` and ignored by Git. The explicit scale gate is separate from
+routine CI:
 
 ```bash
-make generate-data SEED=20260723 DAYS=60 SESSIONS=5000
+make warehouse-scale
 ```
 
 See the [canonical contracts](./contracts/README.md),
+[local warehouse guide](./docs/46_local_warehouse_and_reconciliation.md),
 [local Python workflow](./python/README.md), and
 [repository governance](./docs/40_repository_governance.md).
 
@@ -173,8 +174,9 @@ Start with [`roadmap/README.md`](./roadmap/README.md). Do not start with dashboa
 
 ## Current status
 
-Sprint 0–1 established versioned contracts, source adapters, deterministic
-generation, DuckDB checks and CI. Sprint 2–3 adds versioned AstraDrive
-reference registries plus the local demo, tracking, consent, decisioning, CRM
-and reconciliation runtime. Production deployment, real integrations,
-dashboards and live experiment conclusions remain out of scope.
+Sprint 0–1 established contracts and deterministic generation. Sprint 2–3
+added the AstraDrive analytics test surface and local CRM runtime. Sprint 4
+adds governed DuckDB ingestion, complete canonical dbt marts, full web/CRM
+reconciliation, bounded experiment/personalisation attribution and executable
+quality gates at smoke and acceptance scale. Production deployment, real
+integrations, dashboards and live experiment conclusions remain out of scope.

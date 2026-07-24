@@ -9,5 +9,35 @@ models:
     description: Form funnel by privacy-safe lead key.
   - name: int_crm_web_match
     description: Web lead and CRM outcome join.
+    columns:
+      - name: crm_match_status
+        tests:
+          - accepted_values:
+              arguments:
+                values: ['matched', 'web_only', 'crm_only', 'identity_conflict']
   - name: int_experiment_exposure
-    description: First eligible experiment exposure.
+    description: First rendered experiment exposure reconciled to assignment.
+    columns:
+      - name: experiment_assignment_id
+        tests: [unique, not_null]
+      - name: assignment_valid_flag
+        tests:
+          - accepted_values:
+              arguments:
+                values: [true]
+  - name: int_experiment_outcomes
+    description: Bounded experiment exposure-to-web-and-CRM outcome bridge.
+  - name: int_personalisation_exposure
+    description: First rendered personalisation exposure reconciled to assignment.
+    columns:
+      - name: personalisation_assignment_id
+        tests: [unique, not_null]
+      - name: assignment_valid_flag
+        tests:
+          - accepted_values:
+              arguments:
+                values: [true]
+  - name: int_personalisation_outcomes
+    description: Bounded personalisation exposure-to-web-and-CRM outcome bridge.
+  - name: int_marketing_attribution
+    description: Session outcomes at date and governed campaign context.

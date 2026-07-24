@@ -11,4 +11,11 @@ stats as (
 select d.*
 from daily d
 join stats s using (event_name)
-where abs(safe_divide(d.event_count - s.avg_count, nullif(s.std_count, 0))) >= 3
+where abs(
+  {{ safe_divide(
+    'd.event_count - s.avg_count',
+    'nullif(s.std_count, 0)'
+  ) }}
+) >= 4
+  -- Four sigma limits false positives across many event/day comparisons.
+  and abs(d.event_count - s.avg_count) >= 5

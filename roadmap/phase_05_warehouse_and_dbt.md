@@ -20,8 +20,12 @@ Create warehouse layers and tested dbt marts from raw events, CRM outcomes, medi
 
 ## Exit criteria
 
-- [ ] dbt build passes.
-- [ ] Core quality tests pass.
-- [ ] Lineage is documented.
-- [ ] Partition and cost-control standards are applied.
-- [ ] KPI definitions map to marts.
+- [x] Local dbt build passes.
+- [x] Core quality tests pass.
+- [x] Lineage is documented.
+- [ ] Production partition and cost controls are applied.
+- [x] KPI definitions map to marts.
+
+BigQuery deployment remains intentionally outside Sprint 4, so the production
+partition/cost-control item is a documented future gate rather than a local
+completion claim.

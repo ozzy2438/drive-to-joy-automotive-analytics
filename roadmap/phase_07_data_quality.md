@@ -22,4 +22,7 @@ Operationalise analytics data integrity.
 - [ ] Every critical check has an alert path.
 - [ ] Every critical alert has a runbook.
 - [ ] Dashboard quality status is visible.
-- [ ] At least one simulated incident is documented.
+- [x] At least one simulated incident is executable through controlled defects.
+
+Local critical checks have explicit owners in `fct_data_quality_results` and a
+local runbook. External alert routing and dashboard visibility remain pending.

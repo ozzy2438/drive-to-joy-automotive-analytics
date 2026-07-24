@@ -21,6 +21,7 @@ vars:
 ```
 
 - `synthetic_flat` reads deterministic local flat events.
+- `local_demo` reads sanitised browser collector evidence.
 - `ga4_bigquery` extracts approved fields from nested/repeated GA4 BigQuery
   export records.
 
@@ -33,15 +34,15 @@ Parse the complete graph without warehouse credentials:
 make dbt-parse
 ```
 
-Load all versioned reference seeds and run their integrity tests in local
-DuckDB:
+Build governed raw schemas, all dbt layers, marts and quality tests:
 
 ```bash
-make dbt-seed-local
+make warehouse-smoke
 ```
 
-The local DuckDB file is written under `data/processed/` and ignored by Git.
-No BigQuery credentials are required.
+Run the separate 180-day acceptance-scale profile with
+`make warehouse-scale`. Local DuckDB files are ignored by Git. No BigQuery
+credential is required.
 
 Running `dbt build` against BigQuery requires an owner-provided local profile
 and credentials; neither is committed.
@@ -59,6 +60,8 @@ and credentials; neither is committed.
 - `dim_dealer`
 - `dim_campaign`
 - `dim_date`
+- `dim_experiment`
+- `dim_personalisation_audience`
 
 ## Required tests
 
@@ -72,3 +75,5 @@ and credentials; neither is committed.
 - CRM match threshold
 - Invalid funnel progression
 - Experiment Sample Ratio Mismatch
+- Bounded experiment/personalisation outcome windows
+- Controlled-defect detection and clean quality-result enforcement

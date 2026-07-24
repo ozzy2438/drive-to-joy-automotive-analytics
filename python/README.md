@@ -26,6 +26,8 @@ Run these from the repository root:
 make setup
 make test-python
 make generate-data
+make warehouse-smoke
+make warehouse-scale
 make dbt-parse
 ```
 
@@ -40,7 +42,9 @@ Or invoke the pipeline from this directory:
 ```
 
 The same seed and parameters produce the same logical records. The output
-manifest includes file digests and all executable validation results.
+manifest includes file digests, bounded-context metrics and executable
+validation results. The loader verifies every digest before materialising
+governed DuckDB raw schemas.
 
 ## Rules
 

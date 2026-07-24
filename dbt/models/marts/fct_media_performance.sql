@@ -1,7 +1,8 @@
 with media as (
   select * from {{ ref('stg_media_spend') }}
 ),
-journey as (
+
+attribution as (
   select * from {{ ref('int_marketing_attribution') }}
 )
 
@@ -17,10 +18,12 @@ select
   m.spend_aud,
   m.impressions,
   m.clicks,
-  coalesce(j.sessions, 0) as sessions,
-  coalesce(j.high_intent_sessions, 0) as high_intent_sessions,
-  coalesce(j.web_lead_sessions, 0) as web_lead_sessions
+  coalesce(a.sessions, 0) as sessions,
+  coalesce(a.high_intent_sessions, 0) as high_intent_sessions,
+  coalesce(a.web_lead_sessions, 0) as web_lead_sessions,
+  {{ safe_divide('m.spend_aud', 'coalesce(a.web_lead_sessions, 0)') }}
+    as cost_per_web_lead
 from media m
-left join journey j
-  on m.spend_date = j.event_date
- and m.channel = j.channel
+left join attribution a
+  on m.spend_date = a.event_date
+ and m.campaign_id = a.campaign_id
