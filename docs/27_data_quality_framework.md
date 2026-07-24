@@ -25,7 +25,14 @@
 | Consent shift | Medium |
 | Experiment SRM | Critical |
 | Invalid funnel progression | High |
+| Assignment/exposure mismatch | Critical |
+| Outcome outside analysis window | Critical |
+| Web/CRM identity conflict | Critical |
+| Controlled defect not detected | Critical |
 
 ## Response
 
 Critical issues require immediate investigation; high issues within one business day; medium issues enter planned remediation; low governance issues are handled in maintenance.
+
+Local owners, triage and scale instructions are in the
+[local warehouse runbook](../operations/local_warehouse_runbook.md).

@@ -17,9 +17,9 @@ Generate realistic synthetic automotive data and ingest approved public context 
 
 ## Exit criteria
 
-- [ ] At least 180 days of data.
-- [ ] At least 100,000 sessions.
-- [ ] At least 500,000 events.
-- [ ] CRM, campaign, dealer and vehicle keys reconcile.
-- [ ] Intentional anomalies and quality defects exist.
-- [ ] No PII exists.
+- [x] At least 180 days of data in the explicit scale profile.
+- [x] At least 100,000 identified consented sessions.
+- [x] At least 500,000 events.
+- [x] CRM, campaign, dealer and vehicle keys reconcile.
+- [x] Intentional quality defects exist in an isolated fixture.
+- [x] No PII exists.

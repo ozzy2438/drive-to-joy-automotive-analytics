@@ -38,6 +38,18 @@
 - Consent affects observed journey coverage.
 - CRM and analytics timestamps may differ.
 
+## Local warehouse limitations
+
+- DuckDB demonstrates the complete canonical graph but is not a deployed
+  BigQuery environment.
+- Nested GA4 support is parse-validated only; no real export or credential is
+  used.
+- Local-demo NDJSON is sanitised runtime evidence, not GA4 or Salesforce data.
+- Production partitioning, clustering, orchestration, freshness alerts and
+  access controls remain design specifications.
+- Assignment context can persist beyond an analytical outcome window; marts
+  correctly retain the context but exclude it from attributed outcomes.
+
 ## Portfolio statement
 
 This repository demonstrates how a production-quality analytics capability can

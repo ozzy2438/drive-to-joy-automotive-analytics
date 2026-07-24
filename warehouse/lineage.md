@@ -11,3 +11,20 @@ marts → dashboards/reports/experiments/alerts
 ```
 
 Use dbt documentation and Mermaid diagrams to keep lineage current.
+
+## Executable Sprint 4 lineage
+
+```text
+governed Parquet ─┐
+local NDJSON ─────┼→ source adapter → stg_ga4_events
+nested GA4 shape ─┘
+
+stg_ga4_events → sessions / vehicle journey / form funnel
+form funnel + CRM → full reconciliation
+assignment + rendered exposure + reconciliation
+  → bounded experiment and personalisation outcomes
+intermediate models + reference seeds
+  → canonical marts + executable quality results
+```
+
+Source-adapter branching is prohibited after canonical staging.

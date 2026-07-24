@@ -1,10 +1,22 @@
-name: dbt Tests
+name: Local Warehouse and dbt Tests
 
 on:
   pull_request:
     paths:
       - 'dbt/**'
+      - 'python/**'
+      - 'contracts/**'
+      - 'data/reference/**'
+      - 'Makefile'
       - '.github/workflows/dbt-tests.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'dbt/**'
+      - 'python/**'
+      - 'contracts/**'
+      - 'data/reference/**'
+      - 'Makefile'
   workflow_dispatch:
 
 permissions:
@@ -23,36 +35,12 @@ jobs:
         with:
           python-version: '3.11'
           cache: pip
-          cache-dependency-path: dbt/requirements.txt
-      - name: Install dbt adapter
-        run: python -m pip install -r dbt/requirements.txt
-      - name: Prepare local DuckDB output directory
-        run: mkdir -p data/processed
-      - name: Load versioned seeds in local DuckDB
-        run: >-
-          dbt seed
-          --project-dir dbt
-          --profiles-dir dbt/ci
-          --target local
-      - name: Test local reference seeds
-        run: >-
-          dbt test
-          --project-dir dbt
-          --profiles-dir dbt/ci
-          --target local
-          --select
-          vehicle_catalogue
-          dealers
-          campaign_registry
-          experiment_registry
-          personalisation_audience_registry
-          reference_minimum_volumes
-          reference_campaign_focus_integrity
-          reference_proprietary_brand_guard
+          cache-dependency-path: |
+            dbt/requirements.txt
+            python/requirements.txt
+      - name: Install local warehouse dependencies
+        run: make setup
+      - name: Build deterministic local warehouse and all canonical marts
+        run: make warehouse-smoke
       - name: Parse dbt project without warehouse credentials
-        run: >-
-          dbt parse
-          --project-dir dbt
-          --profiles-dir dbt/ci
-          --target ci
-          --no-partial-parse
+        run: make dbt-parse
