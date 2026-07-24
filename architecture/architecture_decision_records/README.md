@@ -6,7 +6,14 @@ Use an ADR when a decision has material effect on implementation, data quality, 
 
 - Context
 - Decision
-- Alternatives considered
+- Alternatives
 - Consequences
-- Validation/rollback
+- Privacy implications
+- Rollback
 - Status
+
+## Sprint 3 decisions
+
+- [ADR-008 — Demo Site Technology](./ADR-008-demo-site-technology.md)
+- [ADR-009 — Client Identity and Assignment Persistence](./ADR-009-client-identity-and-assignment-persistence.md)
+- [ADR-010 — Demo CRM Emulator](./ADR-010-demo-crm-emulator.md)
