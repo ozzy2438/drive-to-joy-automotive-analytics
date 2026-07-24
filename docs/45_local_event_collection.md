@@ -45,6 +45,10 @@ Checks include:
 - duplicate experiment assignment exposure;
 - duplicate personalisation assignment exposure.
 
+The browser suite resets its dedicated `.local-data/e2e` evidence directory at
+startup. This keeps duplicate checks scoped to one reproducible run while
+leaving general local-development records untouched.
+
 ## Operational limitation
 
 Append ordering is guaranteed only inside one Node.js application process.

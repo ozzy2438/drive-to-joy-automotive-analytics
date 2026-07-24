@@ -31,7 +31,9 @@ DTJ_LOCAL_DATA_DIR=.local-data/e2e npm run quality:local
 ```
 
 The Playwright server uses port `3113` to avoid common development-port
-collisions.
+collisions. Each Playwright suite resets only `.local-data/e2e` so repeated
+runs do not mix deterministic assignment evidence. General local development
+data is not removed.
 
 ## Local data
 
