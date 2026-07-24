@@ -1,4 +1,4 @@
-{{ config(enabled=var('event_source_adapter', 'synthetic_flat') == 'synthetic_flat') }}
+{{ config(enabled=var('event_source_adapter', 'synthetic_flat') == 'local_demo') }}
 
 select
   cast(schema_version as string) as schema_version,
@@ -6,7 +6,7 @@ select
   'synthetic' as data_origin,
   cast(event_id as string) as event_id,
   date(event_date) as event_date,
-  cast(event_timestamp as timestamp) as event_at,
+  cast(event_at as timestamp) as event_at,
   cast(event_name as string) as event_name,
   cast(user_pseudo_id as string) as user_pseudo_id,
   cast(session_id as string) as session_id,
@@ -47,7 +47,8 @@ select
   cast(experiment_assignment_id as string) as experiment_assignment_id,
   cast(variant_id as string) as variant_id,
   cast(audience_id as string) as audience_id,
-  cast(personalisation_assignment_id as string) as personalisation_assignment_id,
+  cast(personalisation_assignment_id as string)
+    as personalisation_assignment_id,
   cast(experience_id as string) as experience_id,
   cast(holdout_flag as bool) as holdout_flag,
   cast(consent_analytics as string) as consent_analytics,
@@ -55,4 +56,4 @@ select
   cast(cmp_version as string) as cmp_version,
   cast(lead_status as string) as lead_status,
   cast(order_value_band as string) as order_value_band
-from {{ source('raw_synthetic', 'events_flat') }}
+from {{ source('raw_local_demo', 'events') }}

@@ -7,7 +7,9 @@ models:
       - name: session_id
         tests: [unique, not_null]
   - name: fct_lead_funnel
-    description: Governed web-to-CRM lead funnel.
+    description: >
+      One reconciled accepted web or CRM lead record, retaining unmatched
+      records and match status.
     columns:
       - name: web_submission_id
         tests: [unique, not_null]
@@ -34,7 +36,7 @@ models:
       - name: audience_id
         tests: [unique, not_null]
   - name: fct_data_quality_results
-    description: Executable canonical identity and CRM quality checks.
+    description: One executable quality check result for the current run date.
     columns:
       - name: check_date
         tests: [not_null]
@@ -47,3 +49,15 @@ models:
                 values: ['pass', 'fail']
       - name: failure_count
         tests: [not_null]
+  - name: fct_vehicle_journey
+    description: One session and vehicle-model journey progression record.
+  - name: fct_media_performance
+    description: One date and campaign media/performance record.
+  - name: fct_experiment_results
+    description: >
+      One exposure date, experiment and variant result using assignment-key
+      and bounded outcome joins.
+  - name: fct_personalisation_performance
+    description: >
+      One exposure date, audience, experience and holdout result using bounded
+      assignment-key joins.

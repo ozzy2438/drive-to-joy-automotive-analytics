@@ -6,6 +6,9 @@ sources:
     tables:
       - name: events_flat
         description: Privacy-safe flat synthetic source events.
+      - name: experiment_assignments
+      - name: personalisation_assignments
+      - name: web_submissions
   - name: raw_ga4
     schema: raw_ga4
     tables:
@@ -18,12 +21,24 @@ sources:
     schema: raw_media
     tables:
       - name: daily_spend
+  - name: raw_local_demo
+    schema: raw_local_demo
+    tables:
+      - name: events
+      - name: crm_leads
+  - name: raw_quality
+    schema: raw_quality
+    tables:
+      - name: canonical_events_controlled_defects
+      - name: controlled_defect_registry
 
 models:
   - name: stg_synthetic_flat_events
     description: Flat synthetic source adapter to canonical event v1.1.
   - name: stg_ga4_bigquery_events
     description: Nested GA4 BigQuery source adapter to canonical event v1.1.
+  - name: stg_local_demo_events
+    description: Canonical local collector evidence adapter.
   - name: stg_ga4_events
     description: Active source adapter selected through event_source_adapter.
     columns:
@@ -38,6 +53,24 @@ models:
                 values: ['synthetic', 'official_sample', 'live_demo']
   - name: stg_crm_leads
     description: Standardised CRM lead outcomes.
+  - name: stg_experiment_assignments
+    description: Stable experiment assignments and bounded outcome windows.
+    columns:
+      - name: experiment_assignment_id
+        tests: [unique, not_null]
+      - name: assignment_key
+        tests: [not_null]
+      - name: outcome_window_end_at
+        tests: [not_null]
+  - name: stg_personalisation_assignments
+    description: Stable personalisation assignments and bounded outcome windows.
+    columns:
+      - name: personalisation_assignment_id
+        tests: [unique, not_null]
+      - name: assignment_key
+        tests: [not_null]
+      - name: outcome_window_end_at
+        tests: [not_null]
   - name: stg_media_spend
     description: Standardised daily media spend.
   - name: stg_vehicle_catalogue
@@ -50,3 +83,7 @@ models:
     description: Governed experiment and collision registry.
   - name: stg_personalisation_audiences
     description: Governed audience, holdout and priority registry.
+  - name: stg_controlled_defect_events
+    description: Isolated canonical events containing registered test defects.
+  - name: stg_controlled_defect_registry
+    description: Expected quality failures for the isolated defect fixture.

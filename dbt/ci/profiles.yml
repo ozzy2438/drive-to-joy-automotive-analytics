@@ -10,5 +10,7 @@ drive_to_joy:
       location: australia-southeast1
     local:
       type: duckdb
-      path: data/processed/drive_to_joy_local.duckdb
+      path: "{{ env_var('DTJ_DUCKDB_PATH', 'data/processed/drive_to_joy_local.duckdb') }}"
       threads: 4
+      settings:
+        TimeZone: UTC
