@@ -4,7 +4,7 @@ with events as (
 
 journey as (
   select
-    concat(user_pseudo_id, '-', ga_session_id) as session_id,
+    session_id,
     vehicle_model,
     max(if(event_name = 'view_vehicle_model', 1, 0)) as viewed_model_flag,
     max(if(event_name = 'configurator_start', 1, 0)) as configurator_start_flag,
@@ -15,7 +15,7 @@ journey as (
     max(if(event_name = 'test_drive_submit', 1, 0)) as test_drive_submit_flag,
     max(if(event_name = 'quote_submit', 1, 0)) as quote_submit_flag
   from events
-  where ga_session_id is not null
+  where session_id is not null
   group by 1, 2
 )
 

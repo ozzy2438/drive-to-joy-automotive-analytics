@@ -2,7 +2,7 @@
 
 ## Drive to Joy
 
-**Automotive Digital Analytics, Experimentation and Lead-Quality Intelligence Platform**
+## Automotive Digital Analytics, Experimentation and Lead-Quality Intelligence Platform
 
 ### Business challenge
 

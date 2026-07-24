@@ -1,6 +1,12 @@
 version: 2
 
 sources:
+  - name: raw_synthetic
+    database: '{{ target.project }}'
+    schema: raw_synthetic
+    tables:
+      - name: events_flat
+        description: Privacy-safe flat synthetic source events.
   - name: raw_ga4
     database: '{{ target.project }}'
     schema: raw_ga4
@@ -18,8 +24,22 @@ sources:
       - name: daily_spend
 
 models:
+  - name: stg_synthetic_flat_events
+    description: Flat synthetic source adapter to canonical event v1.
+  - name: stg_ga4_bigquery_events
+    description: Nested GA4 BigQuery source adapter to canonical event v1.
   - name: stg_ga4_events
-    description: Standardised GA4-style events.
+    description: Active source adapter selected through event_source_adapter.
+    columns:
+      - name: event_id
+        tests: [unique, not_null]
+      - name: event_name
+        tests: [not_null]
+      - name: data_origin
+        tests:
+          - accepted_values:
+              arguments:
+                values: ['synthetic', 'official_sample', 'live_demo']
   - name: stg_crm_leads
     description: Standardised CRM lead outcomes.
   - name: stg_media_spend

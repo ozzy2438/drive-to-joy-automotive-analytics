@@ -1,0 +1,76 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://drive-to-joy.example/contracts/canonical_crm_lead.schema.json",
+  "title": "Canonical CRM lead outcome",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "crm_lead_id",
+    "web_submission_id",
+    "lead_id_hash",
+    "web_submit_at",
+    "lead_created_at",
+    "lead_status",
+    "lead_status_updated_at",
+    "appointment_attended_flag",
+    "vehicle_ordered_flag",
+    "data_origin"
+  ],
+  "properties": {
+    "schema_version": { "const": "1.0.0" },
+    "crm_lead_id": { "type": "string", "minLength": 8 },
+    "web_submission_id": { "type": "string", "minLength": 8 },
+    "lead_id_hash": { "type": "string", "minLength": 16 },
+    "web_submit_at": { "type": "string", "format": "date-time" },
+    "lead_created_at": { "type": "string", "format": "date-time" },
+    "lead_status": {
+      "enum": [
+        "new",
+        "contacted",
+        "qualified",
+        "disqualified",
+        "appointment_booked",
+        "attended",
+        "ordered",
+        "lost"
+      ]
+    },
+    "lead_status_updated_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "vehicle_model_interest": { "type": ["string", "null"] },
+    "dealer_id": { "type": ["string", "null"] },
+    "disqualification_reason": {
+      "type": ["string", "null"],
+      "enum": [
+        "duplicate",
+        "invalid",
+        "uncontactable",
+        "out_of_area",
+        "low_intent",
+        "existing_customer",
+        null
+      ]
+    },
+    "appointment_booked_at": {
+      "type": ["string", "null"],
+      "format": "date-time"
+    },
+    "appointment_attended_flag": { "type": "boolean" },
+    "vehicle_ordered_flag": { "type": "boolean" },
+    "order_value_band": {
+      "type": ["string", "null"],
+      "enum": [
+        "under_40000",
+        "40000_50000",
+        "50000_60000",
+        "60000_70000",
+        "70000_plus",
+        null
+      ]
+    },
+    "data_origin": { "const": "synthetic" }
+  }
+}

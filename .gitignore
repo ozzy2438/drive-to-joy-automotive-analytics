@@ -20,6 +20,8 @@ logs/
 target/
 dbt_packages/
 profiles.yml
+!dbt/ci/profiles.yml
+dbt/ci/.user.yml
 
 # Data outputs
 *.parquet

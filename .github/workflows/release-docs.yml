@@ -9,14 +9,19 @@ on:
       - 'architecture/**'
       - 'experiments/**'
 
+permissions:
+  contents: read
+
 jobs:
   docs:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Confirm required policy files
         run: |
           test -f README.md
           test -f data/DATA_DISCLOSURE.md
           test -f docs/39_limitations.md
           test -f roadmap/README.md
+          test -f contracts/README.md
+          test -f contracts/schemas/canonical_event.schema.json

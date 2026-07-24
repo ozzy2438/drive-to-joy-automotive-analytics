@@ -1,0 +1,11 @@
+{
+  "config": {
+    "MD013": false,
+    "MD060": false
+  },
+  "ignores": [
+    "**/.venv/**",
+    "**/dbt_packages/**",
+    "**/target/**"
+  ]
+}

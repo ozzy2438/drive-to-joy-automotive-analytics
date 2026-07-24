@@ -2,7 +2,7 @@
 
 ## North Star Metric
 
-**Qualified Leads per 1,000 Engaged Sessions**
+### Qualified Leads per 1,000 Engaged Sessions
 
 ```text
 Qualified Leads per 1,000 Engaged Sessions =

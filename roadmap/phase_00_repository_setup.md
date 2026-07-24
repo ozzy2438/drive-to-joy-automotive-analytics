@@ -8,7 +8,10 @@ Create a versioned, documentation-first repository that a developer can implemen
 
 - Repository created.
 - README, data disclosure, security and contribution guidance added.
-- Initial GitHub issue/PR templates and workflow placeholders added.
+- GitHub issue/PR templates and executable workflows added.
+- Pull-request-only change workflow and CODEOWNERS added.
+- Python, contract, data-quality, dbt parse and Markdown checks added.
+- Canonical contract version 1.0.0 and local reproducible foundation added.
 - Architecture, roadmap, measurement, data, experiment and operating-model documentation started.
 
 ## Remaining tasks
@@ -21,8 +24,10 @@ Create a versioned, documentation-first repository that a developer can implemen
 
 ## Exit criteria
 
-- [ ] Repo structure exists
-- [ ] Required policies exist
+- [x] Repo structure exists
+- [x] Required repository policies exist
+- [x] Canonical contracts and local validation exist
+- [x] CI contains meaningful, non-placeholder checks
 - [ ] Main branch protections are considered
-- [ ] No secrets/PII in Git
+- [x] No secrets/PII in Git
 - [ ] Project tracking board exists

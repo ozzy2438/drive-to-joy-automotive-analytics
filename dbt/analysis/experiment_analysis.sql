@@ -1,4 +1,4 @@
-# Experiment Analysis
+-- Experiment Analysis
 
 select
   experiment_id,

@@ -1,4 +1,4 @@
-# Channel Quality Analysis
+-- Channel Quality Analysis
 
 select
   channel,

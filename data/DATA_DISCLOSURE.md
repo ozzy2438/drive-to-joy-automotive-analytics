@@ -21,7 +21,9 @@ Do not describe any project result as Honda Australia performance, Honda custome
 ## Privacy rules
 
 - Do not send raw PII to GA4-style events.
-- Use hashed identifiers for web-to-CRM matching.
+- Use generated pseudonymous submission references for web-to-CRM matching.
+- Never derive analytics identifiers from email addresses, phone numbers,
+  names or other raw PII, even when hashed.
 - Never commit secrets or credentials.
 - Do not commit production exports to Git.
 - Label outputs as `Synthetic demonstration data`, `Public open-data context`, or `Official sample analytics data`.

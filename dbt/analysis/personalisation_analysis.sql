@@ -1,4 +1,4 @@
-# Personalisation Analysis
+-- Personalisation Analysis
 
 select
   audience_id,

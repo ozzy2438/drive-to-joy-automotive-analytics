@@ -1,0 +1,90 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://drive-to-joy.example/contracts/experiment_definition.schema.json",
+  "title": "Experiment definition",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "experiment_id",
+    "status",
+    "allocation_unit",
+    "analysis_unit",
+    "variants",
+    "primary_metric",
+    "family_alpha",
+    "target_power",
+    "multiple_comparison_method",
+    "sample_size_alpha_per_comparison",
+    "outcome_window_days"
+  ],
+  "properties": {
+    "schema_version": { "const": "1.0.0" },
+    "experiment_id": { "type": "string", "pattern": "^EXP-[A-Z]+-[0-9]{3}$" },
+    "status": {
+      "enum": [
+        "draft",
+        "blocked_pending_baseline",
+        "ready_for_qa",
+        "active",
+        "complete",
+        "stopped",
+        "invalid"
+      ]
+    },
+    "allocation_unit": { "enum": ["browser", "user"] },
+    "analysis_unit": { "enum": ["eligible_exposed_user", "assigned_user"] },
+    "variants": {
+      "type": "array",
+      "minItems": 2,
+      "uniqueItems": true,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["variant_id", "allocation"],
+        "properties": {
+          "variant_id": { "type": "string", "minLength": 2 },
+          "allocation": {
+            "type": "number",
+            "exclusiveMinimum": 0,
+            "maximum": 1
+          }
+        }
+      }
+    },
+    "primary_metric": { "type": "string", "minLength": 3 },
+    "baseline_rate": {
+      "type": ["number", "null"],
+      "minimum": 0,
+      "maximum": 1
+    },
+    "minimum_detectable_effect_absolute": {
+      "type": ["number", "null"],
+      "exclusiveMinimum": 0,
+      "maximum": 1
+    },
+    "family_alpha": {
+      "type": "number",
+      "exclusiveMinimum": 0,
+      "maximum": 0.1
+    },
+    "target_power": {
+      "type": "number",
+      "minimum": 0.7,
+      "maximum": 0.99
+    },
+    "multiple_comparison_method": {
+      "enum": ["holm", "bonferroni", "dunnett"]
+    },
+    "sample_size_alpha_per_comparison": {
+      "type": "number",
+      "exclusiveMinimum": 0,
+      "maximum": 0.1
+    },
+    "outcome_window_days": {
+      "type": ["integer", "null"],
+      "minimum": 1,
+      "maximum": 180
+    }
+  }
+}
