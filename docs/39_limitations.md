@@ -28,6 +28,8 @@
 - No real GTM, GA4, BigQuery or CRM credential is configured.
 - Local export routes are disabled in production and are not a production
   access-control design.
+- Responsive layouts use native accessible controls, but a formal WCAG audit
+  and cross-browser/mobile device matrix have not been completed.
 
 ## Attribution limitations
 

@@ -48,4 +48,5 @@ dependency.
 - GTM/GA4 container publication.
 - Salesforce or another external CRM.
 - Authentication or an admin interface.
+- Formal accessibility audit and cross-browser/mobile device matrix.
 - Live experiment analysis, winner declaration or commercial performance claim.

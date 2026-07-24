@@ -3,6 +3,7 @@ import Ajv2020 from "ajv/dist/2020";
 import addFormats from "ajv-formats";
 import canonicalCrmLeadSchema from "../../../../../contracts/schemas/canonical_crm_lead.schema.json";
 import webSubmissionSchema from "../../../../../contracts/schemas/web_submission.schema.json";
+import { getDealer, getVehicleModels } from "@/lib/reference-data";
 import { assertNoRawPii } from "@/lib/tracking";
 import {
   crmSubmissionRequestSchema,
@@ -16,6 +17,7 @@ const ajv = new Ajv2020({ allErrors: true, strict: true });
 addFormats(ajv);
 const validateSubmission = ajv.compile<WebSubmission>(webSubmissionSchema);
 const validateLead = ajv.compile<CanonicalCrmLead>(canonicalCrmLeadSchema);
+const vehicleModels = getVehicleModels();
 
 export interface CrmCreationOptions {
   now?: () => Date;
@@ -30,6 +32,33 @@ function deriveLeadHash(internalLeadReference: string): string {
   return `lead_${createHash("sha256")
     .update(`drive-to-joy:opaque-lead:v1|${internalLeadReference}`)
     .digest("hex")}`;
+}
+
+function assertReferenceIntegrity(request: CrmSubmissionRequest): void {
+  const vehicle = vehicleModels.find(
+    (candidate) => candidate.vehicleModel === request.vehicle_model,
+  );
+  if (!vehicle) {
+    throw new Error("CRM submission references an unknown vehicle model");
+  }
+  if (
+    request.vehicle_variant &&
+    !vehicle.variants.some(
+      (variant) => variant.vehicle_variant === request.vehicle_variant,
+    )
+  ) {
+    throw new Error(
+      "CRM submission variant does not belong to the selected vehicle model",
+    );
+  }
+
+  const dealer = getDealer(request.dealer_id);
+  if (!dealer?.active_flag || dealer.availability_state === "inactive") {
+    throw new Error("CRM submission references an unavailable dealer");
+  }
+  if (dealer.state !== request.dealer_state) {
+    throw new Error("CRM submission dealer state does not match the registry");
+  }
 }
 
 function assertContract(
@@ -52,6 +81,7 @@ export function createCrmEnvelope(
   assertNoRawPii(candidate);
   const request: CrmSubmissionRequest =
     crmSubmissionRequestSchema.parse(candidate);
+  assertReferenceIntegrity(request);
   const now = (options.now ?? (() => new Date()))().toISOString();
   const idFactory = options.opaqueId ?? randomUUID;
   const webSubmissionId = prefixedId("sub", idFactory());

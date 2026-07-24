@@ -29,3 +29,11 @@ All notable project-design and implementation changes should be recorded here.
 - KPI tree and event catalogue.
 - Synthetic data specification.
 - Experimentation and personalisation foundations.
+
+### Changed
+
+- Hardened raw-PII field detection across snake_case, camelCase and
+  delimiter-separated keys.
+- Added server-side vehicle, variant, dealer and dealer-state integrity checks
+  to CRM submissions.
+- Clarified synthetic-data disclosure and the pending accessibility audit gate.

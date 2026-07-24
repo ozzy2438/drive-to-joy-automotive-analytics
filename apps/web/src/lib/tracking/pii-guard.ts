@@ -3,14 +3,22 @@ const FORBIDDEN_KEYS = new Set([
   "first_name",
   "last_name",
   "full_name",
+  "contact_name",
   "customer_name",
   "email",
   "email_address",
+  "contact_email",
   "customer_email",
   "phone",
   "phone_number",
+  "mobile",
+  "mobile_number",
+  "contact_phone",
   "customer_phone",
   "address",
+  "street_address",
+  "home_address",
+  "residential_address",
   "postal_address",
   "customer_address",
   "postcode",
@@ -21,7 +29,7 @@ const FORBIDDEN_KEYS = new Set([
 const EMAIL_PATTERN = /\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b/i;
 const PHONE_PATTERN = /^\s*(?:\+?61|0)[\s()-]*(?:\d[\s()-]*){8,10}\s*$/;
 const FORBIDDEN_QUERY_PATTERN =
-  /[?&](?:name|email|phone|address|postcode|postal_code)=/i;
+  /[?&](?:name|first_?name|last_?name|full_?name|email(?:_?address)?|phone(?:_?number)?|mobile(?:_?number)?|address|postcode|postal_?code)=/i;
 
 export class PiiGuardError extends Error {
   constructor(reason: string) {
@@ -30,8 +38,16 @@ export class PiiGuardError extends Error {
   }
 }
 
+function normaliseKey(key: string): string {
+  return key
+    .trim()
+    .replace(/([a-z0-9])([A-Z])/g, "$1_$2")
+    .replace(/[^a-zA-Z0-9]+/g, "_")
+    .toLowerCase();
+}
+
 function inspect(value: unknown, key?: string): void {
-  const normalisedKey = key?.trim().toLowerCase();
+  const normalisedKey = key ? normaliseKey(key) : undefined;
   if (normalisedKey && FORBIDDEN_KEYS.has(normalisedKey)) {
     throw new PiiGuardError(`forbidden field "${normalisedKey}"`);
   }

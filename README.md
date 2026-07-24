@@ -24,7 +24,11 @@ Drive to Joy is an end-to-end portfolio case study for an Automotive Analytics S
 
 ## Important data disclosure
 
-This repository contains **no proprietary Honda Australia data**, customer data, campaign data, CRM data, dealership data, or internal analytics exports. The core data model is synthetic and the project is a fictional, production-style automotive analytics case study.
+This repository contains **no proprietary Honda Australia data and no real
+customer, campaign, CRM, dealership or internal analytics export**. It does
+contain visibly labelled synthetic versions of those business domains for
+contract and engineering validation. The project is a fictional,
+production-style automotive analytics case study.
 
 Honda Australia is referenced only as the target-employer and role context. This work is not affiliated with, commissioned by, or endorsed by Honda Australia.
 

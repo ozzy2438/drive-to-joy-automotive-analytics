@@ -32,25 +32,51 @@ const forbiddenKeys = new Set([
   "first_name",
   "last_name",
   "full_name",
+  "contact_name",
+  "customer_name",
   "email",
   "email_address",
+  "contact_email",
+  "customer_email",
   "phone",
   "phone_number",
+  "mobile",
+  "mobile_number",
+  "contact_phone",
+  "customer_phone",
   "address",
+  "street_address",
+  "home_address",
+  "residential_address",
   "postal_address",
+  "customer_address",
   "postcode",
   "postal_code",
   "raw_financial_value",
 ]);
 const emailPattern = /\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b/i;
 const phonePattern = /^\s*(?:\+?61|0)[\s()-]*(?:\d[\s()-]*){8,10}\s*$/;
+const forbiddenQueryPattern =
+  /[?&](?:name|first_?name|last_?name|full_?name|email(?:_?address)?|phone(?:_?number)?|mobile(?:_?number)?|address|postcode|postal_?code)=/i;
+
+function normaliseKey(key) {
+  return key
+    .trim()
+    .replace(/([a-z0-9])([A-Z])/g, "$1_$2")
+    .replace(/[^a-zA-Z0-9]+/g, "_")
+    .toLowerCase();
+}
 
 function containsForbiddenPii(value, key) {
-  if (key && forbiddenKeys.has(key.toLowerCase())) {
+  if (key && forbiddenKeys.has(normaliseKey(key))) {
     return true;
   }
   if (typeof value === "string") {
-    return emailPattern.test(value) || phonePattern.test(value);
+    return (
+      emailPattern.test(value) ||
+      phonePattern.test(value) ||
+      forbiddenQueryPattern.test(value)
+    );
   }
   if (Array.isArray(value)) {
     return value.some((item) => containsForbiddenPii(item));

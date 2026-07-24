@@ -73,7 +73,11 @@ describe("canonical event builder", () => {
     { email: "test.user@example.invalid" },
     { phone: "0400 000 000" },
     { name: "Example User" },
+    { firstName: "Example" },
+    { customerEmail: "not-an-email-shaped-value" },
+    { postalCode: "3000" },
     { form_field: "test.user@example.invalid" },
+    { form_field: "https://example.invalid/?firstName=Example" },
   ])("rejects raw PII-shaped fields or values", (fields) => {
     expect(() =>
       buildCanonicalEvent(

@@ -7,7 +7,7 @@ const safeRequest = {
   form_instance_id: "frm_example_0001",
   form_type: "test_drive" as const,
   vehicle_model: "Aurora SUV",
-  vehicle_variant: "Aurora Touring",
+  vehicle_variant: "Aurora Hybrid Touring",
   dealer_id: "VIC-001",
   dealer_state: "VIC",
   user_pseudo_id: "usr_example_0001",
@@ -48,6 +48,26 @@ describe("CRM emulator", () => {
         email: "test.user@example.invalid",
       }),
     ).toThrow(/PII guard/);
+    expect(() =>
+      createCrmEnvelope({
+        ...safeRequest,
+        firstName: "Example",
+      }),
+    ).toThrow(/PII guard/);
+  });
+
+  it.each([
+    { vehicle_model: "Unknown Synthetic Model" },
+    { vehicle_variant: "Unknown Synthetic Variant" },
+    { dealer_id: "NSW-004", dealer_state: "NSW" },
+    { dealer_id: "VIC-001", dealer_state: "NSW" },
+  ])("rejects invalid reference context", (invalidContext) => {
+    expect(() =>
+      createCrmEnvelope({
+        ...safeRequest,
+        ...invalidContext,
+      }),
+    ).toThrow(/vehicle|variant|dealer/i);
   });
 
   it("supports only valid lifecycle transitions", () => {
