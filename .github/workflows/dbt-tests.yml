@@ -26,6 +26,8 @@ jobs:
           cache-dependency-path: dbt/requirements.txt
       - name: Install dbt adapter
         run: python -m pip install -r dbt/requirements.txt
+      - name: Prepare local DuckDB output directory
+        run: mkdir -p data/processed
       - name: Load versioned seeds in local DuckDB
         run: >-
           dbt seed

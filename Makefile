@@ -35,6 +35,7 @@ dbt-parse:
 		--no-partial-parse
 
 dbt-seed-local:
+	mkdir -p data/processed
 	$(DBT) seed \
 		--project-dir dbt \
 		--profiles-dir dbt/ci \
