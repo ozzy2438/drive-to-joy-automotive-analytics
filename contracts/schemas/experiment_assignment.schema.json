@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://drive-to-joy.example/contracts/experiment_assignment.schema.json",
+  "title": "Experiment assignment and exposure",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "experiment_assignment_id",
+    "experiment_id",
+    "assignment_key",
+    "variant_id",
+    "allocation_unit",
+    "eligible_at",
+    "assigned_at",
+    "exposed_at",
+    "exposure_event_id",
+    "outcome_window_end_at",
+    "eligible_flag",
+    "consent_analytics",
+    "data_origin"
+  ],
+  "properties": {
+    "schema_version": { "const": "1.0.0" },
+    "experiment_assignment_id": { "type": "string", "minLength": 8 },
+    "experiment_id": { "type": "string", "pattern": "^EXP-[A-Z]+-[0-9]{3}$" },
+    "assignment_key": { "type": "string", "minLength": 8 },
+    "variant_id": { "type": "string", "minLength": 2 },
+    "allocation_unit": { "enum": ["browser", "user"] },
+    "eligible_at": { "type": "string", "format": "date-time" },
+    "assigned_at": { "type": "string", "format": "date-time" },
+    "exposed_at": { "type": ["string", "null"], "format": "date-time" },
+    "exposure_event_id": { "type": ["string", "null"] },
+    "outcome_window_end_at": {
+      "type": ["string", "null"],
+      "format": "date-time"
+    },
+    "eligible_flag": { "type": "boolean" },
+    "exclusion_reason": { "type": ["string", "null"] },
+    "consent_analytics": {
+      "enum": ["granted", "denied", "unknown", "revoked"]
+    },
+    "data_origin": { "const": "synthetic" }
+  }
+}

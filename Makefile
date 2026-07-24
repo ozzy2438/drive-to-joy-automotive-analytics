@@ -1,14 +1,40 @@
-# Makefile
+PYTHON ?= python3
+VENV ?= python/.venv
+VENV_PYTHON := $(VENV)/bin/python
+DBT := $(VENV)/bin/dbt
+SEED ?= 20260723
+DAYS ?= 30
+SESSIONS ?= 1000
+OUTPUT ?= data/processed/local_foundation
 
-.PHONY: docs test-python dbt-build
+.PHONY: setup test-python generate-data validate-data dbt-parse lint-markdown check
 
-docs:
-	@echo "Review Markdown documentation and GitHub Actions markdown lint workflow."
+setup:
+	$(PYTHON) -m venv $(VENV)
+	$(VENV_PYTHON) -m pip install --upgrade pip
+	$(VENV_PYTHON) -m pip install -r python/requirements.txt -r dbt/requirements.txt
 
 test-python:
-	python -m pytest python/tests
+	cd python && .venv/bin/python -m pytest
 
-dbt-build:
-	@echo "Configure profiles.yml and warehouse credentials, then run:"
-	@echo "dbt deps --project-dir dbt"
-	@echo "dbt build --project-dir dbt"
+generate-data:
+	cd python && .venv/bin/python -m src.pipeline \
+		--output ../$(OUTPUT) \
+		--seed $(SEED) \
+		--days $(DAYS) \
+		--sessions $(SESSIONS)
+
+validate-data: generate-data
+	@echo "Validated synthetic foundation; see $(OUTPUT)/manifest.json"
+
+dbt-parse:
+	$(DBT) parse \
+		--project-dir dbt \
+		--profiles-dir dbt/ci \
+		--target ci \
+		--no-partial-parse
+
+lint-markdown:
+	npx --yes markdownlint-cli2 "**/*.md"
+
+check: test-python validate-data dbt-parse lint-markdown

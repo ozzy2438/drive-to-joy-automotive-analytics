@@ -36,7 +36,7 @@ Drive to Joy connects website behaviour, campaign context, CRM outcomes, data-qu
 
 ## North Star Metric
 
-**Qualified Leads per 1,000 Engaged Sessions**
+### Qualified Leads per 1,000 Engaged Sessions
 
 ```text
 Qualified Leads per 1,000 Engaged Sessions =
@@ -66,6 +66,7 @@ Acquisition
 | [`roadmap/`](./roadmap) | End-to-end implementation sequence |
 | [`architecture/`](./architecture) | Architecture decisions and Mermaid diagrams |
 | [`measurement/`](./measurement) | KPI, event, GTM, GA4 and QA specifications |
+| [`contracts/`](./contracts) | Versioned event, identity, CRM and assignment contracts |
 | [`data/`](./data) | Data policy, sources and synthetic-data contracts |
 | [`crm/`](./crm) | Lead lifecycle and online-to-offline measurement |
 | [`warehouse/`](./warehouse) | BigQuery warehouse guidance |
@@ -81,16 +82,42 @@ Acquisition
 | [`confluence/`](./confluence) | Documentation-hub structure |
 | [`presentation/`](./presentation) | Portfolio and interview collateral |
 
+## Local foundation
+
+Sprint 0–1 provides a deterministic, privacy-safe development baseline. It
+normalises both flat synthetic events and nested GA4 BigQuery export records
+into canonical contract version `1.0.0`, generates coherent synthetic
+outcomes, and validates the result in DuckDB.
+
+Prerequisites are Python 3.11+, Make and Node.js/npm for Markdown linting.
+
+```bash
+make setup
+make check
+```
+
+The generated Parquet files and validation manifest are written to
+`data/processed/local_foundation/` and ignored by Git. Override the
+deterministic defaults when needed:
+
+```bash
+make generate-data SEED=20260723 DAYS=60 SESSIONS=5000
+```
+
+See the [canonical contracts](./contracts/README.md),
+[local Python workflow](./python/README.md), and
+[repository governance](./docs/40_repository_governance.md).
+
 ## Build order
 
 Start with [`roadmap/README.md`](./roadmap/README.md). Do not start with dashboards.
 
 1. Define business problem, stakeholders and KPI tree.
-2. Define the customer journey and measurement contract.
-3. Build the fictional automotive demo site.
-4. Implement dataLayer, GTM and GA4-style event collection.
-5. Generate and ingest synthetic/public-context data.
-6. Build warehouse, dbt models and tests.
+2. Define the canonical data, identity and outcome contracts.
+3. Generate and validate deterministic synthetic data.
+4. Build warehouse adapters, dbt models and data-quality tests.
+5. Build the fictional automotive demo site.
+6. Implement dataLayer, GTM and GA4-style event collection.
 7. Add data-quality monitoring.
 8. Build stakeholder dashboards.
 9. Run experiments and analyse results.
@@ -110,4 +137,7 @@ Start with [`roadmap/README.md`](./roadmap/README.md). Do not start with dashboa
 
 ## Current status
 
-The repository is being established as a documentation-first implementation blueprint. See the roadmap for implementation phases and exit criteria.
+Sprint 0–1 establishes the executable local foundation: versioned contracts,
+source adapters, deterministic generators, DuckDB checks and meaningful CI.
+Dashboard, demo-site and live-experiment implementation remain out of scope
+until the canonical mart and data-quality layers are complete.

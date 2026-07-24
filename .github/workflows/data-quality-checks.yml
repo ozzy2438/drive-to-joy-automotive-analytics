@@ -1,16 +1,48 @@
 name: Data Quality Checks
 
 on:
+  pull_request:
+    paths:
+      - 'python/**'
+      - 'contracts/**'
+      - 'data/synthetic/**'
+      - '.github/workflows/data-quality-checks.yml'
   workflow_dispatch:
   schedule:
     - cron: '0 8 * * 1-5'
 
+permissions:
+  contents: read
+
+concurrency:
+  group: local-foundation-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
-  quality:
+  local-foundation:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: python
     steps:
-      - uses: actions/checkout@v4
-      - name: Placeholder
-        run: |
-          echo "Connect warehouse credentials and execute governed quality checks here."
-          echo "Quality SQL specifications live in sql/data_quality and dbt/tests."
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.11'
+          cache: pip
+          cache-dependency-path: python/requirements.txt
+      - name: Install dependencies
+        run: python -m pip install -r requirements.txt
+      - name: Build and validate deterministic local foundation
+        run: >-
+          python -m src.pipeline
+          --output "${{ runner.temp }}/drive-to-joy-foundation"
+          --seed 20260723
+          --days 14
+          --sessions 500
+      - name: Upload validation manifest
+        uses: actions/upload-artifact@v7
+        with:
+          name: local-foundation-validation
+          path: ${{ runner.temp }}/drive-to-joy-foundation/manifest.json
+          if-no-files-found: error

@@ -1,0 +1,20 @@
+{
+  "schema_version": "1.0.0",
+  "experiment_id": "EXP-CTA-001",
+  "status": "blocked_pending_baseline",
+  "allocation_unit": "browser",
+  "analysis_unit": "eligible_exposed_user",
+  "variants": [
+    { "variant_id": "control", "allocation": 0.3333333333 },
+    { "variant_id": "treatment_a", "allocation": 0.3333333333 },
+    { "variant_id": "treatment_b", "allocation": 0.3333333334 }
+  ],
+  "primary_metric": "qualified_lead_rate",
+  "baseline_rate": null,
+  "minimum_detectable_effect_absolute": null,
+  "family_alpha": 0.05,
+  "target_power": 0.8,
+  "multiple_comparison_method": "holm",
+  "sample_size_alpha_per_comparison": 0.025,
+  "outcome_window_days": null
+}

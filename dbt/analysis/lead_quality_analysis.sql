@@ -1,4 +1,4 @@
-# Lead Quality Analysis
+-- Lead Quality Analysis
 
 select
   form_type,

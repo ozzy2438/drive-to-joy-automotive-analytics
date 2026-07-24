@@ -7,12 +7,29 @@ on:
       - '.github/workflows/dbt-tests.yml'
   workflow_dispatch:
 
+permissions:
+  contents: read
+
+concurrency:
+  group: dbt-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   dbt-tests:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - name: Placeholder
-        run: |
-          echo "Configure dbt-bigquery credentials through repository secrets before enabling dbt build."
-          echo "Expected command: dbt deps && dbt build --project-dir dbt"
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.11'
+          cache: pip
+          cache-dependency-path: dbt/requirements.txt
+      - name: Install dbt adapter
+        run: python -m pip install -r dbt/requirements.txt
+      - name: Parse dbt project without warehouse credentials
+        run: >-
+          dbt parse
+          --project-dir dbt
+          --profiles-dir dbt/ci
+          --target ci
+          --no-partial-parse

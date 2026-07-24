@@ -1,4 +1,4 @@
-# Funnel Analysis
+-- Funnel Analysis
 
 -- Purpose: model-page to test-drive funnel by vehicle and device.
 -- Grain: vehicle model × reporting date.

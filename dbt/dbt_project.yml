@@ -18,6 +18,10 @@ clean-targets:
   - 'target'
   - 'dbt_packages'
 
+vars:
+  event_source_adapter: synthetic_flat
+  data_origin: synthetic
+
 models:
   drive_to_joy:
     staging:

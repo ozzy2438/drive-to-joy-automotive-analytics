@@ -1,18 +1,46 @@
-# Python Module Plan
+# Python Local Foundation
 
 ## Purpose
 
-This directory will contain Python modules for synthetic data generation, data-quality checks, experimentation analysis, lead-scoring prototyping and reporting exports.
+This package implements deterministic synthetic data generation, source
+normalisation, contract validation, local warehouse checks and experiment
+calculation utilities.
 
-## Planned modules
+## Implemented modules
 
 | Module | Responsibility |
 |---|---|
 | `data_generation` | Generate synthetic event, CRM, media, dealer and experiment datasets |
-| `data_quality` | Detect anomalies, completeness failures, duplicates and matching issues |
+| `adapters` | Normalise flat synthetic and nested GA4 BigQuery shapes |
+| `contracts` | Enforce canonical columns, JSON Schemas and privacy invariants |
+| `warehouse` | Validate the generated local foundation with DuckDB |
 | `experimentation` | Power calculation, frequentist/Bayesian analysis, SRM and guardrails |
-| `lead_scoring` | Explainable behavioural scoring and calibration against CRM outcomes |
-| `reporting` | Weekly summaries, experiment readouts and documentation exports |
+
+Lead scoring and reporting exports remain future work.
+
+## Commands
+
+Run these from the repository root:
+
+```bash
+make setup
+make test-python
+make generate-data
+make dbt-parse
+```
+
+Or invoke the pipeline from this directory:
+
+```bash
+.venv/bin/python -m src.pipeline \
+  --output ../data/processed/local_foundation \
+  --seed 20260723 \
+  --days 30 \
+  --sessions 1000
+```
+
+The same seed and parameters produce the same logical records. The output
+manifest includes file digests and all executable validation results.
 
 ## Rules
 

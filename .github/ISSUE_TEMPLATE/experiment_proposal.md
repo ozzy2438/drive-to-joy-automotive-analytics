@@ -15,7 +15,8 @@ What behavioural, qualitative or commercial evidence supports this?
 
 ## Hypothesis
 
-If we change ___ for ___ audience, then ___ will improve because ___.
+If we change `[experience]` for `[audience]`, then `[metric]` will improve
+because `[reason]`.
 
 ## Variants
 

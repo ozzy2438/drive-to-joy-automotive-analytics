@@ -1,0 +1,10 @@
+drive_to_joy:
+  target: ci
+  outputs:
+    ci:
+      type: bigquery
+      method: oauth
+      project: synthetic-ci-project
+      dataset: analytics_ci
+      threads: 1
+      location: australia-southeast1

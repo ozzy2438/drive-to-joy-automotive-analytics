@@ -9,8 +9,10 @@ models:
   - name: fct_lead_funnel
     description: Governed web-to-CRM lead funnel.
     columns:
-      - name: lead_id_hash
+      - name: web_submission_id
         tests: [unique, not_null]
+      - name: lead_id_hash
+        tests: [not_null]
   - name: dim_vehicle
     columns:
       - name: vehicle_variant
@@ -19,3 +21,17 @@ models:
     columns:
       - name: dealer_id
         tests: [unique, not_null]
+  - name: fct_data_quality_results
+    description: Executable canonical identity and CRM quality checks.
+    columns:
+      - name: check_date
+        tests: [not_null]
+      - name: check_name
+        tests: [unique, not_null]
+      - name: status
+        tests:
+          - accepted_values:
+              arguments:
+                values: ['pass', 'fail']
+      - name: failure_count
+        tests: [not_null]

@@ -1,0 +1,94 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://drive-to-joy.example/contracts/canonical_event.schema.json",
+  "title": "Canonical analytics event",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "source_system",
+    "data_origin",
+    "event_id",
+    "event_date",
+    "event_at",
+    "event_name",
+    "user_pseudo_id",
+    "session_id",
+    "consent_analytics",
+    "consent_marketing"
+  ],
+  "properties": {
+    "schema_version": { "const": "1.0.0" },
+    "source_system": {
+      "enum": ["synthetic_flat", "ga4_bigquery"]
+    },
+    "data_origin": {
+      "enum": ["synthetic", "official_sample", "live_demo"]
+    },
+    "event_id": { "type": "string", "minLength": 8, "maxLength": 128 },
+    "event_date": { "type": "string", "format": "date" },
+    "event_at": { "type": "string", "format": "date-time" },
+    "event_name": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_]*$"
+    },
+    "user_pseudo_id": { "type": ["string", "null"], "maxLength": 128 },
+    "session_id": { "type": ["string", "null"], "maxLength": 128 },
+    "page_type": { "type": ["string", "null"], "maxLength": 80 },
+    "journey_stage": {
+      "type": ["string", "null"],
+      "enum": [
+        "discover",
+        "research",
+        "configure",
+        "evaluate",
+        "convert",
+        "progress",
+        null
+      ]
+    },
+    "device_category": {
+      "type": ["string", "null"],
+      "enum": ["mobile", "desktop", "tablet", null]
+    },
+    "traffic_source": { "type": ["string", "null"], "maxLength": 100 },
+    "traffic_medium": { "type": ["string", "null"], "maxLength": 100 },
+    "campaign_id": { "type": ["string", "null"], "maxLength": 100 },
+    "campaign_name": { "type": ["string", "null"], "maxLength": 160 },
+    "vehicle_model": { "type": ["string", "null"], "maxLength": 120 },
+    "vehicle_variant": { "type": ["string", "null"], "maxLength": 160 },
+    "powertrain": { "type": ["string", "null"], "maxLength": 60 },
+    "configurator_id": { "type": ["string", "null"], "maxLength": 128 },
+    "dealer_id": { "type": ["string", "null"], "maxLength": 80 },
+    "dealer_state": { "type": ["string", "null"], "maxLength": 8 },
+    "form_type": {
+      "type": ["string", "null"],
+      "enum": ["test_drive", "quote", null]
+    },
+    "form_instance_id": { "type": ["string", "null"], "maxLength": 128 },
+    "web_submission_id": { "type": ["string", "null"], "maxLength": 128 },
+    "lead_id_hash": { "type": ["string", "null"], "maxLength": 128 },
+    "form_field": { "type": ["string", "null"], "maxLength": 80 },
+    "form_error_type": { "type": ["string", "null"], "maxLength": 80 },
+    "experiment_id": { "type": ["string", "null"], "maxLength": 80 },
+    "experiment_assignment_id": {
+      "type": ["string", "null"],
+      "maxLength": 128
+    },
+    "variant_id": { "type": ["string", "null"], "maxLength": 80 },
+    "audience_id": { "type": ["string", "null"], "maxLength": 80 },
+    "personalisation_assignment_id": {
+      "type": ["string", "null"],
+      "maxLength": 128
+    },
+    "experience_id": { "type": ["string", "null"], "maxLength": 80 },
+    "holdout_flag": { "type": ["boolean", "null"] },
+    "consent_analytics": {
+      "enum": ["granted", "denied", "unknown", "revoked"]
+    },
+    "consent_marketing": {
+      "enum": ["granted", "denied", "unknown", "revoked"]
+    },
+    "cmp_version": { "type": ["string", "null"], "maxLength": 40 }
+  }
+}

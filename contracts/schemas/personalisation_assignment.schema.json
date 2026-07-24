@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://drive-to-joy.example/contracts/personalisation_assignment.schema.json",
+  "title": "Personalisation assignment and holdout",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "personalisation_assignment_id",
+    "audience_id",
+    "assignment_key",
+    "experience_id",
+    "holdout_flag",
+    "eligible_at",
+    "assigned_at",
+    "exposed_at",
+    "exposure_event_id",
+    "outcome_window_end_at",
+    "consent_analytics",
+    "data_origin"
+  ],
+  "properties": {
+    "schema_version": { "const": "1.0.0" },
+    "personalisation_assignment_id": { "type": "string", "minLength": 8 },
+    "audience_id": { "type": "string", "minLength": 3 },
+    "assignment_key": { "type": "string", "minLength": 8 },
+    "experience_id": { "type": "string", "minLength": 3 },
+    "holdout_flag": { "type": "boolean" },
+    "eligible_at": { "type": "string", "format": "date-time" },
+    "assigned_at": { "type": "string", "format": "date-time" },
+    "exposed_at": { "type": ["string", "null"], "format": "date-time" },
+    "exposure_event_id": { "type": ["string", "null"] },
+    "outcome_window_end_at": {
+      "type": ["string", "null"],
+      "format": "date-time"
+    },
+    "consent_analytics": {
+      "enum": ["granted", "denied", "unknown", "revoked"]
+    },
+    "data_origin": { "const": "synthetic" }
+  }
+}

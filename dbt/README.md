@@ -1,4 +1,4 @@
-# dbt Transformation Plan
+# dbt Transformation Foundation
 
 ## Goal
 
@@ -10,7 +10,33 @@ Transform raw GA4-style event data, CRM outcomes, media spend and reference data
 raw → staging → intermediate → marts
 ```
 
-## Required marts
+## Source adapters
+
+The dbt variable `event_source_adapter` selects a source-specific staging
+model while preserving one canonical downstream relation:
+
+```yaml
+vars:
+  event_source_adapter: synthetic_flat
+```
+
+- `synthetic_flat` reads deterministic local flat events.
+- `ga4_bigquery` extracts approved fields from nested/repeated GA4 BigQuery
+  export records.
+
+The default is `synthetic_flat`. Models downstream of `stg_ga4_events` must
+never depend directly on either raw source shape.
+
+Parse the complete graph without warehouse credentials:
+
+```bash
+make dbt-parse
+```
+
+Running `dbt build` against BigQuery requires an owner-provided local profile
+and credentials; neither is committed.
+
+## Marts
 
 - `fct_sessions`
 - `fct_vehicle_journey`
