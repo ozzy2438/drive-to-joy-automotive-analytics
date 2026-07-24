@@ -73,6 +73,7 @@ Acquisition
 | [`dbt/`](./dbt) | Transformation-layer design |
 | [`sql/`](./sql) | Analysis and data-quality query plan |
 | [`python/`](./python) | Data generation and analysis module plan |
+| [`apps/web/`](./apps/web) | Executable consent-aware AstraDrive analytics test surface |
 | [`experiments/`](./experiments) | Experiment governance and case studies |
 | [`personalisation/`](./personalisation) | Audience and holdout design |
 | [`dashboards/`](./dashboards) | Dashboard specifications |
@@ -108,6 +109,36 @@ See the [canonical contracts](./contracts/README.md),
 [local Python workflow](./python/README.md), and
 [repository governance](./docs/40_repository_governance.md).
 
+## Local web runtime
+
+Sprint 2–3 adds the fictional AstraDrive customer journey as an executable
+analytics test surface. It validates canonical events, consent, anonymous
+identity, experiment and personalisation exposure, form lifecycle and local
+CRM reconciliation without external credentials.
+
+```bash
+cd apps/web
+cp .env.example .env.local
+npm ci
+npm run dev
+```
+
+Run the complete web validation:
+
+```bash
+npm run lint
+npm run typecheck
+npm test
+npm run build
+npx playwright install chromium
+npm run test:e2e
+DTJ_LOCAL_DATA_DIR=.local-data/e2e npm run quality:local
+```
+
+See [local development](./web-demo/local_development.md),
+[event runtime](./web-demo/event_runtime.md) and
+[demo privacy](./docs/44_demo_environment_and_privacy.md).
+
 ## Build order
 
 Start with [`roadmap/README.md`](./roadmap/README.md). Do not start with dashboards.
@@ -116,8 +147,9 @@ Start with [`roadmap/README.md`](./roadmap/README.md). Do not start with dashboa
 2. Define the canonical data, identity and outcome contracts.
 3. Generate and validate deterministic synthetic data.
 4. Build warehouse adapters, dbt models and data-quality tests.
-5. Build the fictional automotive demo site.
-6. Implement dataLayer, GTM and GA4-style event collection.
+5. Build the fictional automotive demo site. *(Local executable complete.)*
+6. Implement dataLayer, GTM and GA4-style event collection. *(Canonical local
+   dataLayer and collector complete; real GTM/GA4 remains out of scope.)*
 7. Add data-quality monitoring.
 8. Build stakeholder dashboards.
 9. Run experiments and analyse results.
@@ -137,7 +169,8 @@ Start with [`roadmap/README.md`](./roadmap/README.md). Do not start with dashboa
 
 ## Current status
 
-Sprint 0–1 establishes the executable local foundation: versioned contracts,
-source adapters, deterministic generators, DuckDB checks and meaningful CI.
-Dashboard, demo-site and live-experiment implementation remain out of scope
-until the canonical mart and data-quality layers are complete.
+Sprint 0–1 established versioned contracts, source adapters, deterministic
+generation, DuckDB checks and CI. Sprint 2–3 adds versioned AstraDrive
+reference registries plus the local demo, tracking, consent, decisioning, CRM
+and reconciliation runtime. Production deployment, real integrations,
+dashboards and live experiment conclusions remain out of scope.

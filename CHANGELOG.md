@@ -6,6 +6,16 @@ All notable project-design and implementation changes should be recorded here.
 
 ### Added
 
+- Next.js AstraDrive analytics test surface with all required research,
+  configurator, finance, dealer and lead routes.
+- Consent-aware canonical tracking, local ordered NDJSON collection and
+  browser-to-CRM reconciliation.
+- Deterministic three-arm `EXP-CTA-001` runtime and five personalisation
+  audiences with generic holdouts, cooldowns and collision handling.
+- Local CRM emulator with opaque server-side lead identity and tested lifecycle
+  transitions.
+- Vitest, Playwright, production-build and local privacy/duplicate quality
+  gates for the web runtime.
 - Canonical analytics contract `1.1.0` journey fields for executable web,
   adapter and warehouse parity.
 - Versioned AstraDrive vehicle, dealer, campaign, experiment and

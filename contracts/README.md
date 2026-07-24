@@ -44,6 +44,9 @@ Schemas use JSON Schema 2020-12 and reject undocumented properties.
   number, name or other raw PII.
 - `user_pseudo_id` and `session_id` support anonymous web journey analysis.
   They do not replace the submission or CRM identifiers.
+- An accepted submission may have a null analytics `session_id` when analytics
+  consent is not granted; the server-side submission and lead identities
+  remain valid and separate.
 - Experiment and personalisation assignment IDs are separate so overlapping
   decision systems remain auditable.
 

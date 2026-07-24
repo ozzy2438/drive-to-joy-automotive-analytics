@@ -7,8 +7,8 @@
 │   ├── /vehicles/coastline-suv
 │   └── /vehicles/metro-hatch
 ├── /compare
-├── /build
-├── /finance
+├── /build/[model]
+├── /finance/[model]
 ├── /dealers
 ├── /test-drive
 ├── /quote

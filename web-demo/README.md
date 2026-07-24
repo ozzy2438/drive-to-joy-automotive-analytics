@@ -1,5 +1,11 @@
 # Web Demo Requirements
 
+## Implementation
+
+The Sprint 3 local implementation lives in `apps/web`. Start with
+[implementation status](./implementation_status.md) and
+[local development](./local_development.md).
+
 ## Purpose
 
 The demo site is a fictional automotive website used to generate real, consent-aware, GA4-style events and exercise the measurement contract.
@@ -27,7 +33,7 @@ The demo site is a fictional automotive website used to generate real, consent-a
 - Experiment exposure
 - Personalisation exposure
 - Consent state
-- Hashed synthetic lead key
+- Lead hash derived from an opaque server-side synthetic reference
 
 ## Safety requirements
 
