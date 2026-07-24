@@ -42,5 +42,11 @@ jobs:
         run: npm run typecheck
       - name: Unit and integration tests
         run: npm test
+      - name: Install Playwright Chromium
+        run: npx playwright install --with-deps chromium
+      - name: Browser journey tests
+        run: npm run test:e2e
+      - name: Reconcile local browser and CRM evidence
+        run: DTJ_LOCAL_DATA_DIR=.local-data/e2e npm run quality:local
       - name: Production build
         run: npm run build

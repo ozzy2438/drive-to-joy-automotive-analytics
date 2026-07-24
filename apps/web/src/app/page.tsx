@@ -1,8 +1,15 @@
 import Link from "next/link";
+import { TrackedPageView } from "@/lib/tracking/tracking-context";
 
 export default function HomePage() {
   return (
     <div className="shell py-16 sm:py-24">
+      <TrackedPageView
+        eventName="view_homepage"
+        pageType="homepage"
+        journeyStage="discover"
+        identity="/"
+      />
       <section className="grid items-center gap-10 lg:grid-cols-[1.25fr_0.75fr]">
         <div>
           <p className="mb-3 text-sm font-bold uppercase tracking-[0.18em] text-[var(--brand)]">

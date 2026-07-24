@@ -1,3 +1,5 @@
+import { ConsentControls } from "@/components/consent-controls";
+
 export default function PrivacyPage() {
   return (
     <article className="shell max-w-3xl py-16">
@@ -21,6 +23,7 @@ export default function PrivacyPage() {
           any person or external system.
         </p>
       </div>
+      <ConsentControls />
     </article>
   );
 }
