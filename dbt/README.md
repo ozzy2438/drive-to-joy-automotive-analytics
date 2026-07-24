@@ -33,6 +33,16 @@ Parse the complete graph without warehouse credentials:
 make dbt-parse
 ```
 
+Load all versioned reference seeds and run their integrity tests in local
+DuckDB:
+
+```bash
+make dbt-seed-local
+```
+
+The local DuckDB file is written under `data/processed/` and ignored by Git.
+No BigQuery credentials are required.
+
 Running `dbt build` against BigQuery requires an owner-provided local profile
 and credentials; neither is committed.
 

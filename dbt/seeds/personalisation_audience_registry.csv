@@ -1,0 +1,7 @@
+schema_version,record_version,audience_id,audience_name,status,runtime_enabled,eligibility_version,holdout_allocation,cooldown_hours,priority,exclusion_rule_reference,treatment_experience_id,holdout_experience_id,collision_namespace,owner,data_origin
+1.0.0,1,AUD-HYB-001,Hybrid Researchers,instrumentation_demo,True,hybrid_research_v1,0.2,168,50,EXC-CONVERTED-30D,hybrid_ownership_next_step,generic_holdout,model_primary_action,crm_analytics,synthetic
+1.0.0,1,AUD-CFG-002,Configurator Abandoners,instrumentation_demo,True,configurator_abandon_v1,0.2,72,90,EXC-CONVERTED-30D,resume_configuration,generic_holdout,model_primary_action,product_analytics,synthetic
+1.0.0,1,AUD-FIN-003,Finance Support Seekers,instrumentation_demo,True,finance_repeat_v1,0.2,72,80,EXC-CONVERTED-30D,finance_support_next_step,generic_holdout,finance_next_action,product_analytics,synthetic
+1.0.0,1,AUD-RET-004,Returning High Intent,instrumentation_demo,True,returning_high_intent_v1,0.2,168,70,EXC-CONVERTED-30D,recent_journey_next_step,generic_holdout,model_primary_action,crm_analytics,synthetic
+1.0.0,1,AUD-REG-005,Regional Dealer Searchers,instrumentation_demo,True,regional_dealer_search_v1,0.2,168,60,EXC-CONVERTED-30D,regional_availability_next_step,generic_holdout,dealer_next_action,dealer_analytics,synthetic
+1.0.0,1,AUD-OWN-006,Known Owner Placeholder,placeholder,False,not_implemented,0.2,720,10,EXC-NO-KNOWN-IDENTITY,not_implemented,generic_holdout,owner_lifecycle_action,crm_analytics,synthetic

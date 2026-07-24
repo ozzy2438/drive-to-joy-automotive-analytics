@@ -25,6 +25,11 @@ from src.data_generation.generate_personalisation_data import (
     generate_personalisation_data,
 )
 from src.data_generation.generate_vehicle_catalogue import generate_vehicle_catalogue
+from src.data_generation.reference_data import (
+    generate_campaign_registry,
+    generate_experiment_registry,
+    generate_personalisation_audience_registry,
+)
 from src.warehouse.local_validation import validate_local_foundation
 
 
@@ -133,6 +138,11 @@ def build_local_foundation(
     personalisation_assignments = generate_personalisation_data(canonical_events)
     vehicle_catalogue = generate_vehicle_catalogue()
     dealers = generate_dealers()
+    campaign_registry = generate_campaign_registry()
+    experiment_registry = generate_experiment_registry()
+    personalisation_audience_registry = (
+        generate_personalisation_audience_registry()
+    )
     media_spend = generate_media_spend(seed=seed + 3, days=days)
 
     datasets = {
@@ -144,6 +154,11 @@ def build_local_foundation(
         "personalisation_assignments.parquet": personalisation_assignments,
         "vehicle_catalogue.parquet": vehicle_catalogue,
         "dealers.parquet": dealers,
+        "campaign_registry.parquet": campaign_registry,
+        "experiment_registry.parquet": experiment_registry,
+        "personalisation_audience_registry.parquet": (
+            personalisation_audience_registry
+        ),
         "media_spend_daily.parquet": media_spend,
     }
     _validate_synthetic_boundaries(datasets)

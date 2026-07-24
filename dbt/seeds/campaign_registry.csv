@@ -1,0 +1,11 @@
+schema_version,record_version,campaign_id,campaign_name,channel,source,medium,owner,objective,focus_type,focus_id,landing_page,active_start_date,active_end_date,governance_status,data_origin
+1.0.0,1,cmp_001,au_paid_search_lead_aurora_suv_launch_2026_08,Paid Search,google,cpc,growth_search,lead,vehicle,mdl_aurora_suv,/vehicles/aurora-suv,2026-08-01,2026-09-30,approved,synthetic
+1.0.0,1,cmp_002,au_paid_search_research_harbour_ev_range_2026_08,Paid Search,bing,cpc,growth_search,research,vehicle,mdl_harbour_ev,/vehicles/harbour-ev,2026-08-01,2026-10-31,approved,synthetic
+1.0.0,1,cmp_003,au_paid_social_awareness_metro_hatch_urban_2026_08,Paid Social,meta,paid_social,growth_social,awareness,vehicle,mdl_metro_hatch,/vehicles/metro-hatch,2026-08-01,2026-08-31,approved,synthetic
+1.0.0,1,cmp_004,au_paid_social_research_hybrid_researchers_2026_08,Paid Social,meta,paid_social,growth_social,research,audience,AUD-HYB-001,/vehicles,2026-08-15,2026-09-30,approved,synthetic
+1.0.0,1,cmp_005,au_organic_search_research_coastline_suv_guide_2026_08,Organic Search,google,organic,content_search,research,vehicle,mdl_coastline_suv,/vehicles/coastline-suv,2026-08-01,2026-12-31,approved,synthetic
+1.0.0,1,cmp_006,au_organic_search_research_trailstar_utility_guide_2026_08,Organic Search,google,organic,content_search,research,vehicle,mdl_trailstar_utility,/vehicles/trailstar-utility,2026-08-01,2026-12-31,approved,synthetic
+1.0.0,1,cmp_007,au_email_nurture_returning_high_intent_resume_2026_08,Email,demo_crm,email,lifecycle_marketing,nurture,audience,AUD-RET-004,/vehicles,2026-08-10,2026-09-30,approved,synthetic
+1.0.0,1,cmp_008,au_referral_lead_aurora_suv_partner_2026_08,Referral,fictional_partner,referral,partnerships,lead,vehicle,mdl_aurora_suv,/vehicles/aurora-suv,2026-08-01,2026-10-31,approved,synthetic
+1.0.0,1,cmp_009,au_direct_navigation_sitewide_always_on_2026_08,Direct,direct,none,digital_product,navigation,sitewide,sitewide,/,2026-08-01,2026-12-31,approved,synthetic
+1.0.0,1,cmp_010,au_email_support_finance_anxious_next_step_2026_08,Email,demo_crm,email,lifecycle_marketing,support,audience,AUD-FIN-003,/finance/aurora-suv,2026-08-20,2026-10-31,draft,synthetic

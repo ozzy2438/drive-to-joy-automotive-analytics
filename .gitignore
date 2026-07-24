@@ -28,6 +28,7 @@ dbt/ci/.user.yml
 *.feather
 *.pkl
 *.pickle
+*.duckdb
 /data/raw/*
 !/data/raw/.gitkeep
 /data/interim/*

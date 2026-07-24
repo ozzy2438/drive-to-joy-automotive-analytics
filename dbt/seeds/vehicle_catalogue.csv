@@ -1,5 +1,13 @@
-vehicle_model,vehicle_variant,body_type,powertrain,price_band,seats,launch_status
-Aurora SUV,Aurora Hybrid Touring,SUV,hybrid,50000_60000,5,current
-Aurora SUV,Aurora Petrol Active,SUV,petrol,40000_50000,5,current
-Coastline SUV,Coastline Hybrid Elite,SUV,hybrid,60000_70000,7,current
-Metro Hatch,Metro Hybrid Urban,Hatch,hybrid,30000_40000,5,current
+schema_version,record_version,vehicle_model_id,vehicle_model,model_slug,variant_id,vehicle_variant,body_type,usage_segment,powertrain,price_band,seats,launch_status,data_origin
+1.0.0,1,mdl_aurora_suv,Aurora SUV,aurora-suv,var_aurora_hybrid_touring,Aurora Hybrid Touring,SUV,family,hybrid,50000_60000,5,current,synthetic
+1.0.0,1,mdl_aurora_suv,Aurora SUV,aurora-suv,var_aurora_petrol_active,Aurora Petrol Active,SUV,family,petrol,40000_50000,5,current,synthetic
+1.0.0,1,mdl_coastline_suv,Coastline SUV,coastline-suv,var_coastline_hybrid_elite,Coastline Hybrid Elite,SUV,large_family,hybrid,60000_70000,7,current,synthetic
+1.0.0,1,mdl_coastline_suv,Coastline SUV,coastline-suv,var_coastline_petrol_touring,Coastline Petrol Touring,SUV,large_family,petrol,50000_60000,7,current,synthetic
+1.0.0,1,mdl_metro_hatch,Metro Hatch,metro-hatch,var_metro_hybrid_urban,Metro Hybrid Urban,Hatch,urban,hybrid,30000_40000,5,current,synthetic
+1.0.0,1,mdl_metro_hatch,Metro Hatch,metro-hatch,var_metro_petrol_sport,Metro Petrol Sport,Hatch,urban,petrol,30000_40000,5,current,synthetic
+1.0.0,1,mdl_solstice_sedan,Solstice Sedan,solstice-sedan,var_solstice_hybrid_luxe,Solstice Hybrid Luxe,Sedan,executive,hybrid,50000_60000,5,current,synthetic
+1.0.0,1,mdl_solstice_sedan,Solstice Sedan,solstice-sedan,var_solstice_petrol_touring,Solstice Petrol Touring,Sedan,executive,petrol,40000_50000,5,current,synthetic
+1.0.0,1,mdl_trailstar_utility,Trailstar Utility,trailstar-utility,var_trailstar_diesel_work,Trailstar Diesel Work,Utility,work,diesel,50000_60000,5,current,synthetic
+1.0.0,1,mdl_trailstar_utility,Trailstar Utility,trailstar-utility,var_trailstar_hybrid_adventure,Trailstar Hybrid Adventure,Utility,adventure,hybrid,60000_70000,5,future,synthetic
+1.0.0,1,mdl_harbour_ev,Harbour EV,harbour-ev,var_harbour_ev_long_range,Harbour EV Long Range,SUV,electric_touring,electric,70000_plus,5,current,synthetic
+1.0.0,1,mdl_harbour_ev,Harbour EV,harbour-ev,var_harbour_ev_city,Harbour EV City,SUV,electric_urban,electric,60000_70000,5,current,synthetic

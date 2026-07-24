@@ -13,7 +13,9 @@ Create realistic but fictional automotive data to support web funnel, CRM lead-q
 | `media_spend_daily` | Date × channel × campaign | Spend and campaign context |
 | `vehicle_catalogue` | Vehicle variant | Vehicle dimension |
 | `dealers` | Dealer | Dealer dimension |
+| `campaign_registry` | Campaign | Governed acquisition context |
 | `experiments` | Experiment | Test registry |
+| `personalisation_audience_registry` | Audience | Eligibility, priority and holdout governance |
 | `experiment_exposure` | User × experiment | Stable variant assignment |
 | `personalisation_exposure` | User × audience | Personalisation / holdout assignment |
 | `consent_events` | Consent event | Consent-aware measurement |
@@ -48,5 +50,12 @@ Create realistic but fictional automotive data to support web funnel, CRM lead-q
 - 12 vehicle variants minimum.
 - 20 fictional dealers across several Australian states.
 - 10 campaigns minimum.
-- 2 experiments minimum.
-- 3 personalisation audiences minimum.
+- 4 experiments minimum.
+- 6 personalisation audience definitions minimum.
+
+## Reference-data source of truth
+
+Versioned JSON records under `data/reference/v1/` are canonical. Python
+generators load those records and committed dbt CSV seeds are deterministic
+projections validated in CI. Each reference record must include
+`schema_version`, `record_version` and `data_origin=synthetic`.

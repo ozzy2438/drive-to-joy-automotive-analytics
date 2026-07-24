@@ -7,7 +7,7 @@ DAYS ?= 30
 SESSIONS ?= 1000
 OUTPUT ?= data/processed/local_foundation
 
-.PHONY: setup test-python generate-data validate-data dbt-parse lint-markdown check
+.PHONY: setup test-python generate-data validate-data dbt-seed-local dbt-parse lint-markdown check
 
 setup:
 	$(PYTHON) -m venv $(VENV)
@@ -34,7 +34,18 @@ dbt-parse:
 		--target ci \
 		--no-partial-parse
 
+dbt-seed-local:
+	$(DBT) seed \
+		--project-dir dbt \
+		--profiles-dir dbt/ci \
+		--target local
+	$(DBT) test \
+		--project-dir dbt \
+		--profiles-dir dbt/ci \
+		--target local \
+		--select vehicle_catalogue dealers campaign_registry experiment_registry personalisation_audience_registry reference_minimum_volumes reference_campaign_focus_integrity reference_proprietary_brand_guard
+
 lint-markdown:
 	npx --yes markdownlint-cli2 "**/*.md"
 
-check: test-python validate-data dbt-parse lint-markdown
+check: test-python validate-data dbt-seed-local dbt-parse lint-markdown

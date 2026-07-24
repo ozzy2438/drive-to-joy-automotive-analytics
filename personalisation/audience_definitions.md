@@ -27,3 +27,19 @@ Experience: repayment explanation and low-friction next action.
 Eligibility: returning user with multiple high-intent actions across defined period.
 
 Experience: recently viewed vehicle, saved context and local dealer CTA.
+
+## AUD-REG-005 — Regional Dealer Searchers
+
+Eligibility: consented regional dealer-search behaviour with no recent
+conversion.
+
+Experience: regional availability and dealer next step.
+
+## AUD-OWN-006 — Known Owner Placeholder
+
+This audience is a registry placeholder only. It has no implemented
+eligibility or runtime experience because the demo has no approved known-owner
+identity source.
+
+The machine-readable source is
+`data/reference/v1/personalisation_audience_registry.json`.

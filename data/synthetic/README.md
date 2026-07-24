@@ -24,3 +24,11 @@ digest of each generated Parquet file. The generated data is ignored by Git.
 
 Controlled data-quality defects are emitted only into separately named and
 labelled files; governed canonical data remains clean.
+
+Versioned reference registries live in `data/reference/v1/`. Regenerate their
+committed dbt seed projections from the repository root with:
+
+```bash
+cd python
+.venv/bin/python -m src.data_generation.export_reference_seeds
+```

@@ -6,6 +6,10 @@ All notable project-design and implementation changes should be recorded here.
 
 ### Added
 
+- Versioned AstraDrive vehicle, dealer, campaign, experiment and
+  personalisation audience registries.
+- Deterministic JSON-to-dbt seed export with Python parity tests.
+- Local DuckDB dbt seed loading and reference-integrity tests.
 - Initial documentation-first repository structure.
 - Project charter and role alignment.
 - Data disclosure policy.
