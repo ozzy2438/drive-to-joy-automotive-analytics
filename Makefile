@@ -10,8 +10,10 @@ OUTPUT ?= data/processed/local_foundation
 WAREHOUSE_DB ?= data/processed/drive_to_joy_local.duckdb
 RUNTIME_DATA ?=
 RUNTIME_DATA_ARG := $(if $(strip $(RUNTIME_DATA)),--runtime-data ../$(RUNTIME_DATA),)
+DASHBOARD_FIXTURE_INPUT ?= data/synthetic/dashboard_fixtures/v1/metric_inputs.csv
+DASHBOARD_FIXTURE_DB ?= data/processed/dashboard_fixtures.duckdb
 
-.PHONY: setup test-python generate-data validate-data load-warehouse dbt-build-local warehouse-smoke warehouse-scale dbt-seed-local dbt-parse lint-markdown check
+.PHONY: setup test-python generate-data validate-data load-warehouse dbt-build-local warehouse-smoke warehouse-scale dbt-seed-local dbt-parse semantic-check dashboard-fixture-load dashboard-fixtures dashboard-reconcile lint-markdown check
 
 setup:
 	$(PYTHON) -m venv $(VENV)
@@ -64,6 +66,32 @@ dbt-parse:
 		--target ci \
 		--no-partial-parse
 
+semantic-check:
+	cd python && .venv/bin/python -m src.semantic.metric_contracts \
+		--repository-root ..
+
+dashboard-fixture-load:
+	cd python && .venv/bin/python -m src.semantic.build_dashboard_fixtures \
+		--input ../$(DASHBOARD_FIXTURE_INPUT) \
+		--database ../$(DASHBOARD_FIXTURE_DB)
+
+dashboard-fixtures: dashboard-fixture-load
+	DTJ_DUCKDB_PATH=$(DASHBOARD_FIXTURE_DB) $(DBT) build \
+		--project-dir dbt \
+		--profiles-dir dbt/ci \
+		--target local \
+		--no-partial-parse \
+		--select agg_dashboard_fixture_results \
+		--vars '{semantic_source_adapter: dashboard_fixture}'
+	cd python && .venv/bin/python -m src.semantic.validate_dashboard_fixtures \
+		--repository-root .. \
+		--database ../$(DASHBOARD_FIXTURE_DB)
+
+dashboard-reconcile: semantic-check
+	cd python && .venv/bin/python -m src.semantic.reconcile_dashboards \
+		--repository-root .. \
+		--database ../$(WAREHOUSE_DB)
+
 dbt-seed-local:
 	mkdir -p data/processed
 	$(DBT) seed \
@@ -79,4 +107,4 @@ dbt-seed-local:
 lint-markdown:
 	npx --yes markdownlint-cli2 "**/*.md"
 
-check: test-python warehouse-smoke dbt-parse lint-markdown
+check: test-python warehouse-smoke semantic-check dashboard-fixtures dashboard-reconcile dbt-parse lint-markdown

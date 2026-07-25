@@ -8,6 +8,11 @@ Head of Digital and leadership.
 
 Where should the organisation invest, investigate or stop activity?
 
+## Governed sources
+
+`agg_executive_daily`, `agg_marketing_daily`, `agg_data_quality_daily` and
+`agg_experiment_daily`.
+
 ## Required sections
 
 1. North Star trend: qualified leads per 1,000 engaged sessions.

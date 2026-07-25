@@ -1,0 +1,106 @@
+version: 2
+
+models:
+  - name: agg_executive_daily
+    description: >
+      One Melbourne business date executive metric row with additive funnel
+      components and governed ratios.
+    columns:
+      - name: business_date
+        tests: [unique, not_null]
+      - name: metric_contract_version
+        tests: [not_null]
+      - name: data_origin
+        tests:
+          - accepted_values:
+              arguments:
+                values: ['synthetic', 'live_demo', 'official_sample']
+      - name: quality_status
+        tests:
+          - accepted_values:
+              arguments:
+                values: ['pass', 'warn', 'fail', 'unknown', 'stale']
+
+  - name: agg_journey_daily
+    description: One Melbourne business date and vehicle model journey row.
+    columns:
+      - name: business_date
+        tests: [not_null]
+      - name: vehicle_model
+        tests: [not_null]
+      - name: metric_contract_version
+        tests: [not_null]
+      - name: quality_status
+        tests:
+          - accepted_values:
+              arguments:
+                values: ['pass', 'warn', 'fail', 'unknown', 'stale']
+
+  - name: agg_marketing_daily
+    description: One Melbourne business date, channel and campaign metric row.
+    columns:
+      - name: business_date
+        tests: [not_null]
+      - name: channel
+        tests: [not_null]
+      - name: metric_contract_version
+        tests: [not_null]
+      - name: quality_status
+        tests:
+          - accepted_values:
+              arguments:
+                values: ['pass', 'warn', 'fail', 'unknown', 'stale']
+
+  - name: agg_data_quality_daily
+    description: >
+      One Melbourne business date event-parameter and UTM compliance row with
+      freshness and quality badges.
+    columns:
+      - name: business_date
+        tests: [unique, not_null]
+      - name: metric_contract_version
+        tests: [not_null]
+      - name: freshness_status
+        tests:
+          - accepted_values:
+              arguments:
+                values: ['pass', 'warn', 'fail', 'unknown', 'stale']
+      - name: quality_status
+        tests:
+          - accepted_values:
+              arguments:
+                values: ['pass', 'warn', 'fail', 'unknown', 'stale']
+
+  - name: agg_experiment_daily
+    description: >
+      One Melbourne business date, experiment and variant row derived only from
+      valid actual exposures and 30-day bounded outcomes.
+    columns:
+      - name: business_date
+        tests: [not_null]
+      - name: experiment_id
+        tests: [not_null]
+      - name: variant_id
+        tests: [not_null]
+      - name: srm_status
+        tests:
+          - accepted_values:
+              arguments:
+                values: ['pass', 'warn', 'fail', 'unknown', 'stale']
+
+  - name: agg_personalisation_daily
+    description: >
+      One Melbourne business date, audience and treatment experience row with a
+      mandatory generic holdout and 14-day bounded outcomes.
+    columns:
+      - name: business_date
+        tests: [not_null]
+      - name: audience_id
+        tests: [not_null]
+      - name: experience_id
+        tests: [not_null]
+      - name: quality_status
+        tests:
+          - accepted_values:
+              arguments:
+                values: ['pass', 'warn', 'fail', 'unknown', 'stale']

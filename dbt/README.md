@@ -56,6 +56,13 @@ and credentials; neither is committed.
 - `fct_experiment_results`
 - `fct_personalisation_performance`
 - `fct_data_quality_results`
+- `fct_reconciliation_results`
+- `agg_executive_daily`
+- `agg_journey_daily`
+- `agg_marketing_daily`
+- `agg_data_quality_daily`
+- `agg_experiment_daily`
+- `agg_personalisation_daily`
 - `dim_vehicle`
 - `dim_dealer`
 - `dim_campaign`
@@ -77,3 +84,9 @@ and credentials; neither is committed.
 - Experiment Sample Ratio Mismatch
 - Bounded experiment/personalisation outcome windows
 - Controlled-defect detection and clean quality-result enforcement
+- Melbourne business-date and DST boundaries
+- Semantic aggregate grains, metadata and additive-rate reconciliation
+
+The acceptance-only `agg_dashboard_fixture_results` model is enabled only with
+`semantic_source_adapter: dashboard_fixture` and builds in a separate ignored
+DuckDB database.

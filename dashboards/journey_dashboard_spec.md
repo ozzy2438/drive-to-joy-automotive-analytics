@@ -20,6 +20,6 @@ Which customer journey friction should be prioritised next?
 - Returning versus new visitor behaviour
 - Journey drop-off annotations
 
-## Data sources
+## Governed sources
 
-`fct_sessions`, `fct_vehicle_journey`, `fct_lead_funnel`.
+`agg_journey_daily` and `agg_executive_daily`.

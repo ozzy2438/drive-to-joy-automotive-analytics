@@ -22,6 +22,8 @@ vars:
   event_source_adapter: synthetic_flat
   crm_source_adapter: synthetic_foundation
   data_origin: synthetic
+  semantic_source_adapter: canonical_marts
+  semantic_evaluated_at_utc: '2026-10-01T00:00:00+00:00'
 
 models:
   drive_to_joy:

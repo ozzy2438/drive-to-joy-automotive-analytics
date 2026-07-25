@@ -4,6 +4,10 @@
 
 Build stakeholder dashboards from governed analytics marts.
 
+Sprint 5 completes the pre-UI gate: machine-readable metric contracts,
+dashboard-ready aggregates, source allowlisting, executable reconciliation and
+deterministic acceptance fixtures. Dashboard rendering remains a later phase.
+
 ## Required dashboards
 
 1. Executive Digital Performance
@@ -24,6 +28,9 @@ Build stakeholder dashboards from governed analytics marts.
 ## Exit criteria
 
 - [ ] Each dashboard has an audience and owner.
-- [ ] Every metric maps to governed logic.
+- [x] Every metric maps to governed logic.
+- [x] Metric contracts and versions pass automated validation.
+- [x] Dashboard sources are restricted to governed aggregates.
+- [x] Deterministic fixture expectations and reconciliation queries pass.
 - [ ] Dashboard QA passes.
 - [ ] Screenshots are documented.

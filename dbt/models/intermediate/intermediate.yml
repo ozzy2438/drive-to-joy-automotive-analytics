@@ -1,6 +1,23 @@
 version: 2
 
 models:
+  - name: int_semantic_run_metadata
+    description: >
+      One governed semantic-run record with UTC data-through time, deterministic
+      evaluation clock, Melbourne freshness policy and synthetic disclosure.
+    columns:
+      - name: reporting_timezone
+        description: Australia/Melbourne is fixed by the metric contract.
+  - name: int_semantic_quality_status
+    description: >
+      One run-level quality status using fail, stale, warn, unknown and pass
+      precedence.
+    columns:
+      - name: quality_status
+        tests:
+          - accepted_values:
+              arguments:
+                values: ['pass', 'warn', 'fail', 'unknown', 'stale']
   - name: int_sessions
     description: Sessionised web behaviour.
   - name: int_vehicle_journey

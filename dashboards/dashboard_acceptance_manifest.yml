@@ -1,0 +1,47 @@
+manifest_version: 1.0.0
+metric_contract_version: 1.0.0
+fixture_adapter: dashboard_fixture
+data_origin: synthetic
+scenarios:
+  - scenario_id: clean_baseline
+    description: All governed metrics have valid additive inputs and current data.
+  - scenario_id: unmatched_crm
+    description: Accepted submissions include records not received by CRM.
+  - scenario_id: identity_conflict
+    description: Submission and CRM opaque lead references disagree.
+  - scenario_id: zero_denominator
+    description: A governed ratio has no eligible denominator.
+  - scenario_id: stale_data
+    description: Data-through time is older than the 48-hour freshness SLA.
+  - scenario_id: invalid_utm
+    description: Paid sessions include incomplete campaign parameters.
+  - scenario_id: missing_parameter
+    description: Context-required events omit a required vehicle parameter.
+  - scenario_id: srm_failure
+    description: Three-arm experiment allocation breaches the SRM threshold.
+  - scenario_id: personalisation_holdout
+    description: Treatment and generic holdout rates produce known absolute lift.
+expectations:
+  - {scenario_id: clean_baseline, metric_id: qualified_leads_per_1000_engaged_sessions, expected_numerator: 100, expected_denominator: 5000, expected_value: 20, expected_status: null, expected_quality_status: pass, tolerance: 0.000001}
+  - {scenario_id: clean_baseline, metric_id: qualified_lead_rate, expected_numerator: 100, expected_denominator: 120, expected_value: 0.833333333333333, expected_status: null, expected_quality_status: pass, tolerance: 0.000001}
+  - {scenario_id: clean_baseline, metric_id: cost_per_qualified_lead, expected_numerator: 25000, expected_denominator: 100, expected_value: 250, expected_status: null, expected_quality_status: pass, tolerance: 0.01}
+  - {scenario_id: clean_baseline, metric_id: crm_match_rate, expected_numerator: 120, expected_denominator: 125, expected_value: 0.96, expected_status: null, expected_quality_status: pass, tolerance: 0.000001}
+  - {scenario_id: clean_baseline, metric_id: model_to_test_drive_rate, expected_numerator: 50, expected_denominator: 1000, expected_value: 0.05, expected_status: null, expected_quality_status: pass, tolerance: 0.000001}
+  - {scenario_id: clean_baseline, metric_id: configurator_completion_rate, expected_numerator: 300, expected_denominator: 500, expected_value: 0.6, expected_status: null, expected_quality_status: pass, tolerance: 0.000001}
+  - {scenario_id: clean_baseline, metric_id: finance_to_lead_progression_rate, expected_numerator: 80, expected_denominator: 400, expected_value: 0.2, expected_status: null, expected_quality_status: pass, tolerance: 0.000001}
+  - {scenario_id: clean_baseline, metric_id: test_drive_attendance_rate, expected_numerator: 45, expected_denominator: 60, expected_value: 0.75, expected_status: null, expected_quality_status: pass, tolerance: 0.000001}
+  - {scenario_id: clean_baseline, metric_id: vehicle_order_rate, expected_numerator: 20, expected_denominator: 100, expected_value: 0.2, expected_status: null, expected_quality_status: pass, tolerance: 0.000001}
+  - {scenario_id: clean_baseline, metric_id: experiment_qualified_lead_rate, expected_numerator: 30, expected_denominator: 300, expected_value: 0.1, expected_status: null, expected_quality_status: pass, tolerance: 0.000001}
+  - {scenario_id: clean_baseline, metric_id: experiment_srm_status, expected_numerator: null, expected_denominator: null, expected_value: null, expected_status: pass, expected_quality_status: pass, tolerance: 0}
+  - {scenario_id: clean_baseline, metric_id: personalisation_holdout_lift, expected_numerator: 0.12, expected_denominator: 0.10, expected_value: 0.02, expected_status: null, expected_quality_status: pass, tolerance: 0.000001}
+  - {scenario_id: clean_baseline, metric_id: event_parameter_completeness, expected_numerator: 98, expected_denominator: 100, expected_value: 0.98, expected_status: null, expected_quality_status: pass, tolerance: 0.000001}
+  - {scenario_id: clean_baseline, metric_id: utm_compliance_rate, expected_numerator: 95, expected_denominator: 100, expected_value: 0.95, expected_status: null, expected_quality_status: pass, tolerance: 0.000001}
+  - {scenario_id: clean_baseline, metric_id: data_freshness_status, expected_numerator: null, expected_denominator: null, expected_value: null, expected_status: pass, expected_quality_status: pass, tolerance: 0}
+  - {scenario_id: unmatched_crm, metric_id: crm_match_rate, expected_numerator: 8, expected_denominator: 10, expected_value: 0.8, expected_status: null, expected_quality_status: warn, tolerance: 0.000001}
+  - {scenario_id: identity_conflict, metric_id: crm_match_rate, expected_numerator: 7, expected_denominator: 10, expected_value: 0.7, expected_status: null, expected_quality_status: fail, tolerance: 0.000001}
+  - {scenario_id: zero_denominator, metric_id: cost_per_qualified_lead, expected_numerator: 1000, expected_denominator: 0, expected_value: null, expected_status: null, expected_quality_status: unknown, tolerance: 0.01}
+  - {scenario_id: stale_data, metric_id: data_freshness_status, expected_numerator: null, expected_denominator: null, expected_value: null, expected_status: stale, expected_quality_status: stale, tolerance: 0}
+  - {scenario_id: invalid_utm, metric_id: utm_compliance_rate, expected_numerator: 7, expected_denominator: 10, expected_value: 0.7, expected_status: null, expected_quality_status: warn, tolerance: 0.000001}
+  - {scenario_id: missing_parameter, metric_id: event_parameter_completeness, expected_numerator: 8, expected_denominator: 10, expected_value: 0.8, expected_status: null, expected_quality_status: warn, tolerance: 0.000001}
+  - {scenario_id: srm_failure, metric_id: experiment_srm_status, expected_numerator: null, expected_denominator: null, expected_value: null, expected_status: fail, expected_quality_status: fail, tolerance: 0}
+  - {scenario_id: personalisation_holdout, metric_id: personalisation_holdout_lift, expected_numerator: 0.25, expected_denominator: 0.20, expected_value: 0.05, expected_status: null, expected_quality_status: pass, tolerance: 0.000001}

@@ -1,0 +1,16 @@
+version: 1.0.0
+governed_sources:
+  - model: agg_executive_daily
+    dashboard_specs: [executive_dashboard_spec.md]
+  - model: agg_journey_daily
+    dashboard_specs: [journey_dashboard_spec.md]
+  - model: agg_marketing_daily
+    dashboard_specs: [marketing_dashboard_spec.md]
+  - model: agg_data_quality_daily
+    dashboard_specs: [data_quality_dashboard_spec.md]
+  - model: agg_experiment_daily
+    dashboard_specs: [experimentation_dashboard_spec.md]
+  - model: agg_personalisation_daily
+    dashboard_specs: [personalisation_dashboard_spec.md]
+forbidden_model_prefixes: [raw_, stg_, int_]
+policy: Dashboard specifications and reconciliation SQL may reference only governed_sources.

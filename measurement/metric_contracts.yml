@@ -1,0 +1,413 @@
+contract_version: 1.0.0
+effective_from: 2026-07-24
+reporting_timezone: Australia/Melbourne
+data_origin: synthetic
+quality_status:
+  values: [pass, warn, fail, unknown, stale]
+  precedence: [fail, stale, warn, unknown, pass]
+  rule: The first applicable status in precedence order is published.
+metrics:
+  - metric_id: qualified_leads_per_1000_engaged_sessions
+    metric_name: Qualified Leads per 1,000 Engaged Sessions
+    metric_version: 1.0.0
+    business_definition: CRM-qualified matched leads generated for every 1,000 consented engaged sessions.
+    formula: qualified_leads / engaged_sessions * 1000
+    numerator: qualified_leads
+    denominator: engaged_sessions
+    grain: business_date
+    dimensions: [business_date]
+    source_model: agg_executive_daily
+    source_columns: [qualified_leads, engaged_sessions, qualified_leads_per_1000_engaged_sessions]
+    filter_rules: [crm_match_status = matched, engaged_session_flag = 1]
+    exclusion_rules: [consent-denied sessions, unmatched CRM outcomes, identity conflicts]
+    freshness_requirement: within_48_hours
+    quality_dependencies: [crm_match_rate_minimum, business_event_consent_valid]
+    owner: Digital Analytics
+    limitation: Synthetic outcomes demonstrate the method and are not automotive performance claims.
+    acceptance_fixture: clean_baseline.qualified_leads_per_1000_engaged_sessions
+    reconciliation_query: dashboards/reconciliation/qualified_leads_per_1000_engaged_sessions.sql
+    aggregation_behavior: ratio_of_sums
+    unit: per_1000_sessions
+    reporting_timezone: Australia/Melbourne
+    zero_denominator_policy: 'null'
+    effective_from: 2026-07-24
+    deprecated_at: null
+    tolerance: 0.000001
+
+  - metric_id: qualified_lead_rate
+    metric_name: Qualified Lead Rate
+    metric_version: 1.0.0
+    business_definition: Share of CRM-matched web submissions that reach a qualified-or-later CRM state.
+    formula: qualified_leads / crm_matched_submissions
+    numerator: qualified_leads
+    denominator: crm_matched_submissions
+    grain: business_date
+    dimensions: [business_date]
+    source_model: agg_executive_daily
+    source_columns: [qualified_leads, crm_matched_submissions, qualified_lead_rate]
+    filter_rules: [crm_match_status = matched]
+    exclusion_rules: [web-only records, CRM-only records, identity conflicts]
+    freshness_requirement: within_48_hours
+    quality_dependencies: [crm_identity_conflict, crm_match_rate_minimum]
+    owner: CRM Analytics
+    limitation: The rate describes matched submissions and must be read with CRM Match Rate.
+    acceptance_fixture: clean_baseline.qualified_lead_rate
+    reconciliation_query: dashboards/reconciliation/qualified_lead_rate.sql
+    aggregation_behavior: ratio_of_sums
+    unit: proportion
+    reporting_timezone: Australia/Melbourne
+    zero_denominator_policy: 'null'
+    effective_from: 2026-07-24
+    deprecated_at: null
+    tolerance: 0.000001
+
+  - metric_id: cost_per_qualified_lead
+    metric_name: Cost per Qualified Lead
+    metric_version: 1.0.0
+    business_definition: Governed media spend divided by attributed CRM-qualified matched leads.
+    formula: spend_aud / attributed_qualified_leads
+    numerator: spend_aud
+    denominator: attributed_qualified_leads
+    grain: business_date, channel, campaign_id
+    dimensions: [business_date, channel, campaign_id]
+    source_model: agg_marketing_daily
+    source_columns: [spend_aud, attributed_qualified_leads, cost_per_qualified_lead]
+    filter_rules: [campaign governance status is approved]
+    exclusion_rules: [unattributed leads from the campaign denominator]
+    freshness_requirement: within_48_hours
+    quality_dependencies: [campaign_reference_integrity, paid_campaign_utm_complete]
+    owner: Marketing Analytics
+    limitation: Attribution is decision context and is not a causal incrementality claim.
+    acceptance_fixture: clean_baseline.cost_per_qualified_lead
+    reconciliation_query: dashboards/reconciliation/cost_per_qualified_lead.sql
+    aggregation_behavior: ratio_of_sums
+    unit: AUD_per_lead
+    reporting_timezone: Australia/Melbourne
+    zero_denominator_policy: 'null'
+    effective_from: 2026-07-24
+    deprecated_at: null
+    tolerance: 0.01
+
+  - metric_id: crm_match_rate
+    metric_name: CRM Match Rate
+    metric_version: 1.0.0
+    business_definition: Share of accepted web submissions matched to CRM on submission ID and opaque lead hash.
+    formula: matched_web_submissions / eligible_web_submissions
+    numerator: matched_web_submissions
+    denominator: eligible_web_submissions
+    grain: business_date
+    dimensions: [business_date]
+    source_model: agg_executive_daily
+    source_columns: [matched_web_submissions, eligible_web_submissions, crm_match_rate]
+    filter_rules: [web_submission_id is present]
+    exclusion_rules: [CRM-only records from the denominator]
+    freshness_requirement: within_48_hours
+    quality_dependencies: [crm_identifiers_unique, crm_identity_conflict]
+    owner: CRM Operations
+    limitation: Match coverage depends on delivery and lifecycle emulator completeness.
+    acceptance_fixture: unmatched_crm.crm_match_rate
+    reconciliation_query: dashboards/reconciliation/crm_match_rate.sql
+    aggregation_behavior: ratio_of_sums
+    unit: proportion
+    reporting_timezone: Australia/Melbourne
+    zero_denominator_policy: 'null'
+    effective_from: 2026-07-24
+    deprecated_at: null
+    tolerance: 0.000001
+
+  - metric_id: model_to_test_drive_rate
+    metric_name: Model-to-Test-Drive Rate
+    metric_version: 1.0.0
+    business_definition: Share of model-view sessions that submit a test-drive request for the same model.
+    formula: test_drive_submit_sessions / model_view_sessions
+    numerator: test_drive_submit_sessions
+    denominator: model_view_sessions
+    grain: business_date, vehicle_model
+    dimensions: [business_date, vehicle_model]
+    source_model: agg_journey_daily
+    source_columns: [test_drive_submit_sessions, model_view_sessions, model_to_test_drive_rate]
+    filter_rules: [viewed_model_flag = 1, same session and vehicle model]
+    exclusion_rules: [sessions without analytics consent]
+    freshness_requirement: within_48_hours
+    quality_dependencies: [vehicle_event_context_complete, vehicle_reference_integrity]
+    owner: Digital Experience
+    limitation: Same-session progression does not measure later cross-session conversion.
+    acceptance_fixture: clean_baseline.model_to_test_drive_rate
+    reconciliation_query: dashboards/reconciliation/model_to_test_drive_rate.sql
+    aggregation_behavior: ratio_of_sums
+    unit: proportion
+    reporting_timezone: Australia/Melbourne
+    zero_denominator_policy: 'null'
+    effective_from: 2026-07-24
+    deprecated_at: null
+    tolerance: 0.000001
+
+  - metric_id: configurator_completion_rate
+    metric_name: Configurator Completion Rate
+    metric_version: 1.0.0
+    business_definition: Share of vehicle-model journeys with configurator start that reach configurator completion.
+    formula: configurator_completions / configurator_starts
+    numerator: configurator_completions
+    denominator: configurator_starts
+    grain: business_date, vehicle_model
+    dimensions: [business_date, vehicle_model]
+    source_model: agg_journey_daily
+    source_columns: [configurator_completions, configurator_starts, configurator_completion_rate]
+    filter_rules: [stable configurator lifecycle within session and model]
+    exclusion_rules: [journeys without configurator_start]
+    freshness_requirement: within_48_hours
+    quality_dependencies: [vehicle_event_context_complete]
+    owner: Product Analytics
+    limitation: Completion indicates configured intent, not purchase intent.
+    acceptance_fixture: clean_baseline.configurator_completion_rate
+    reconciliation_query: dashboards/reconciliation/configurator_completion_rate.sql
+    aggregation_behavior: ratio_of_sums
+    unit: proportion
+    reporting_timezone: Australia/Melbourne
+    zero_denominator_policy: 'null'
+    effective_from: 2026-07-24
+    deprecated_at: null
+    tolerance: 0.000001
+
+  - metric_id: finance_to_lead_progression_rate
+    metric_name: Finance-to-Lead Progression Rate
+    metric_version: 1.0.0
+    business_definition: Share of finance-complete vehicle journeys that submit a quote or test-drive lead in the same session and model.
+    formula: finance_complete_lead_sessions / finance_complete_sessions
+    numerator: finance_complete_lead_sessions
+    denominator: finance_complete_sessions
+    grain: business_date, vehicle_model
+    dimensions: [business_date, vehicle_model]
+    source_model: agg_journey_daily
+    source_columns: [finance_complete_lead_sessions, finance_complete_sessions, finance_to_lead_progression_rate]
+    filter_rules: [finance_complete_flag = 1]
+    exclusion_rules: [cross-session later leads]
+    freshness_requirement: within_48_hours
+    quality_dependencies: [vehicle_event_context_complete, form_lifecycle_valid]
+    owner: Digital Experience
+    limitation: The metric measures same-session web progression, not credit approval.
+    acceptance_fixture: clean_baseline.finance_to_lead_progression_rate
+    reconciliation_query: dashboards/reconciliation/finance_to_lead_progression_rate.sql
+    aggregation_behavior: ratio_of_sums
+    unit: proportion
+    reporting_timezone: Australia/Melbourne
+    zero_denominator_policy: 'null'
+    effective_from: 2026-07-24
+    deprecated_at: null
+    tolerance: 0.000001
+
+  - metric_id: test_drive_attendance_rate
+    metric_name: Test-Drive Attendance Rate
+    metric_version: 1.0.0
+    business_definition: Share of matched booked test-drive leads recorded as attended.
+    formula: attended_test_drives / booked_test_drives
+    numerator: attended_test_drives
+    denominator: booked_test_drives
+    grain: business_date
+    dimensions: [business_date]
+    source_model: agg_executive_daily
+    source_columns: [attended_test_drives, booked_test_drives, test_drive_attendance_rate]
+    filter_rules: [form_type = test_drive, crm_match_status = matched]
+    exclusion_rules: [quote leads, unmatched records]
+    freshness_requirement: within_48_hours
+    quality_dependencies: [crm_outcome_order_valid, funnel_progression_valid]
+    owner: Sales Operations
+    limitation: Dealer operational effects are included in the outcome.
+    acceptance_fixture: clean_baseline.test_drive_attendance_rate
+    reconciliation_query: dashboards/reconciliation/test_drive_attendance_rate.sql
+    aggregation_behavior: ratio_of_sums
+    unit: proportion
+    reporting_timezone: Australia/Melbourne
+    zero_denominator_policy: 'null'
+    effective_from: 2026-07-24
+    deprecated_at: null
+    tolerance: 0.000001
+
+  - metric_id: vehicle_order_rate
+    metric_name: Vehicle Order Rate
+    metric_version: 1.0.0
+    business_definition: Share of CRM-qualified matched leads that progress to vehicle ordered.
+    formula: vehicle_orders / qualified_leads
+    numerator: vehicle_orders
+    denominator: qualified_leads
+    grain: business_date
+    dimensions: [business_date]
+    source_model: agg_executive_daily
+    source_columns: [vehicle_orders, qualified_leads, vehicle_order_rate]
+    filter_rules: [crm_match_status = matched]
+    exclusion_rules: [unqualified and unmatched records]
+    freshness_requirement: within_48_hours
+    quality_dependencies: [crm_outcome_order_valid, funnel_progression_valid]
+    owner: Sales Operations
+    limitation: Synthetic lifecycle progression is not a real sales conversion rate.
+    acceptance_fixture: clean_baseline.vehicle_order_rate
+    reconciliation_query: dashboards/reconciliation/vehicle_order_rate.sql
+    aggregation_behavior: ratio_of_sums
+    unit: proportion
+    reporting_timezone: Australia/Melbourne
+    zero_denominator_policy: 'null'
+    effective_from: 2026-07-24
+    deprecated_at: null
+    tolerance: 0.000001
+
+  - metric_id: experiment_qualified_lead_rate
+    metric_name: Experiment Qualified Lead Rate
+    metric_version: 1.0.0
+    business_definition: Bounded qualified outcomes per actual experiment exposure.
+    formula: qualified_leads / exposed_assignments
+    numerator: qualified_leads
+    denominator: exposed_assignments
+    grain: business_date, experiment_id, variant_id
+    dimensions: [business_date, experiment_id, variant_id]
+    source_model: agg_experiment_daily
+    source_columns: [qualified_leads, exposed_assignments, experiment_qualified_lead_rate]
+    filter_rules: [actual exposure, assignment_valid_flag = true, outcome within 30 days]
+    exclusion_rules: [assignment without exposure, outcomes after outcome_window_end_at]
+    freshness_requirement: within_48_hours
+    quality_dependencies: [experiment_assignment_valid, experiment_srm_status]
+    owner: Experimentation
+    limitation: No winner claim is permitted without the governed decision process and adequate power.
+    acceptance_fixture: clean_baseline.experiment_qualified_lead_rate
+    reconciliation_query: dashboards/reconciliation/experiment_qualified_lead_rate.sql
+    aggregation_behavior: ratio_of_sums
+    unit: proportion
+    reporting_timezone: Australia/Melbourne
+    zero_denominator_policy: 'null'
+    effective_from: 2026-07-24
+    deprecated_at: null
+    tolerance: 0.000001
+
+  - metric_id: experiment_srm_status
+    metric_name: Experiment SRM Status
+    metric_version: 1.0.0
+    business_definition: Three-arm chi-square sample-ratio-mismatch status for actual EXP-CTA-001 exposures.
+    formula: chi_square(control, treatment_a, treatment_b) compared with 5.991
+    numerator: observed_exposures_by_variant
+    denominator: expected_equal_allocation
+    grain: business_date, experiment_id
+    dimensions: [business_date, experiment_id]
+    source_model: agg_experiment_daily
+    source_columns: [srm_chi_square, srm_status]
+    filter_rules: [actual valid exposures, EXP-CTA-001 has three equal-allocation arms]
+    exclusion_rules: [fewer than 30 daily exposures returns unknown]
+    freshness_requirement: within_48_hours
+    quality_dependencies: [experiment_assignment_valid]
+    owner: Experimentation
+    limitation: Daily SRM status is a guardrail and not a treatment-effect result.
+    acceptance_fixture: srm_failure.experiment_srm_status
+    reconciliation_query: dashboards/reconciliation/experiment_srm_status.sql
+    aggregation_behavior: status
+    unit: status
+    reporting_timezone: Australia/Melbourne
+    zero_denominator_policy: unknown
+    effective_from: 2026-07-24
+    deprecated_at: null
+    tolerance: 0
+
+  - metric_id: personalisation_holdout_lift
+    metric_name: Personalisation Holdout Lift
+    metric_version: 1.0.0
+    business_definition: Absolute percentage-point difference between treatment and generic-holdout qualified-lead rates.
+    formula: treatment_qualified_lead_rate - holdout_qualified_lead_rate
+    numerator: treatment_qualified_lead_rate
+    denominator: holdout_qualified_lead_rate
+    grain: business_date, audience_id, experience_id
+    dimensions: [business_date, audience_id, experience_id]
+    source_model: agg_personalisation_daily
+    source_columns: [treatment_qualified_leads, treatment_exposures, holdout_qualified_leads, holdout_exposures, personalisation_holdout_lift]
+    filter_rules: [same assignment key, explicit generic holdout, outcomes within 14 days]
+    exclusion_rules: [missing holdout, missing assignment, outcomes outside bounded window]
+    freshness_requirement: within_48_hours
+    quality_dependencies: [personalisation_assignment_valid]
+    owner: Personalisation
+    limitation: Absolute lift is descriptive until sample and validity requirements are met.
+    acceptance_fixture: personalisation_holdout.personalisation_holdout_lift
+    reconciliation_query: dashboards/reconciliation/personalisation_holdout_lift.sql
+    aggregation_behavior: difference_of_ratios
+    unit: percentage_point
+    reporting_timezone: Australia/Melbourne
+    zero_denominator_policy: 'null'
+    effective_from: 2026-07-24
+    deprecated_at: null
+    tolerance: 0.000001
+
+  - metric_id: event_parameter_completeness
+    metric_name: Event Parameter Completeness
+    metric_version: 1.0.0
+    business_definition: Share of governed context-required events containing their required vehicle context.
+    formula: complete_required_events / eligible_required_events
+    numerator: complete_required_events
+    denominator: eligible_required_events
+    grain: business_date
+    dimensions: [business_date]
+    source_model: agg_data_quality_daily
+    source_columns: [complete_required_events, eligible_required_events, event_parameter_completeness]
+    filter_rules: [event name requires vehicle context]
+    exclusion_rules: [events without a governed vehicle-context requirement]
+    freshness_requirement: within_48_hours
+    quality_dependencies: [vehicle_event_context_complete]
+    owner: Digital Analytics
+    limitation: This release measures the governed vehicle-context requirement set.
+    acceptance_fixture: missing_parameter.event_parameter_completeness
+    reconciliation_query: dashboards/reconciliation/event_parameter_completeness.sql
+    aggregation_behavior: ratio_of_sums
+    unit: proportion
+    reporting_timezone: Australia/Melbourne
+    zero_denominator_policy: 'null'
+    effective_from: 2026-07-24
+    deprecated_at: null
+    tolerance: 0.000001
+
+  - metric_id: utm_compliance_rate
+    metric_name: UTM Compliance Rate
+    metric_version: 1.0.0
+    business_definition: Share of paid-media sessions with complete governed source, medium, campaign ID and campaign name.
+    formula: compliant_paid_sessions / eligible_paid_sessions
+    numerator: compliant_paid_sessions
+    denominator: eligible_paid_sessions
+    grain: business_date
+    dimensions: [business_date]
+    source_model: agg_data_quality_daily
+    source_columns: [compliant_paid_sessions, eligible_paid_sessions, utm_compliance_rate]
+    filter_rules: [traffic_medium in cpc or paid_social]
+    exclusion_rules: [organic, referral, email and direct sessions]
+    freshness_requirement: within_48_hours
+    quality_dependencies: [paid_campaign_utm_complete, campaign_reference_integrity]
+    owner: Marketing Analytics
+    limitation: Compliance validates tagging completeness, not campaign effectiveness.
+    acceptance_fixture: invalid_utm.utm_compliance_rate
+    reconciliation_query: dashboards/reconciliation/utm_compliance_rate.sql
+    aggregation_behavior: ratio_of_sums
+    unit: proportion
+    reporting_timezone: Australia/Melbourne
+    zero_denominator_policy: 'null'
+    effective_from: 2026-07-24
+    deprecated_at: null
+    tolerance: 0.000001
+
+  - metric_id: data_freshness_status
+    metric_name: Data Freshness Status
+    metric_version: 1.0.0
+    business_definition: Status of the governed event data-through timestamp against the 48-hour SLA and evaluation clock.
+    formula: status(data_through_at_utc, evaluated_at_utc, 48 hours)
+    numerator: data_through_at_utc
+    denominator: evaluated_at_utc
+    grain: evaluation_run
+    dimensions: [evaluated_at_utc]
+    source_model: agg_data_quality_daily
+    source_columns: [data_through_at_utc, evaluated_at_utc, freshness_status]
+    filter_rules: [use the governed evaluation clock]
+    exclusion_rules: [future timestamps beyond one day return unknown]
+    freshness_requirement: within_48_hours
+    quality_dependencies: [session_rows_present]
+    owner: Analytics Engineering
+    limitation: Local synthetic evaluation uses a deterministic clock supplied by dbt vars.
+    acceptance_fixture: stale_data.data_freshness_status
+    reconciliation_query: dashboards/reconciliation/data_freshness_status.sql
+    aggregation_behavior: status
+    unit: status
+    reporting_timezone: Australia/Melbourne
+    zero_denominator_policy: unknown
+    effective_from: 2026-07-24
+    deprecated_at: null
+    tolerance: 0

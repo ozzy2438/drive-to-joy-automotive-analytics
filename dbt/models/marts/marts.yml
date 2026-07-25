@@ -61,3 +61,15 @@ models:
     description: >
       One exposure date, audience, experience and holdout result using bounded
       assignment-key joins.
+  - name: fct_reconciliation_results
+    description: >
+      One Melbourne business date reconciliation result with additive matched,
+      unmatched and identity-conflict components.
+    columns:
+      - name: business_date
+        tests: [unique, not_null]
+      - name: reconciliation_status
+        tests:
+          - accepted_values:
+              arguments:
+                values: ['pass', 'warn', 'fail', 'unknown', 'stale']

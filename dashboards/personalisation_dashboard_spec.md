@@ -4,6 +4,10 @@
 
 CRM, MarTech and digital teams.
 
+## Governed sources
+
+`agg_personalisation_daily` and `agg_data_quality_daily`.
+
 ## Required views
 
 - Audience eligibility volume
